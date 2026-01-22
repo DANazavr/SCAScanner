@@ -1,6 +1,7 @@
 package main
 
 import (
+	"SCAScanner/internal/scanner"
 	"fmt"
 	"log"
 
@@ -26,5 +27,14 @@ func main() {
 }
 
 func rootExecuteble(projectPath string) {
-	fmt.Printf("Scanning project at path: %s", projectPath)
+	fmt.Printf("Scanning project at path: %s\n", projectPath)
+	scanener := scanner.New()
+	deps, err := scanener.Scan(projectPath)
+	if err != nil {
+		log.Fatalf("Error during scanning: %v", err)
+	}
+	fmt.Println("Dependencies found:")
+	for _, dep := range deps {
+		fmt.Println(dep)
+	}
 }
