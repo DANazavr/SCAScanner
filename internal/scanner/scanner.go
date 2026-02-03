@@ -7,7 +7,7 @@ import (
 )
 
 type Scanner interface {
-	Scan() error
+	Scan(string) ([]string, error)
 	Analyze() error
 }
 
