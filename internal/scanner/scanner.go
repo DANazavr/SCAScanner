@@ -2,12 +2,13 @@
 package scanner
 
 import (
+	"SCAScanner/internal/models"
+	"SCAScanner/pkg/parsers"
 	"fmt"
-	"os"
 )
 
 type Scanner interface {
-	Scan(string) ([]string, error)
+	Scan(string) ([]models.Dependency, error)
 	Analyze() error
 }
 
@@ -17,8 +18,8 @@ func New() *VulnScanner {
 	return &VulnScanner{}
 }
 
-func (vs *VulnScanner) Scan(projectPath string) ([]string, error) {
-	var dependencies []string
+func (vs *VulnScanner) Scan(projectPath string) ([]models.Dependency, error) {
+	var dependencies []models.Dependency
 
 	files := []string{
 		"go.mod",           // Go
@@ -29,14 +30,21 @@ func (vs *VulnScanner) Scan(projectPath string) ([]string, error) {
 	}
 
 	for _, file := range files {
-		filepath := fmt.Sprintf("%s/%s", projectPath, file)
-		if _, err := os.Stat(filepath); err == nil {
-			deps, err := os.ReadFile(filepath)
+		var err error
+		filepath := fmt.Sprintf("%s\\%s", projectPath, file)
+		switch file {
+		case "go.mod":
+			dependencies, err = parsers.ParseGoMod(filepath)
 			if err != nil {
 				return nil, err
 			}
-			dependencies = append(dependencies, string(deps))
+		default:
+			continue
 		}
 	}
 	return dependencies, nil
+}
+
+func (vs *VulnScanner) Analyze() error {
+	return nil
 }

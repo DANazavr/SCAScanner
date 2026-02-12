@@ -28,13 +28,17 @@ func main() {
 
 func rootExecuteble(projectPath string) {
 	fmt.Printf("Scanning project at path: %s\n", projectPath)
-	scanener := scanner.New()
-	deps, err := scanener.Scan(projectPath)
+	scanner := scanner.New()
+	deps, err := scanner.Scan(projectPath)
 	if err != nil {
 		log.Fatalf("Error during scanning: %v", err)
 	}
 	fmt.Println("Dependencies found:")
 	for _, dep := range deps {
 		fmt.Println(dep)
+	}
+	vuln, err := scanner.SearchCVE(deps)
+	if err != nil {
+		log.Fatalf("Error during vulnerability search: %v", err)
 	}
 }
