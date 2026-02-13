@@ -6,22 +6,31 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 type CVEItem struct {
-	CVEID       string    `json:"cve_id"`
-	Description string    `json:"description"`
-	Severity    string    `json:"severity"`
-	CVSSScore   float64   `json:"cvss_score"`
-	Date        time.Time `json:"published_date"`
+	CVE struct {
+		ID          string `json:"id"`
+		Description []struct {
+			Lang  string `json:"lang"`
+			Value string `json:"value"`
+		} `json:"descriptions"`
+		Metrics struct {
+			CVSSMetricsV31 []struct {
+				CVSSData struct {
+					BaseScore    float64 `json:"baseScore"`
+					BaseSeverity string  `json:"baseSeverity"`
+				} `json:"cvssData"`
+			} `json:"cvssMetricV31"`
+		} `json:"metrics"`
+	} `json:"cve"`
 }
 
 type CVEResponce struct {
 	Vulnerabilities []CVEItem `json:"vulnerabilities"`
 }
 
-func SearchCVE(dependencyName string) ([]models.Vulnerability, error) {
+func (vs *VulnScanner) SearchCVE(dependencyName string) ([]models.Vulnerability, error) {
 	url := fmt.Sprintf("https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=%s", url.QueryEscape(dependencyName))
 	resp, err := http.Get(url)
 	if err != nil {
@@ -39,13 +48,22 @@ func SearchCVE(dependencyName string) ([]models.Vulnerability, error) {
 	}
 	var vulnerabilities []models.Vulnerability
 	for _, item := range cveResponce.Vulnerabilities {
+		description := ""
+		if len(item.CVE.Description) > 0 {
+			description = item.CVE.Description[0].Value
+		}
+		severity := "UNKNOWN"
+		cvssScore := 0.0
+		if len(item.CVE.Metrics.CVSSMetricsV31) > 0 {
+			severity = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseSeverity
+			cvssScore = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseScore
+		}
 		vulnerabilities = append(vulnerabilities, models.Vulnerability{
-			CVEID:           item.CVEID,
-			Description:     item.Description,
-			Severity:        item.Severity,
+			CVEID:           item.CVE.ID,
+			Description:     description, // Assuming the first description is in English
+			Severity:        severity,
 			AffectedPackage: dependencyName,
-			CVSSScore:       item.CVSSScore,
-			Date:            item.Date,
+			CVSSScore:       cvssScore,
 		})
 	}
 	return vulnerabilities, nil

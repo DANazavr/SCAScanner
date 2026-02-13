@@ -1,9 +1,11 @@
 package main
 
 import (
+	"SCAScanner/internal/models"
 	"SCAScanner/internal/scanner"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -28,8 +30,8 @@ func main() {
 
 func rootExecuteble(projectPath string) {
 	fmt.Printf("Scanning project at path: %s\n", projectPath)
-	scanner := scanner.New()
-	deps, err := scanner.Scan(projectPath)
+	s := scanner.New()
+	deps, err := s.Scan(projectPath)
 	if err != nil {
 		log.Fatalf("Error during scanning: %v", err)
 	}
@@ -37,8 +39,20 @@ func rootExecuteble(projectPath string) {
 	for _, dep := range deps {
 		fmt.Println(dep)
 	}
-	vuln, err := scanner.SearchCVE(deps)
-	if err != nil {
-		log.Fatalf("Error during vulnerability search: %v", err)
+	var vulnerabilities []models.Vulnerability
+	for _, v := range deps {
+		vuln, err := s.SearchCVE(v.Name)
+		if err != nil {
+			log.Printf("Error searching CVE for %s: %v", v.Name, err)
+			continue
+		}
+		vulnerabilities = append(vulnerabilities, vuln...)
+
+		time.Sleep(6 * time.Second)
+	}
+	fmt.Println("Vulnerabilities found:")
+	for _, vuln := range vulnerabilities {
+		fmt.Printf("CVE ID: %s\nDescription: %s\nSeverity: %s\nAffected Package: %s\nCVSS Score: %.1f\n\n",
+			vuln.CVEID, vuln.Description, vuln.Severity, vuln.AffectedPackage, vuln.CVSSScore)
 	}
 }

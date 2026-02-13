@@ -8,12 +8,11 @@ type Dependency struct {
 }
 
 type Vulnerability struct {
-	CVEID           string    `json:"cve_id"`
-	Description     string    `json:"description"`
-	Severity        string    `json:"severity"`
-	AffectedPackage string    `json:"affected_package"`
-	CVSSScore       float64   `json:"cvss_score"`
-	Date            time.Time `json:"date"`
+	CVEID           string  `json:"cve_id"`
+	Description     string  `json:"description"`
+	Severity        string  `json:"severity"`
+	AffectedPackage string  `json:"affected_package"`
+	CVSSScore       float64 `json:"cvss_score"`
 }
 
 type ReportResult struct {
