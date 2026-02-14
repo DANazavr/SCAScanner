@@ -1,0 +1,66 @@
+{
+  "dependencies": [
+    {
+      "name": "github.com/spf13/cobra",
+      "version": "v1.10.2"
+    },
+    {
+      "name": "github.com/inconshreveable/mousetrap",
+      "version": "v1.1.0"
+    },
+    {
+      "name": "github.com/spf13/pflag",
+      "version": "v1.0.10"
+    },
+    {
+      "name": "golang.org/x/net",
+      "version": "v0.50.0"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "cve_id": "CVE-2021-33194",
+      "published": "2021-05-26T15:15:08.217",
+      "lastModified": "2024-11-21T06:08:29.390",
+      "description": "golang.org/x/net before v0.0.0-20210520170846-37e1c6afe023 allows attackers to cause a denial of service (infinite loop) via crafted ParseFragment input.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2023-39325",
+      "published": "2023-10-11T22:15:09.880",
+      "lastModified": "2024-11-21T08:15:09.627",
+      "description": "A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2025-47911",
+      "published": "2026-02-05T18:16:09.893",
+      "lastModified": "2026-02-12T16:16:03.417",
+      "description": "The html.Parse function in golang.org/x/net/html has quadratic parsing complexity when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2025-58190",
+      "published": "2026-02-05T18:16:10.027",
+      "lastModified": "2026-02-12T16:16:03.737",
+      "description": "The html.Parse function in golang.org/x/net/html has an infinite parsing loop when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "golang.org/x/net"
+    }
+  ],
+  "statistics": {
+    "Total": 4,
+    "Critical": 0,
+    "High": 2,
+    "Medium": 2,
+    "Low": 0
+  },
+  "scan_date": "2026-02-14T17:46:01.3899157+05:00"
+}

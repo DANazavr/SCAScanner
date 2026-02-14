@@ -2,6 +2,7 @@ package main
 
 import (
 	"SCAScanner/internal/models"
+	"SCAScanner/internal/reporters"
 	"SCAScanner/internal/scanner"
 	"fmt"
 	"log"
@@ -12,6 +13,7 @@ import (
 
 var (
 	projectPath string
+	outputPath  string
 )
 
 func main() {
@@ -23,6 +25,7 @@ func main() {
 		},
 	}
 	rootCmd.Flags().StringVarP(&projectPath, "path", "p", ".", "Path to the project to scan")
+	rootCmd.Flags().StringVarP(&outputPath, "out", "o", ".", "Path to the create report")
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("Error executing command: %v", err)
 	}
@@ -35,13 +38,9 @@ func rootExecuteble(projectPath string) {
 	if err != nil {
 		log.Fatalf("Error during scanning: %v", err)
 	}
-	fmt.Println("Dependencies found:")
-	for _, dep := range deps {
-		fmt.Println(dep)
-	}
 	var vulnerabilities []models.Vulnerability
 	for _, v := range deps {
-		vuln, err := s.SearchCVE(v.Name)
+		vuln, err := s.SearchCVE(v.Name, v.Version)
 		if err != nil {
 			log.Printf("Error searching CVE for %s: %v", v.Name, err)
 			continue
@@ -50,9 +49,15 @@ func rootExecuteble(projectPath string) {
 
 		time.Sleep(6 * time.Second)
 	}
-	fmt.Println("Vulnerabilities found:")
-	for _, vuln := range vulnerabilities {
-		fmt.Printf("CVE ID: %s\nDescription: %s\nSeverity: %s\nAffected Package: %s\nCVSS Score: %.1f\n\n",
-			vuln.CVEID, vuln.Description, vuln.Severity, vuln.AffectedPackage, vuln.CVSSScore)
+
+	if outputPath != "" {
+		if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
+			log.Fatalf("Error generating report: %v", err)
+		}
+		fmt.Printf("Report generated successfully at: %s/report.json\n", outputPath)
+	}
+
+	if err := reporters.GenerateHTMLReport(deps, vulnerabilities); err != nil {
+		log.Fatalf("Error generating HTML report: %v", err)
 	}
 }

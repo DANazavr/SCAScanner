@@ -10,8 +10,10 @@ import (
 
 type CVEItem struct {
 	CVE struct {
-		ID          string `json:"id"`
-		Description []struct {
+		ID           string `json:"id"`
+		PubishedDate string `json:"published"`
+		LastModified string `json:"lastModified"`
+		Description  []struct {
 			Lang  string `json:"lang"`
 			Value string `json:"value"`
 		} `json:"descriptions"`
@@ -30,7 +32,7 @@ type CVEResponce struct {
 	Vulnerabilities []CVEItem `json:"vulnerabilities"`
 }
 
-func (vs *VulnScanner) SearchCVE(dependencyName string) ([]models.Vulnerability, error) {
+func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
 	url := fmt.Sprintf("https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=%s", url.QueryEscape(dependencyName))
 	resp, err := http.Get(url)
 	if err != nil {
@@ -60,6 +62,8 @@ func (vs *VulnScanner) SearchCVE(dependencyName string) ([]models.Vulnerability,
 		}
 		vulnerabilities = append(vulnerabilities, models.Vulnerability{
 			CVEID:           item.CVE.ID,
+			PublishedDate:   item.CVE.PubishedDate,
+			LastModified:    item.CVE.LastModified,
 			Description:     description, // Assuming the first description is in English
 			Severity:        severity,
 			AffectedPackage: dependencyName,
