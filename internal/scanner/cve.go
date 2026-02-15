@@ -66,6 +66,7 @@ func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string
 			LastModified:    item.CVE.LastModified,
 			Description:     description, // Assuming the first description is in English
 			Severity:        severity,
+			SeverityClass:   severity, // You can map this to CSS classes in the HTML report
 			AffectedPackage: dependencyName,
 			CVSSScore:       cvssScore,
 		})

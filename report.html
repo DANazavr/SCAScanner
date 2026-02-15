@@ -1,14 +1,4 @@
-package reporters
 
-import (
-	"SCAScanner/internal/models"
-	"os"
-	"path/filepath"
-	"text/template"
-	"time"
-)
-
-const htmlTemplate = `
 	<!DOCTYPE html>
 	<html lang="ru">
 	<head>
@@ -172,49 +162,94 @@ const htmlTemplate = `
 			<header>
 				<h1>🛡️ Vulnerability Report</h1>
 				<div class="scan-info">
-					<div>📅 Scan Date: {{.Date}}</div>
-					<div>📦 Total Dependencies: {{.TotalDeps}}</div>
-					<div>🔍 Vulnerabilities Found: {{.Statistics.Total}}</div>
+					<div>📅 Scan Date: 2026-02-15 17:14:25</div>
+					<div>📦 Total Dependencies: 4</div>
+					<div>🔍 Vulnerabilities Found: 4</div>
 				</div>
 			</header>
 
 			<div class="stats">
 				<div class="stat-card critical">
 					<h3>Critical</h3>
-					<div class="number">{{.Statistics.Critical}}</div>
+					<div class="number">0</div>
 				</div>
 				<div class="stat-card high">
 					<h3>High</h3>
-					<div class="number">{{.Statistics.High}}</div>
+					<div class="number">2</div>
 				</div>
 				<div class="stat-card medium">
 					<h3>Medium</h3>
-					<div class="number">{{.Statistics.Medium}}</div>
+					<div class="number">2</div>
 				</div>
 				<div class="stat-card low">
 					<h3>Low</h3>
-					<div class="number">{{.Statistics.Low}}</div>
+					<div class="number">0</div>
 				</div>
 			</div>
 
 			<div class="vulnerabilities">
 				<h2>Vulnerability Details</h2>
-				{{range .Vulnerabilities}}
-				<div class="vuln-item {{.SeverityClass}}">
+				
+				<div class="vuln-item HIGH">
 					<div class="vuln-header">
-						<div class="vuln-id">{{.CVEID}}</div>
-						<div class="severity-badge {{.SeverityClass}}">
-							{{.Severity}} (CVSS: {{.CVSSScore}})
+						<div class="vuln-id">CVE-2021-33194</div>
+						<div class="severity-badge HIGH">
+							HIGH (CVSS: 7.5)
 						</div>
 					</div>
 					<div class="vuln-detail">
-						<strong>Affected Package:</strong> {{.AffectedPackage}}
+						<strong>Affected Package:</strong> golang.org/x/net
 					</div>
 					<div class="vuln-description">
-						{{.Description}}
+						golang.org/x/net before v0.0.0-20210520170846-37e1c6afe023 allows attackers to cause a denial of service (infinite loop) via crafted ParseFragment input.
 					</div>
 				</div>
-				{{end}}
+				
+				<div class="vuln-item HIGH">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-39325</div>
+						<div class="severity-badge HIGH">
+							HIGH (CVSS: 7.5)
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> golang.org/x/net
+					</div>
+					<div class="vuln-description">
+						A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.
+					</div>
+				</div>
+				
+				<div class="vuln-item MEDIUM">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-47911</div>
+						<div class="severity-badge MEDIUM">
+							MEDIUM (CVSS: 5.3)
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> golang.org/x/net
+					</div>
+					<div class="vuln-description">
+						The html.Parse function in golang.org/x/net/html has quadratic parsing complexity when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.
+					</div>
+				</div>
+				
+				<div class="vuln-item MEDIUM">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-58190</div>
+						<div class="severity-badge MEDIUM">
+							MEDIUM (CVSS: 5.3)
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> golang.org/x/net
+					</div>
+					<div class="vuln-description">
+						The html.Parse function in golang.org/x/net/html has an infinite parsing loop when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.
+					</div>
+				</div>
+				
 			</div>
 
 			<footer>
@@ -223,33 +258,4 @@ const htmlTemplate = `
 		</div>
 	</body>
 	</html>
-	`
-
-func GenerateHTMLReport(deps []models.Dependency, vuln []models.Vulnerability, outpath string) error {
-	statistics := calculateStatistics(vuln)
-	report := models.ReportResult{
-		Dependencies:    deps,
-		Vulnerabilities: vuln,
-		Statistics:      statistics,
-		TotalDeps:       len(deps),
-		Date:            time.Now().Format("2006-01-02 15:04:05"),
-	}
-	return saveReportAsHTML(report, outpath)
-}
-
-func saveReportAsHTML(report models.ReportResult, outpath string) error {
-	file, err := os.Create(filepath.Join(outpath, "report.html"))
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	tmpl, err := template.New("report").Parse(htmlTemplate)
-	if err != nil {
-		return err
-	}
-	if err := tmpl.Execute(file, report); err != nil {
-		return err
-	}
-	return nil
-}
+	

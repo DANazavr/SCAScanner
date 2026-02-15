@@ -14,7 +14,8 @@ func GenerateJSONReport(deps []models.Dependency, vuln []models.Vulnerability, o
 		Dependencies:    deps,
 		Vulnerabilities: vuln,
 		Statistics:      statistics,
-		Date:            time.Now(),
+		TotalDeps:       len(deps),
+		Date:            time.Now().Format("2006-01-02 15:04:05"),
 	}
 	return saveReportAsJSON(report, outpath)
 }

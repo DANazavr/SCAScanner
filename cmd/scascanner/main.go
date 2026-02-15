@@ -50,14 +50,13 @@ func rootExecuteble(projectPath string) {
 		time.Sleep(6 * time.Second)
 	}
 
-	if outputPath != "" {
-		if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
-			log.Fatalf("Error generating report: %v", err)
-		}
-		fmt.Printf("Report generated successfully at: %s/report.json\n", outputPath)
+	if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
+		log.Fatalf("Error generating report: %v", err)
 	}
+	fmt.Printf("Report generated successfully at: %s/report.json\n", outputPath)
 
-	if err := reporters.GenerateHTMLReport(deps, vulnerabilities); err != nil {
+	if err := reporters.GenerateHTMLReport(deps, vulnerabilities, outputPath); err != nil {
 		log.Fatalf("Error generating HTML report: %v", err)
 	}
+	fmt.Printf("Report generated successfully at: %s/report.html\n", outputPath)
 }
