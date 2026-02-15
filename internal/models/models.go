@@ -11,7 +11,6 @@ type Vulnerability struct {
 	LastModified    string  `json:"lastModified"`
 	Description     string  `json:"description"`
 	Severity        string  `json:"severity"`
-	SeverityClass   string  `json:"severity_class"`
 	CVSSScore       float64 `json:"cvss_score"`
 	AffectedPackage string  `json:"affected_package"`
 }

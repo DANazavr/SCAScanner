@@ -14,6 +14,7 @@ import (
 var (
 	projectPath string
 	outputPath  string
+	format      string
 )
 
 func main() {
@@ -26,6 +27,7 @@ func main() {
 	}
 	rootCmd.Flags().StringVarP(&projectPath, "path", "p", ".", "Path to the project to scan")
 	rootCmd.Flags().StringVarP(&outputPath, "out", "o", ".", "Path to the create report")
+	rootCmd.Flags().StringVarP(&format, "format", "f", "html", "format of the report (html or json)")
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("Error executing command: %v", err)
 	}
@@ -50,13 +52,17 @@ func rootExecuteble(projectPath string) {
 		time.Sleep(6 * time.Second)
 	}
 
-	if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
-		log.Fatalf("Error generating report: %v", err)
+	if format == "json" {
+		if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
+			log.Fatalf("Error generating report: %v", err)
+		}
+		fmt.Printf("Report generated successfully at: %s/report.json\n", outputPath)
 	}
-	fmt.Printf("Report generated successfully at: %s/report.json\n", outputPath)
 
-	if err := reporters.GenerateHTMLReport(deps, vulnerabilities, outputPath); err != nil {
-		log.Fatalf("Error generating HTML report: %v", err)
+	if format == "html" {
+		if err := reporters.GenerateHTMLReport(deps, vulnerabilities, outputPath); err != nil {
+			log.Fatalf("Error generating HTML report: %v", err)
+		}
+		fmt.Printf("Report generated successfully at: %s/report.html\n", outputPath)
 	}
-	fmt.Printf("Report generated successfully at: %s/report.html\n", outputPath)
 }

@@ -200,10 +200,10 @@ const htmlTemplate = `
 			<div class="vulnerabilities">
 				<h2>Vulnerability Details</h2>
 				{{range .Vulnerabilities}}
-				<div class="vuln-item {{.SeverityClass}}">
+				<div class="vuln-item {{.Severity}}">
 					<div class="vuln-header">
 						<div class="vuln-id">{{.CVEID}}</div>
-						<div class="severity-badge {{.SeverityClass}}">
+						<div class="severity-badge {{.Severity}}">
 							{{.Severity}} (CVSS: {{.CVSSScore}})
 						</div>
 					</div>
