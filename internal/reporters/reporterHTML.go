@@ -130,11 +130,12 @@ const htmlTemplate = `
 			}
 
 			.severity-badge {
-				padding: 5px 15px;
-				border-radius: 20px;
-				font-size: 0.85em;
+				padding: 8px 20px;
+				border-radius: 25px;
+				font-size: 0.9em;
 				font-weight: bold;
-				color: white;
+				color: grey;
+				box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 			}
 
 			.severity-badge.critical { background: #dc3545; }
@@ -204,7 +205,11 @@ const htmlTemplate = `
 					<div class="vuln-header">
 						<div class="vuln-id">{{.CVEID}}</div>
 						<div class="severity-badge {{.Severity}}">
-							{{.Severity}} (CVSS: {{.CVSSScore}})
+							{{if eq .Severity "CRITICAL"}}🔴{{end}}
+							{{if eq .Severity "HIGH"}}🟠{{end}}
+							{{if eq .Severity "MEDIUM"}}🟡{{end}}
+							{{if eq .Severity "LOW"}}🟢{{end}}
+							{{.Severity}} (CVSS: {{printf "%.1f" .CVSSScore}})
 						</div>
 					</div>
 					<div class="vuln-detail">
