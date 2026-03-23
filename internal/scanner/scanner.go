@@ -30,14 +30,20 @@ func (vs *VulnScanner) Scan(projectPath string) ([]models.Dependency, error) {
 	}
 
 	for _, file := range files {
-		var err error
 		filepath := fmt.Sprintf("%s\\%s", projectPath, file)
 		switch file {
 		case "go.mod":
-			dependencies, err = parsers.ParseGoMod(filepath)
+			deps, err := parsers.ParseGoMod(filepath)
 			if err != nil {
 				return nil, err
 			}
+			dependencies = append(dependencies, deps...)
+		case "requirements.txt":
+			deps, err := parsers.ParseRequirementsTxt(filepath)
+			if err != nil {
+				return nil, err
+			}
+			dependencies = append(dependencies, deps...)
 		default:
 			continue
 		}

@@ -6,6 +6,7 @@ import (
 	"SCAScanner/internal/scanner"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
@@ -40,6 +41,7 @@ func rootExecuteble(projectPath string) {
 	if err != nil {
 		log.Fatalf("Error during scanning: %v", err)
 	}
+
 	bar := progressbar.NewOptions(len(deps),
 		progressbar.OptionSetDescription("Scanning dependencies..."),
 		progressbar.OptionShowCount(),
@@ -61,7 +63,7 @@ func rootExecuteble(projectPath string) {
 		vulnerabilities = append(vulnerabilities, vuln...)
 
 		bar.Add(1)
-		// time.Sleep(6 * time.Second)
+		time.Sleep(6 * time.Second)
 	}
 	bar.Finish()
 
