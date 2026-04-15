@@ -6,6 +6,7 @@ import (
 	"SCAScanner/internal/scanner"
 	"fmt"
 	"log"
+	"sync"
 	"time"
 
 	"github.com/schollz/progressbar/v3"
@@ -42,30 +43,10 @@ func rootExecuteble(projectPath string) {
 		log.Fatalf("Error during scanning: %v", err)
 	}
 
-	bar := progressbar.NewOptions(len(deps),
-		progressbar.OptionSetDescription("Scanning dependencies..."),
-		progressbar.OptionShowCount(),
-	)
-	for range deps {
-		bar.Add(1)
+	vulnerabilities, err := searchVulnerabilities(s, deps)
+	if err != nil {
+		log.Fatalf("Error searching vulnerabilities: %v", err)
 	}
-	bar = progressbar.NewOptions(len(deps),
-		progressbar.OptionSetDescription("Analyzing vulnerabilities..."),
-		progressbar.OptionShowCount(),
-	)
-	var vulnerabilities []models.Vulnerability
-	for _, v := range deps {
-		vuln, err := s.SearchCVE(v.Name, v.Version)
-		if err != nil {
-			log.Printf("Error searching CVE for %s: %v", v.Name, err)
-			continue
-		}
-		vulnerabilities = append(vulnerabilities, vuln...)
-
-		bar.Add(1)
-		time.Sleep(6 * time.Second)
-	}
-	bar.Finish()
 
 	if format == "json" {
 		if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
@@ -90,4 +71,55 @@ func rootExecuteble(projectPath string) {
 		}
 		fmt.Printf("\nReports generated successfully at: %s/report.html and %s/report.json\n", outputPath, outputPath)
 	}
+}
+
+func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]models.Vulnerability, error) {
+	var vulnerabilities []models.Vulnerability
+
+	var mu sync.Mutex
+
+	workerCount := 5
+	jobs := make(chan models.Dependency, len(deps))
+
+	bar := progressbar.NewOptions(len(deps),
+		progressbar.OptionSetDescription("Searching CVEs..."),
+		progressbar.OptionShowCount(),
+		progressbar.OptionSetWidth(15),
+		progressbar.OptionThrottle(65*time.Millisecond),
+		progressbar.OptionClearOnFinish(),
+	)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < workerCount; i++ {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+
+			for dep := range jobs {
+				vuln, err := s.SearchCVE(dep.Name, dep.Version)
+				if err != nil {
+					log.Printf("Error searching CVE for %s: %v", dep.Name, err)
+				} else {
+					mu.Lock()
+					vulnerabilities = append(vulnerabilities, vuln...)
+					mu.Unlock()
+				}
+
+				bar.Add(1)
+			}
+		}()
+	}
+
+	for _, d := range deps {
+		jobs <- d
+	}
+	close(jobs)
+
+	wg.Wait()
+
+	bar.Finish()
+
+	return vulnerabilities, nil
 }

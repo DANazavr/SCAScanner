@@ -4,7 +4,9 @@ package scanner
 import (
 	"SCAScanner/internal/models"
 	"SCAScanner/pkg/parsers"
-	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
 )
 
 type Scanner interface {
@@ -21,32 +23,36 @@ func New() *VulnScanner {
 func (vs *VulnScanner) Scan(projectPath string) ([]models.Dependency, error) {
 	var dependencies []models.Dependency
 
-	files := []string{
-		"go.mod",           // Go
-		"package.json",     // Node.js
-		"pom.xml",          // Maven
-		"requirements.txt", // Python
-		"Cargo.toml",       // Rust
+	files := map[string]func(string) ([]models.Dependency, error){
+		"go.mod":           parsers.ParseGoMod,
+		"package.json":     parsers.ParsePackageJSON,
+		"pom.xml":          parsers.ParsePomXML,
+		"requirements.txt": parsers.ParseRequirementsTxt,
+		"Cargo.toml":       parsers.ParseCargoToml,
 	}
 
-	for _, file := range files {
-		filepath := fmt.Sprintf("%s\\%s", projectPath, file)
-		switch file {
-		case "go.mod":
-			deps, err := parsers.ParseGoMod(filepath)
-			if err != nil {
-				return nil, err
-			}
-			dependencies = append(dependencies, deps...)
-		case "requirements.txt":
-			deps, err := parsers.ParseRequirementsTxt(filepath)
-			if err != nil {
-				return nil, err
-			}
-			dependencies = append(dependencies, deps...)
-		default:
-			continue
+	err := filepath.WalkDir(projectPath, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
 		}
+		if d.IsDir() {
+			return nil
+		}
+		filename := d.Name()
+		if parser, ok := files[filename]; ok {
+			deps, err := parser(path)
+			if err != nil {
+				if os.IsNotExist(err) {
+					return nil // Игнорируем ошибку, если файл не найден
+				}
+				return err
+			}
+			dependencies = append(dependencies, deps...)
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
 	return dependencies, nil
 }

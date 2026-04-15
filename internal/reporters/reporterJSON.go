@@ -23,6 +23,9 @@ func GenerateJSONReport(deps []models.Dependency, vuln []models.Vulnerability, o
 func calculateStatistics(vuln []models.Vulnerability) models.Statistics {
 	var stats models.Statistics
 	for _, v := range vuln {
+		if v.CVSSScore == 0.0 || v.Severity == "UNKNOWN" {
+			continue
+		}
 		stats.Total++
 		switch v.Severity {
 		case "CRITICAL":

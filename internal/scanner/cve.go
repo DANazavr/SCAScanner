@@ -50,15 +50,21 @@ func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string
 	}
 	var vulnerabilities []models.Vulnerability
 	for _, item := range cveResponce.Vulnerabilities {
-		description := ""
-		if len(item.CVE.Description) > 0 {
-			description = item.CVE.Description[0].Value
-		}
 		severity := "UNKNOWN"
 		cvssScore := 0.0
 		if len(item.CVE.Metrics.CVSSMetricsV31) > 0 {
+			// if item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseScore == 0.0 || item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseSeverity == "UNKNOWN" {
+			// 	time.Sleep(100 * time.Millisecond)
+			// 	continue
+			// }
 			severity = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseSeverity
 			cvssScore = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseScore
+		} else {
+			continue
+		}
+		description := ""
+		if len(item.CVE.Description) > 0 {
+			description = item.CVE.Description[0].Value
 		}
 		vulnerabilities = append(vulnerabilities, models.Vulnerability{
 			CVEID:           item.CVE.ID,

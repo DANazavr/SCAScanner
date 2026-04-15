@@ -4,6 +4,7 @@ import (
 	"SCAScanner/internal/models"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -35,7 +36,7 @@ const htmlTemplate = `
 				background: white;
 				border-radius: 10px;
 				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-				overflow: hidden;
+				overflow: visible;
 			}
 
 			header {
@@ -166,9 +167,130 @@ const htmlTemplate = `
 				text-align: center;
 				padding: 20px;
 			}
+
+			#scrollTopBtn {
+				display: none;
+				position: fixed;
+				bottom: 30px;
+				right: 30px;
+				z-index: 99;
+				font-size: 18px;
+				border: none;
+				outline: none;
+				background: #667eea;
+				color: white;
+				cursor: pointer;
+				padding: 12px 16px;
+				border-radius: 50%;
+				box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+				transition: 0.3s;
+			}
+
+			#scrollTopBtn:hover {
+				background: #5a67d8;
+				transform: scale(1.1);
+			}
+
+			.stat-card {
+				cursor: pointer;
+				transition: 0.2s;
+			}
+
+			.stat-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+			}
+
+			.reset-btn {
+				background: #a7a7a7;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			.reset-btn:hover {
+				background: #555;
+			}
+
+			.stat-card.active {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+				border: 2px solid #667eea;
+			}
+
+			.stat-card.critical.active { border-color: #dc3545; }
+			.stat-card.high.active { border-color: #fd7e14; }
+			.stat-card.medium.active { border-color: #ffc107; }
+			.stat-card.low.active { border-color: #28a745; }
 		</style>
 	</head>
 	<body>
+		<script>
+			let activeFilters = new Set();
+
+			function toggleFilter(card) {
+				const level = card.dataset.level;
+
+				if (activeFilters.has(level)) {
+					activeFilters.delete(level);
+					card.classList.remove("active");
+				} else {
+					activeFilters.add(level);
+					card.classList.add("active");
+				}
+
+				applyFilters();
+			}
+
+			function applyFilters() {
+				const items = document.querySelectorAll(".vuln-item");
+
+				items.forEach(item => {
+					const severity = item.dataset.severity;
+
+					if (activeFilters.size === 0 || activeFilters.has(severity)) {
+						item.style.display = "block";
+					} else {
+						item.style.display = "none";
+					}
+				});
+			}
+
+			function resetFilter() {
+				activeFilters.clear();
+
+				document.querySelectorAll(".stat-card").forEach(card => {
+					card.classList.remove("active");
+				});
+
+				document.querySelectorAll(".vuln-item").forEach(item => {
+					item.style.display = "block";
+				});
+			}
+		</script>
+
+		<button onclick="scrollToTop()" id="scrollTopBtn" title="Up">↑</button>
+
+		<script>
+			window.onscroll = function() {
+				const btn = document.getElementById("scrollTopBtn");
+				if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+					btn.style.display = "block";
+				} else {
+					btn.style.display = "none";
+				}
+			};
+
+			function scrollToTop() {
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
+			}
+		</script>
+
 		<div class="container">
 			<header>
 				<h1>🛡️ Vulnerability Report</h1>
@@ -180,28 +302,32 @@ const htmlTemplate = `
 			</header>
 
 			<div class="stats">
-				<div class="stat-card critical">
+				<div class="stat-card critical" onclick="toggleFilter(this)" data-level="CRITICAL">
 					<h3>Critical</h3>
 					<div class="number">{{.Statistics.Critical}}</div>
 				</div>
-				<div class="stat-card high">
+				<div class="stat-card high" onclick="toggleFilter(this)" data-level="HIGH">
 					<h3>High</h3>
 					<div class="number">{{.Statistics.High}}</div>
 				</div>
-				<div class="stat-card medium">
+				<div class="stat-card medium" onclick="toggleFilter(this)" data-level="MEDIUM">
 					<h3>Medium</h3>
 					<div class="number">{{.Statistics.Medium}}</div>
 				</div>
-				<div class="stat-card low">
+				<div class="stat-card low" onclick="toggleFilter(this)" data-level="LOW">
 					<h3>Low</h3>
 					<div class="number">{{.Statistics.Low}}</div>
 				</div>
 			</div>
 
+			<div style="text-align:center; margin: 5px;">
+				<button onclick="resetFilter()" class="reset-btn">Reset filter</button>
+			</div>
+
 			<div class="vulnerabilities">
 				<h2>Vulnerability Details</h2>
 				{{range .Vulnerabilities}}
-				<div class="vuln-item {{.Severity}}">
+				<div class="vuln-item {{lower .Severity}}" data-severity="{{.Severity}}">
 					<div class="vuln-header">
 						<div class="vuln-id">{{.CVEID}}</div>
 						<div class="severity-badge {{.Severity}}">
@@ -249,7 +375,10 @@ func saveReportAsHTML(report models.ReportResult, outpath string) error {
 	}
 	defer file.Close()
 
-	tmpl, err := template.New("report").Parse(htmlTemplate)
+	tmpl := template.New("report").Funcs(template.FuncMap{
+		"lower": strings.ToLower,
+	})
+	tmpl, err = tmpl.Parse(htmlTemplate)
 	if err != nil {
 		return err
 	}
