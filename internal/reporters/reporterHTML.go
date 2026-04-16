@@ -2,6 +2,8 @@ package reporters
 
 import (
 	"SCAScanner/internal/models"
+	"fmt"
+	"html"
 	"os"
 	"path/filepath"
 	"strings"
@@ -172,10 +174,6 @@ const htmlTemplate = `
 				display: block;
 			}
 
-			.vuln-item.open .vuln-header div:last-child {
-				transform: rotate(180deg);
-			}
-
 			footer {
 				background: #333;
 				color: white;
@@ -227,6 +225,33 @@ const htmlTemplate = `
 
 			.reset-btn:hover {
 				background: #555;
+			}
+
+			.global-controls {
+				position: fixed;
+				right: 20px;
+				top: 50%;
+				transform: translateY(-50%);
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				z-index: 100;
+			}
+
+			.global-controls button {
+				background: #667eea;
+				color: white;
+				border: none;
+				padding: 10px 14px;
+				border-radius: 6px;
+				cursor: pointer;
+				box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+				transition: 0.2s;
+			}
+
+			.global-controls button:hover {
+				background: #5a67d8;
+				transform: scale(1.05);
 			}
 
 			.stat-card.active {
@@ -326,6 +351,25 @@ const htmlTemplate = `
 			}
 		</script>
 
+		<script>
+			function expandAll() {
+				document.querySelectorAll(".vuln-item").forEach(card => {
+					card.classList.add("open");
+				});
+			}
+
+			function collapseAll() {
+				document.querySelectorAll(".vuln-item").forEach(card => {
+					card.classList.remove("open");
+				});
+			}
+		</script>
+
+		<div class="global-controls">
+			<button onclick="expandAll()">Expand all</button>
+			<button onclick="collapseAll()">Collapse all</button>
+		</div>
+
 		<div class="container">
 			<header>
 				<h1>🛡️ Vulnerability Report</h1>
@@ -362,7 +406,7 @@ const htmlTemplate = `
 			<div class="vulnerabilities">
 				<h2>Vulnerability Details</h2>
 				{{range .Vulnerabilities}}
-				<div class="vuln-item {{lower .Severity}}" data-severity="{{.Severity}} onclick="toggleCard(this)">
+				<div class="vuln-item {{lower .Severity}}" data-severity="{{.Severity}}" onclick="toggleCard(this)">
 					<div class="vuln-header">
 						<div class="vuln-id">{{.CVEID}}</div>
 						<div class="severity-badge {{lower .Severity}}">
@@ -381,7 +425,7 @@ const htmlTemplate = `
 					<div class="vuln-detail">
 						<strong>Affected Package:</strong> {{.AffectedPackage}}
 					</div>
-					<div class="vuln-description" style="display: none;">
+					<div class="vuln-description">
 						{{.Description}}
 					</div>
 				</div>
@@ -404,10 +448,6 @@ func GenerateHTMLReport(deps []models.Dependency, vuln []models.Vulnerability, o
 		Vulnerabilities: vuln,
 		Statistics:      statistics,
 	}
-	err := saveReportAsJSON(report, outpath)
-	if err != nil {
-		return err
-	}
 	return saveReportAsHTML(report, outpath)
 }
 
@@ -417,8 +457,9 @@ func saveReportAsHTML(report models.ReportResult, outpath string) error {
 		return err
 	}
 	defer file.Close()
+	fmt.Printf("\n")
 	for i := range report.Vulnerabilities {
-		report.Vulnerabilities[i].Description = cleanString(report.Vulnerabilities[i].Description)
+		report.Vulnerabilities[i].Description = html.EscapeString(report.Vulnerabilities[i].Description)
 	}
 	tmpl := template.New("report").Funcs(template.FuncMap{
 		"lower": strings.ToLower,
@@ -433,12 +474,23 @@ func saveReportAsHTML(report models.ReportResult, outpath string) error {
 	return nil
 }
 
-func cleanString(s string) string {
-	out := make([]rune, 0, len(s))
-	for _, r := range s {
-		if r >= 32 || r == '\n' || r == '\t' {
-			out = append(out, r)
-		}
-	}
-	return string(out)
-}
+// func sanitizeDescription(s string) string {
+// 	if !utf8.ValidString(s) {
+// 		s = string([]rune(s))
+// 	}
+
+// 	s = strings.Map(func(r rune) rune {
+// 		if unicode.IsControl(r) && r != '\n' && r != '\t' {
+// 			return -1
+// 		}
+// 		return r
+// 	}, s)
+
+// 	if len(s) > 2000 {
+// 		s = s[:2000] + "..."
+// 	}
+
+// 	s = html.EscapeString(s)
+
+// 	return s
+// }
