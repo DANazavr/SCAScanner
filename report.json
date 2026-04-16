@@ -69,6 +69,42 @@
       "affected_package": "pytest"
     },
     {
+      "cve_id": "CVE-2021-33194",
+      "published": "2021-05-26T15:15:08.217",
+      "lastModified": "2024-11-21T06:08:29.390",
+      "description": "golang.org/x/net before v0.0.0-20210520170846-37e1c6afe023 allows attackers to cause a denial of service (infinite loop) via crafted ParseFragment input.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2023-39325",
+      "published": "2023-10-11T22:15:09.880",
+      "lastModified": "2024-11-21T08:15:09.627",
+      "description": "A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2025-47911",
+      "published": "2026-02-05T18:16:09.893",
+      "lastModified": "2026-02-18T17:48:49.760",
+      "description": "The html.Parse function in golang.org/x/net/html has quadratic parsing complexity when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "golang.org/x/net"
+    },
+    {
+      "cve_id": "CVE-2025-58190",
+      "published": "2026-02-05T18:16:10.027",
+      "lastModified": "2026-02-18T17:46:35.163",
+      "description": "The html.Parse function in golang.org/x/net/html has an infinite parsing loop when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "golang.org/x/net"
+    },
+    {
       "cve_id": "CVE-2017-16764",
       "published": "2017-11-10T09:29:00.410",
       "lastModified": "2025-04-20T01:37:25.860",
@@ -1608,9 +1644,18 @@
       "affected_package": "Django"
     },
     {
+      "cve_id": "CVE-2026-40316",
+      "published": "2026-04-15T23:16:10.220",
+      "lastModified": "2026-04-15T23:16:10.220",
+      "description": "OWASP BLT is a QA testing and vulnerability disclosure platform that encompasses websites, apps, git repositories, and more. Versions prior to 2.1.1 contain an RCE vulnerability in the .github/workflows/regenerate-migrations.yml workflow. The workflow uses the pull_request_target trigger to run with full GITHUB_TOKEN write permissions, copies attacker-controlled files from untrusted pull requests into the trusted runner workspace via git show, and then executes python manage.py makemigrations, which imports Django model modules including attacker-controlled website/models.py at runtime. Any module-level Python code in the attacker's models.py is executed during import, enabling arbitrary code execution in the privileged CI environment with access to GITHUB_TOKEN and repository secrets. The attack is triggerable by any external contributor who can open a pull request, provided a maintainer applies the regenerate-migrations label, potentially leading to secret exfiltration, repository compromise, and supply chain attacks. A patch for this issue is expected to be released in version 2.1.1.",
+      "severity": "HIGH",
+      "cvss_score": 8.8,
+      "affected_package": "Django"
+    },
+    {
       "cve_id": "CVE-2001-0827",
       "published": "2001-12-06T05:00:00.000",
-      "lastModified": "2025-04-23T16:15:18.870",
+      "lastModified": "2026-04-16T00:27:16.627",
       "description": "Cerberus FTP server 1.0 - 1.5 allows remote attackers to cause a denial of service (crash) via a large number of \"PASV\" requests.",
       "severity": "HIGH",
       "cvss_score": 7.5,
@@ -1619,7 +1664,7 @@
     {
       "cve_id": "CVE-2003-0252",
       "published": "2003-08-18T04:00:00.000",
-      "lastModified": "2025-04-03T01:03:51.193",
+      "lastModified": "2026-04-16T00:27:16.627",
       "description": "Off-by-one error in the xlog function of mountd in the Linux NFS utils package (nfs-utils) before 1.0.4 allows remote attackers to cause a denial of service and possibly execute arbitrary code via certain RPC requests to mountd that do not contain newlines.",
       "severity": "CRITICAL",
       "cvss_score": 9.8,
@@ -1628,7 +1673,7 @@
     {
       "cve_id": "CVE-2003-0899",
       "published": "2003-11-03T05:00:00.000",
-      "lastModified": "2025-04-03T01:03:51.193",
+      "lastModified": "2026-04-16T00:27:16.627",
       "description": "Buffer overflow in defang in libhttpd.c for thttpd 2.21 to 2.23b1 allows remote attackers to execute arbitrary code via requests that contain '\u003c' or '\u003e' characters, which trigger the overflow when the characters are expanded to \"\u0026lt;\" and \"\u0026gt;\" sequences.",
       "severity": "CRITICAL",
       "cvss_score": 9.8,
@@ -1637,7 +1682,7 @@
     {
       "cve_id": "CVE-2003-0981",
       "published": "2004-01-05T05:00:00.000",
-      "lastModified": "2025-04-03T01:03:51.193",
+      "lastModified": "2026-04-16T00:27:16.627",
       "description": "FreeScripts VisitorBook LE (visitorbook.pl) logs the reverse DNS name of a visiting host, which allows remote attackers to spoof the origin of their incoming requests and facilitate cross-site scripting (XSS) attacks.",
       "severity": "MEDIUM",
       "cvss_score": 6.1,
@@ -1646,7 +1691,7 @@
     {
       "cve_id": "CVE-2004-0389",
       "published": "2004-06-01T04:00:00.000",
-      "lastModified": "2025-04-03T01:03:51.193",
+      "lastModified": "2026-04-16T00:27:16.627",
       "description": "RealNetworks Helix Universal Server 9.0.1 and 9.0.2 allows remote attackers to cause a denial of service (crash) via malformed requests that trigger a null dereference, as demonstrated using (1) GET_PARAMETER or (2) DESCRIBE requests.",
       "severity": "HIGH",
       "cvss_score": 7.5,
@@ -1966,51 +2011,15 @@
       "severity": "CRITICAL",
       "cvss_score": 9.8,
       "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2021-33194",
-      "published": "2021-05-26T15:15:08.217",
-      "lastModified": "2024-11-21T06:08:29.390",
-      "description": "golang.org/x/net before v0.0.0-20210520170846-37e1c6afe023 allows attackers to cause a denial of service (infinite loop) via crafted ParseFragment input.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "golang.org/x/net"
-    },
-    {
-      "cve_id": "CVE-2023-39325",
-      "published": "2023-10-11T22:15:09.880",
-      "lastModified": "2024-11-21T08:15:09.627",
-      "description": "A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "golang.org/x/net"
-    },
-    {
-      "cve_id": "CVE-2025-47911",
-      "published": "2026-02-05T18:16:09.893",
-      "lastModified": "2026-02-18T17:48:49.760",
-      "description": "The html.Parse function in golang.org/x/net/html has quadratic parsing complexity when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "golang.org/x/net"
-    },
-    {
-      "cve_id": "CVE-2025-58190",
-      "published": "2026-02-05T18:16:10.027",
-      "lastModified": "2026-02-18T17:46:35.163",
-      "description": "The html.Parse function in golang.org/x/net/html has an infinite parsing loop when processing certain inputs, which can lead to denial of service (DoS) if an attacker provides specially crafted HTML content.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "golang.org/x/net"
     }
   ],
   "statistics": {
-    "Total": 217,
+    "Total": 218,
     "Critical": 35,
-    "High": 93,
+    "High": 94,
     "Medium": 72,
     "Low": 17
   },
   "total_deps": 12,
-  "scan_date": "2026-04-15 21:01:45"
+  "scan_date": "2026-04-16 17:06:45"
 }

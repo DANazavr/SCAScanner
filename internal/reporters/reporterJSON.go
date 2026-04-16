@@ -11,11 +11,11 @@ import (
 func GenerateJSONReport(deps []models.Dependency, vuln []models.Vulnerability, outpath string) error {
 	statistics := calculateStatistics(vuln)
 	report := models.ReportResult{
+		TotalDeps:       len(deps),
+		Date:            time.Now().Format("2006-01-02 15:04:05"),
 		Dependencies:    deps,
 		Vulnerabilities: vuln,
 		Statistics:      statistics,
-		TotalDeps:       len(deps),
-		Date:            time.Now().Format("2006-01-02 15:04:05"),
 	}
 	return saveReportAsJSON(report, outpath)
 }
