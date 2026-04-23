@@ -473,24 +473,3 @@ func saveReportAsHTML(report models.ReportResult, outpath string) error {
 	}
 	return nil
 }
-
-// func sanitizeDescription(s string) string {
-// 	if !utf8.ValidString(s) {
-// 		s = string([]rune(s))
-// 	}
-
-// 	s = strings.Map(func(r rune) rune {
-// 		if unicode.IsControl(r) && r != '\n' && r != '\t' {
-// 			return -1
-// 		}
-// 		return r
-// 	}, s)
-
-// 	if len(s) > 2000 {
-// 		s = s[:2000] + "..."
-// 	}
-
-// 	s = html.EscapeString(s)
-
-// 	return s
-// }
