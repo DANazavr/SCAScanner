@@ -3,7 +3,6 @@ package parsers
 import (
 	"SCAScanner/internal/models"
 	"bufio"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -66,7 +65,6 @@ func ParsePackageJSON(filepath string) ([]models.Dependency, error) {
 	if err := scanner.Err(); err != nil {
 		return nil, err
 	}
-	fmt.Printf("Parsed %d package.json dependencies from %s\n", len(dependencies), filepath)
 	return dependencies, nil
 }
 

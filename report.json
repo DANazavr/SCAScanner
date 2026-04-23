@@ -21,6 +21,22 @@
       "version": " \"5.50.0"
     },
     {
+      "name": "org.apache.logging.log4j:log4j-core",
+      "version": "${log4j.version}"
+    },
+    {
+      "name": "com.fasterxml.jackson.core:jackson-databind",
+      "version": "${jackson.version}"
+    },
+    {
+      "name": "org.springframework:spring-web",
+      "version": "${spring.version}"
+    },
+    {
+      "name": "commons-collections:commons-collections",
+      "version": "3.2.1"
+    },
+    {
       "name": "Django",
       "version": "2.2.10"
     },
@@ -71,22 +87,121 @@
   ],
   "vulnerabilities": [
     {
-      "cve_id": "CVE-2023-38695",
-      "published": "2023-08-04T18:15:14.667",
-      "lastModified": "2024-11-21T08:14:04.383",
-      "description": "cypress-image-snapshot shows visual regressions in Cypress with jest-image-snapshot. Prior to version 8.0.2, it\u0026#39;s possible for a user to pass a relative file path for the snapshot name and reach outside of the project directory into the machine running the test. This issue has been patched in version 8.0.2.\n\n\n",
+      "cve_id": "CVE-2018-3721",
+      "published": "2018-06-07T02:29:08.317",
+      "lastModified": "2024-11-21T04:05:56.943",
+      "description": "lodash node module before 4.17.5 suffers from a Modification of Assumed-Immutable Data (MAID) vulnerability via defaultsDeep, merge, and mergeWith functions, which allows a malicious user to modify the prototype of \u0026#34;Object\u0026#34; via __proto__, causing the addition or modification of an existing property that will exist on all objects.",
       "severity": "MEDIUM",
       "cvss_score": 6.5,
-      "affected_package": "jest"
+      "affected_package": "lodash"
     },
     {
-      "cve_id": "CVE-2023-50693",
-      "published": "2024-01-19T20:15:11.917",
-      "lastModified": "2025-05-30T15:15:25.243",
-      "description": "An issue in Jester v.0.6.0 and before allows a remote attacker to send a malicious crafted request.",
+      "cve_id": "CVE-2018-16487",
+      "published": "2019-02-01T18:29:00.943",
+      "lastModified": "2024-11-21T03:52:51.170",
+      "description": "A prototype pollution vulnerability was found in lodash \u0026lt;4.17.11 where the functions merge, mergeWith, and defaultsDeep can be tricked into adding or modifying properties of Object.prototype.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.6,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2019-1010266",
+      "published": "2019-07-17T21:15:10.873",
+      "lastModified": "2024-11-21T04:18:06.797",
+      "description": "lodash prior to 4.17.11 is affected by: CWE-400: Uncontrolled Resource Consumption. The impact is: Denial of service. The component is: Date handler. The attack vector is: Attacker provides very long strings, which the library attempts to match using a regular expression. The fixed version is: 4.17.11.",
+      "severity": "MEDIUM",
+      "cvss_score": 6.5,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2019-10744",
+      "published": "2019-07-26T00:15:11.217",
+      "lastModified": "2024-11-21T04:19:50.123",
+      "description": "Versions of lodash lower than 4.17.12 are vulnerable to Prototype Pollution. The function defaultsDeep could be tricked into adding or modifying properties of Object.prototype using a constructor payload.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.1,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2019-19771",
+      "published": "2019-12-12T20:15:17.867",
+      "lastModified": "2024-11-21T04:35:21.190",
+      "description": "The lodahs package 0.0.1 for Node.js is a Trojan horse, and may have been installed by persons who mistyped the lodash package name. In particular, the Trojan horse finds and exfiltrates cryptocurrency wallets.",
+      "severity": "HIGH",
+      "cvss_score": 8.8,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2020-10790",
+      "published": "2020-03-25T14:15:12.320",
+      "lastModified": "2024-11-21T04:56:04.710",
+      "description": "openITCOCKPIT before 3.7.3 has unnecessary files (such as Lodash files) under the web root, which leads to XSS.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.4,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2020-8203",
+      "published": "2020-07-15T17:15:11.797",
+      "lastModified": "2024-11-21T05:38:29.790",
+      "description": "Prototype pollution attack when using _.zipObjectDeep in lodash before 4.17.20.",
+      "severity": "HIGH",
+      "cvss_score": 7.4,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2020-28500",
+      "published": "2021-02-15T11:15:12.397",
+      "lastModified": "2024-11-21T05:22:55.053",
+      "description": "Lodash versions prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2021-23337",
+      "published": "2021-02-15T13:15:12.560",
+      "lastModified": "2024-11-21T05:51:31.643",
+      "description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
+      "severity": "HIGH",
+      "cvss_score": 7.2,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2024-38986",
+      "published": "2024-07-30T20:15:03.990",
+      "lastModified": "2024-11-21T09:27:02.613",
+      "description": "Prototype Pollution in 75lb deep-merge 1.1.1 allows attackers to execute arbitrary code or cause a Denial of Service (DoS) and cause other impacts via merge methods of lodash to merge objects.",
       "severity": "CRITICAL",
       "cvss_score": 9.8,
-      "affected_package": "jest"
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2025-13465",
+      "published": "2026-01-21T20:16:05.250",
+      "lastModified": "2026-02-17T17:10:07.520",
+      "description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2026-2950",
+      "published": "2026-03-31T20:16:26.207",
+      "lastModified": "2026-04-07T16:12:25.970",
+      "description": "Impact:\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the _.unset and _.omit functions. The fix for (CVE-2025-13465: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as Object.prototype, Number.prototype, and String.prototype.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\nPatches:\n\nThis issue is patched in 4.18.0.\n\nWorkarounds:\n\nNone. Upgrade to the patched version.",
+      "severity": "MEDIUM",
+      "cvss_score": 6.5,
+      "affected_package": "lodash"
+    },
+    {
+      "cve_id": "CVE-2026-40190",
+      "published": "2026-04-10T20:16:24.043",
+      "lastModified": "2026-04-13T15:02:06.187",
+      "description": "LangSmith Client SDKs provide SDK\u0026#39;s for interacting with the LangSmith platform. Prior to 0.5.18, the LangSmith JavaScript/TypeScript SDK (langsmith) contains an incomplete prototype pollution fix in its internally vendored lodash set() utility. The baseAssignValue() function only guards against the __proto__ key, but fails to prevent traversal via constructor.prototype. This allows an attacker who controls keys in data processed by the createAnonymizer() API to pollute Object.prototype, affecting all objects in the Node.js process. This vulnerability is fixed in 0.5.18.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.6,
+      "affected_package": "lodash"
     },
     {
       "cve_id": "CVE-2020-28168",
@@ -260,6 +375,24 @@
       "affected_package": "axios"
     },
     {
+      "cve_id": "CVE-2023-38695",
+      "published": "2023-08-04T18:15:14.667",
+      "lastModified": "2024-11-21T08:14:04.383",
+      "description": "cypress-image-snapshot shows visual regressions in Cypress with jest-image-snapshot. Prior to version 8.0.2, it\u0026#39;s possible for a user to pass a relative file path for the snapshot name and reach outside of the project directory into the machine running the test. This issue has been patched in version 8.0.2.\n\n\n",
+      "severity": "MEDIUM",
+      "cvss_score": 6.5,
+      "affected_package": "jest"
+    },
+    {
+      "cve_id": "CVE-2023-50693",
+      "published": "2024-01-19T20:15:11.917",
+      "lastModified": "2025-05-30T15:15:25.243",
+      "description": "An issue in Jester v.0.6.0 and before allows a remote attacker to send a malicious crafted request.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.8,
+      "affected_package": "jest"
+    },
+    {
       "cve_id": "CVE-2020-15262",
       "published": "2020-10-19T20:15:12.667",
       "lastModified": "2024-11-21T05:05:13.333",
@@ -420,1770 +553,6 @@
       "severity": "HIGH",
       "cvss_score": 7.5,
       "affected_package": "webpack"
-    },
-    {
-      "cve_id": "CVE-2025-71176",
-      "published": "2026-01-22T05:16:17.577",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "pytest through 9.0.2 on UNIX relies on directories with the /tmp/pytest-of-{user} name pattern, which allows local users to cause a denial of service or possibly gain privileges.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.8,
-      "affected_package": "pytest"
-    },
-    {
-      "cve_id": "CVE-2026-5271",
-      "published": "2026-04-01T14:16:59.343",
-      "lastModified": "2026-04-07T19:43:28.947",
-      "description": "pymanager included the current working directory in sys.path meaning modules could be shadowed by modules in the current working directory. As a result, if a user executes a pymanager-generated command (e.g., pip, pytest)\n from an attacker-controlled directory, a malicious module in that \ndirectory can be imported and executed instead of the intended package.",
-      "severity": "HIGH",
-      "cvss_score": 7.8,
-      "affected_package": "pytest"
-    },
-    {
-      "cve_id": "CVE-2018-3721",
-      "published": "2018-06-07T02:29:08.317",
-      "lastModified": "2024-11-21T04:05:56.943",
-      "description": "lodash node module before 4.17.5 suffers from a Modification of Assumed-Immutable Data (MAID) vulnerability via defaultsDeep, merge, and mergeWith functions, which allows a malicious user to modify the prototype of \u0026#34;Object\u0026#34; via __proto__, causing the addition or modification of an existing property that will exist on all objects.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2018-16487",
-      "published": "2019-02-01T18:29:00.943",
-      "lastModified": "2024-11-21T03:52:51.170",
-      "description": "A prototype pollution vulnerability was found in lodash \u0026lt;4.17.11 where the functions merge, mergeWith, and defaultsDeep can be tricked into adding or modifying properties of Object.prototype.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.6,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2019-1010266",
-      "published": "2019-07-17T21:15:10.873",
-      "lastModified": "2024-11-21T04:18:06.797",
-      "description": "lodash prior to 4.17.11 is affected by: CWE-400: Uncontrolled Resource Consumption. The impact is: Denial of service. The component is: Date handler. The attack vector is: Attacker provides very long strings, which the library attempts to match using a regular expression. The fixed version is: 4.17.11.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2019-10744",
-      "published": "2019-07-26T00:15:11.217",
-      "lastModified": "2024-11-21T04:19:50.123",
-      "description": "Versions of lodash lower than 4.17.12 are vulnerable to Prototype Pollution. The function defaultsDeep could be tricked into adding or modifying properties of Object.prototype using a constructor payload.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.1,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2019-19771",
-      "published": "2019-12-12T20:15:17.867",
-      "lastModified": "2024-11-21T04:35:21.190",
-      "description": "The lodahs package 0.0.1 for Node.js is a Trojan horse, and may have been installed by persons who mistyped the lodash package name. In particular, the Trojan horse finds and exfiltrates cryptocurrency wallets.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2020-10790",
-      "published": "2020-03-25T14:15:12.320",
-      "lastModified": "2024-11-21T04:56:04.710",
-      "description": "openITCOCKPIT before 3.7.3 has unnecessary files (such as Lodash files) under the web root, which leads to XSS.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2020-8203",
-      "published": "2020-07-15T17:15:11.797",
-      "lastModified": "2024-11-21T05:38:29.790",
-      "description": "Prototype pollution attack when using _.zipObjectDeep in lodash before 4.17.20.",
-      "severity": "HIGH",
-      "cvss_score": 7.4,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2020-28500",
-      "published": "2021-02-15T11:15:12.397",
-      "lastModified": "2024-11-21T05:22:55.053",
-      "description": "Lodash versions prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the toNumber, trim and trimEnd functions.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2021-23337",
-      "published": "2021-02-15T13:15:12.560",
-      "lastModified": "2024-11-21T05:51:31.643",
-      "description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
-      "severity": "HIGH",
-      "cvss_score": 7.2,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2024-38986",
-      "published": "2024-07-30T20:15:03.990",
-      "lastModified": "2024-11-21T09:27:02.613",
-      "description": "Prototype Pollution in 75lb deep-merge 1.1.1 allows attackers to execute arbitrary code or cause a Denial of Service (DoS) and cause other impacts via merge methods of lodash to merge objects.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2025-13465",
-      "published": "2026-01-21T20:16:05.250",
-      "lastModified": "2026-02-17T17:10:07.520",
-      "description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2026-2950",
-      "published": "2026-03-31T20:16:26.207",
-      "lastModified": "2026-04-07T16:12:25.970",
-      "description": "Impact:\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the _.unset and _.omit functions. The fix for (CVE-2025-13465: https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as Object.prototype, Number.prototype, and String.prototype.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\nPatches:\n\nThis issue is patched in 4.18.0.\n\nWorkarounds:\n\nNone. Upgrade to the patched version.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2026-40190",
-      "published": "2026-04-10T20:16:24.043",
-      "lastModified": "2026-04-13T15:02:06.187",
-      "description": "LangSmith Client SDKs provide SDK\u0026#39;s for interacting with the LangSmith platform. Prior to 0.5.18, the LangSmith JavaScript/TypeScript SDK (langsmith) contains an incomplete prototype pollution fix in its internally vendored lodash set() utility. The baseAssignValue() function only guards against the __proto__ key, but fails to prevent traversal via constructor.prototype. This allows an attacker who controls keys in data processed by the createAnonymizer() API to pollute Object.prototype, affecting all objects in the Node.js process. This vulnerability is fixed in 0.5.18.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.6,
-      "affected_package": "lodash"
-    },
-    {
-      "cve_id": "CVE-2017-16764",
-      "published": "2017-11-10T09:29:00.410",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An exploitable vulnerability exists in the YAML parsing functionality in the read_yaml_file method in io_utils.py in django_make_app 0.1.3. A YAML parser can execute arbitrary Python commands resulting in command execution. An attacker can insert Python into loaded YAML to trigger this vulnerability.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2018-16552",
-      "published": "2018-09-05T22:29:00.600",
-      "lastModified": "2024-11-21T03:52:57.757",
-      "description": "MicroPyramid Django-CRM 0.2 allows CSRF for /users/create/, /users/##/edit/, and /accounts/##/delete/ URIs.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2019-14232",
-      "published": "2019-08-02T15:15:11.880",
-      "lastModified": "2024-11-21T04:26:15.113",
-      "description": "An issue was discovered in Django 1.11.x before 1.11.23, 2.1.x before 2.1.11, and 2.2.x before 2.2.4. If django.utils.text.Truncator\u0026#39;s chars() and words() methods were passed the html=True argument, they were extremely slow to evaluate certain inputs due to a catastrophic backtracking vulnerability in a regular expression. The chars() and words() methods are used to implement the truncatechars_html and truncatewords_html template filters, which were thus vulnerable.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2011-4952",
-      "published": "2019-11-19T16:15:10.837",
-      "lastModified": "2024-11-21T01:33:21.377",
-      "description": "cobbler: Web interface lacks CSRF protection when using Django framework",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2019-19118",
-      "published": "2019-12-02T14:15:10.880",
-      "lastModified": "2024-11-21T04:34:13.920",
-      "description": "Django 2.1 before 2.1.15 and 2.2 before 2.2.8 allows unintended model editing. A Django model admin displaying inline related models, where the user has view-only permissions to a parent model but edit permissions to the inline model, would be presented with an editing UI, allowing POST requests, for updating the inline model. Directly editing the view-only parent model was not possible, but the parent model\u0026#39;s save() method was called, triggering potential side effects, and causing pre and post-save signal handlers to be invoked. (To resolve this, the Django admin is adjusted to require edit permissions on the parent model in order for inline models to be editable.)",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2019-19844",
-      "published": "2019-12-18T19:15:11.780",
-      "lastModified": "2024-11-21T04:35:30.833",
-      "description": "Django before 1.11.27, 2.x before 2.2.9, and 3.x before 3.0.1 allows account takeover. A suitably crafted email address (that is equal to an existing user\u0026#39;s email address after case transformation of Unicode characters) would allow an attacker to be sent a password reset token for the matched user account. (One mitigation in the new releases is to send password reset tokens only to the registered user email address.)",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-5224",
-      "published": "2020-01-24T20:15:10.720",
-      "lastModified": "2024-11-21T05:33:42.787",
-      "description": "In Django User Sessions (django-user-sessions) before 1.7.1, the views provided allow users to terminate specific sessions. The session key is used to identify sessions, and thus included in the rendered HTML. In itself this is not a problem. However if the website has an XSS vulnerability, the session key could be extracted by the attacker and a session takeover could happen.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-7471",
-      "published": "2020-02-03T12:15:26.993",
-      "lastModified": "2024-11-21T05:37:12.667",
-      "description": "Django 1.11 before 1.11.28, 2.2 before 2.2.10, and 3.0 before 3.0.3 allows SQL Injection if untrusted data is used as a StringAgg delimiter (e.g., in Django applications that offer downloads of data as a series of rows with a user-specified column delimiter). By passing a suitably crafted delimiter to a contrib.postgres.aggregates.StringAgg instance, it was possible to break escaping and inject malicious SQL.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-9402",
-      "published": "2020-03-05T15:15:12.410",
-      "lastModified": "2024-11-21T05:40:33.953",
-      "description": "Django 1.11 before 1.11.29, 2.2 before 2.2.11, and 3.0 before 3.0.4 allows SQL Injection if untrusted data is used as a tolerance parameter in GIS functions and aggregates on Oracle. By passing a suitably crafted tolerance to GIS functions and aggregates on Oracle, it was possible to break escaping and inject malicious SQL.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2019-10682",
-      "published": "2020-03-18T15:15:11.640",
-      "lastModified": "2024-11-21T04:19:44.603",
-      "description": "django-nopassword before 5.0.0 stores cleartext secrets in the database.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-13254",
-      "published": "2020-06-03T14:15:12.563",
-      "lastModified": "2024-11-21T05:00:53.270",
-      "description": "An issue was discovered in Django 2.2 before 2.2.13 and 3.0 before 3.0.7. In cases where a memcached backend does not perform key validation, passing malformed cache keys could result in a key collision, and potential data leakage.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.9,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-13596",
-      "published": "2020-06-03T14:15:12.627",
-      "lastModified": "2024-11-21T05:01:34.947",
-      "description": "An issue was discovered in Django 2.2 before 2.2.13 and 3.0 before 3.0.7. Query parameters generated by the Django admin ForeignKeyRawIdWidget were not properly URL encoded, leading to a possibility of an XSS attack.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-4071",
-      "published": "2020-06-24T13:15:11.833",
-      "lastModified": "2024-11-21T05:32:15.157",
-      "description": "In django-basic-auth-ip-whitelist before 0.3.4, a potential timing attack exists on websites where the basic authentication is used or configured, i.e. BASIC_AUTH_LOGIN and BASIC_AUTH_PASSWORD is set. Currently the string comparison between configured credentials and the ones provided by users is performed through a character-by-character string comparison. This enables a possibility that attacker may time the time it takes the server to validate different usernames and password, and use this knowledge to work out the valid credentials. This attack is understood not to be realistic over the Internet. However, it may be achieved from within local networks where the website is hosted, e.g. from inside a data centre where a website\u0026#39;s server is located. Sites protected by IP address whitelisting only are unaffected by this vulnerability. This vulnerability has been fixed on version 0.3.4 of django-basic-auth-ip-whitelist. Update to version 0.3.4 as soon as possible and change basic authentication username and password configured on a Django project using this package. A workaround without upgrading to version 0.3.4 is to stop using basic authentication and use the IP whitelisting component only. It can be achieved by not setting BASIC_AUTH_LOGIN and BASIC_AUTH_PASSWORD in Django project settings.",
-      "severity": "LOW",
-      "cvss_score": 2.2,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-15105",
-      "published": "2020-07-10T21:15:10.950",
-      "lastModified": "2024-11-21T05:04:49.277",
-      "description": "Django Two-Factor Authentication before 1.12, stores the user\u0026#39;s password in clear text in the user session (base64-encoded). The password is stored in the session when the user submits their username and password, and is removed once they complete authentication by entering a two-factor authentication code. This means that the password is stored in clear text in the session for an arbitrary amount of time, and potentially forever if the user begins the login process by entering their username and password and then leaves before entering their two-factor authentication code. The severity of this issue depends on which type of session storage you have configured: in the worst case, if you\u0026#39;re using Django\u0026#39;s default database session storage, then users\u0026#39; passwords are stored in clear text in your database. In the best case, if you\u0026#39;re using Django\u0026#39;s signed cookie session, then users\u0026#39; passwords are only stored in clear text within their browser\u0026#39;s cookie store. In the common case of using Django\u0026#39;s cache session store, the users\u0026#39; passwords are stored in clear text in whatever cache storage you have configured (typically Memcached or Redis). This has been fixed in 1.12. After upgrading, users should be sure to delete any clear text passwords that have been stored. For example, if you\u0026#39;re using the database session backend, you\u0026#39;ll likely want to delete any session record from the database and purge that data from any database backups or replicas. In addition, affected organizations who have suffered a database breach while using an affected version should inform their users that their clear text passwords have been compromised. All organizations should encourage users whose passwords were insecurely stored to change these passwords on any sites where they were used. As a workaround, wwitching Django\u0026#39;s session storage to use signed cookies instead of the database or cache lessens the impact of this issue, but should not be done without a thorough understanding of the security tradeoffs of using signed cookies rather than a server-side session storage. There is no way to fully mitigate the issue without upgrading.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-15118",
-      "published": "2020-07-20T18:15:12.107",
-      "lastModified": "2024-11-21T05:04:51.373",
-      "description": "In Wagtail before versions 2.7.4 and 2.9.3, when a form page type is made available to Wagtail editors through the `wagtail.contrib.forms` app, and the page template is built using Django\u0026#39;s standard form rendering helpers such as form.as_p, any HTML tags used within a form field\u0026#39;s help text will be rendered unescaped in the page. Allowing HTML within help text is an intentional design decision by Django; however, as a matter of policy Wagtail does not allow editors to insert arbitrary HTML by default, as this could potentially be used to carry out cross-site scripting attacks, including privilege escalation. This functionality should therefore not have been made available to editor-level users. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. Patched versions have been released as Wagtail 2.7.4 (for the LTS 2.7 branch) and Wagtail 2.9.3 (for the current 2.9 branch). In these versions, help text will be escaped to prevent the inclusion of HTML tags. Site owners who wish to re-enable the use of HTML within help text (and are willing to accept the risk of this being exploited by editors) may set WAGTAILFORMS_HELP_TEXT_ALLOW_HTML = True in their configuration settings. Site owners who are unable to upgrade to the new versions can secure their form page templates by rendering forms field-by-field as per Django\u0026#39;s documentation, but omitting the |safe filter when outputting the help text.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-17495",
-      "published": "2020-08-11T21:15:10.943",
-      "lastModified": "2024-11-21T05:08:13.470",
-      "description": "django-celery-results through 1.2.1 stores task results in the database. Among the data it stores are the variables passed into the tasks. The variables may contain sensitive cleartext information that does not belong unencrypted in the database.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-24583",
-      "published": "2020-09-01T13:15:11.150",
-      "lastModified": "2024-11-21T05:15:03.120",
-      "description": "An issue was discovered in Django 2.2 before 2.2.16, 3.0 before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used). FILE_UPLOAD_DIRECTORY_PERMISSIONS mode was not applied to intermediate-level directories created in the process of uploading files. It was also not applied to intermediate-level collected static directories when using the collectstatic management command.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-24584",
-      "published": "2020-09-01T13:15:11.197",
-      "lastModified": "2024-11-21T05:15:03.370",
-      "description": "An issue was discovered in Django 2.2 before 2.2.16, 3.0 before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used). The intermediate-level directories of the filesystem cache had the system\u0026#39;s standard umask rather than 0o077.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-25626",
-      "published": "2020-09-30T20:15:15.480",
-      "lastModified": "2024-11-21T05:18:16.460",
-      "description": "A flaw was found in Django REST Framework versions before 3.12.0 and before 3.11.2. When using the browseable API viewer, Django REST Framework fails to properly escape certain strings that can come from user input. This allows a user who can control those strings to inject malicious \u0026lt;script\u0026gt; tags, leading to a cross-site-scripting (XSS) vulnerability.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-3281",
-      "published": "2021-02-02T07:15:14.020",
-      "lastModified": "2024-11-21T06:21:12.677",
-      "description": "In Django 2.2 before 2.2.18, 3.0 before 3.0.12, and 3.1 before 3.1.6, the django.utils.archive.extract method (used by \u0026#34;startapp --template\u0026#34; and \u0026#34;startproject --template\u0026#34;) allows directory traversal via an archive with absolute paths or relative paths with dot segments.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-35681",
-      "published": "2021-02-22T03:15:14.310",
-      "lastModified": "2024-11-21T05:27:50.150",
-      "description": "Django Channels 3.x before 3.0.3 allows remote attackers to obtain sensitive information from a different request scope. The legacy channels.http.AsgiHandler class, used for handling HTTP type requests in an ASGI environment prior to Django 3.0, did not correctly separate request scopes in Channels 3.0. In many cases this would result in a crash but, with correct timing, responses could be sent to the wrong client, resulting in potential leakage of session identifiers and other sensitive data. Note that this affects only the legacy Channels provided class, and not Django\u0026#39;s similar ASGIHandler, available from Django 3.0.",
-      "severity": "HIGH",
-      "cvss_score": 7.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-21376",
-      "published": "2021-03-23T16:15:14.173",
-      "lastModified": "2024-11-21T05:48:13.773",
-      "description": "OMERO.web is open source Django-based software for managing microscopy imaging. OMERO.web before version 5.9.0 loads various information about the current user such as their id, name and the groups they are in, and these are available on the main webclient pages. This represents an information exposure vulnerability. Some additional information being loaded is not used by the webclient and is being removed in this release. This is fixed in version 5.9.0.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-21377",
-      "published": "2021-03-23T16:15:14.283",
-      "lastModified": "2024-11-21T05:48:13.900",
-      "description": "OMERO.web is open source Django-based software for managing microscopy imaging. OMERO.web before version 5.9.0 supports redirection to a given URL after performing login or switching the group context. These URLs are not validated, allowing redirection to untrusted sites. OMERO.web 5.9.0 adds URL validation before redirecting. External URLs are not considered valid, unless specified in the omero.web.redirect_allowed_hosts setting.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-21416",
-      "published": "2021-04-01T22:15:11.653",
-      "lastModified": "2024-11-21T05:48:19.017",
-      "description": "django-registration is a user registration package for Django. The django-registration package provides tools for implementing user-account registration flows in the Django web framework. In django-registration prior to 3.1.2, the base user-account registration view did not properly apply filters to sensitive data, with the result that sensitive data could be included in error reports rather than removed automatically by Django. Triggering this requires: A site is using django-registration \u0026lt; 3.1.2, The site has detailed error reports (such as Django\u0026#39;s emailed error reports to site staff/developers) enabled and a server-side error (HTTP 5xx) occurs during an attempt by a user to register an account. Under these conditions, recipients of the detailed error report will see all submitted data from the account-registration attempt, which may include the user\u0026#39;s proposed credentials (such as a password).",
-      "severity": "LOW",
-      "cvss_score": 3.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-28658",
-      "published": "2021-04-06T15:15:13.437",
-      "lastModified": "2024-11-21T06:00:02.827",
-      "description": "In Django 2.2 before 2.2.20, 3.0 before 3.0.14, and 3.1 before 3.1.8, MultiPartParser allowed directory traversal via uploaded files with suitably crafted file names. Built-in upload handlers were not affected by this vulnerability.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-30459",
-      "published": "2021-04-14T18:15:14.877",
-      "lastModified": "2024-11-21T06:03:57.840",
-      "description": "A SQL Injection issue in the SQL Panel in Jazzband Django Debug Toolbar before 1.11.1, 2.x before 2.2.1, and 3.x before 3.2.1 allows attackers to execute SQL statements by changing the raw_sql input field of the SQL explain, analyze, or select form.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-29434",
-      "published": "2021-04-19T19:15:17.610",
-      "lastModified": "2024-11-21T06:01:05.397",
-      "description": "Wagtail is a Django content management system. In affected versions of Wagtail, when saving the contents of a rich text field in the admin interface, Wagtail does not apply server-side checks to ensure that link URLs use a valid protocol. A malicious user with access to the admin interface could thus craft a POST request to publish content with `javascript:` URLs containing arbitrary code. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. See referenced GitHub advisory for additional details, including a workaround. Patched versions have been released as Wagtail 2.11.7 (for the LTS 2.11 branch) and Wagtail 2.12.4 (for the current 2.12 branch).",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-15225",
-      "published": "2021-04-29T21:15:08.490",
-      "lastModified": "2024-11-21T05:05:07.877",
-      "description": "django-filter is a generic system for filtering Django QuerySets based on user selections. In django-filter before version 2.4.0, automatically generated `NumberFilter` instances, whose value was later converted to an integer, were subject to potential DoS from maliciously input using exponential format with sufficiently large exponents. Version 2.4.0+ applies a `MaxValueValidator` with a a default `limit_value` of 1e50 to the form field used by `NumberFilter` instances. In addition, `NumberFilter` implements the new `get_max_validator()` which should return a configured validator instance to customise the limit, or else `None` to disable the additional validation. Users may manually apply an equivalent validator if they are not able to upgrade.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-31542",
-      "published": "2021-05-05T15:15:08.483",
-      "lastModified": "2024-11-21T06:05:52.810",
-      "description": "In Django 2.2 before 2.2.21, 3.1 before 3.1.9, and 3.2 before 3.2.1, MultiPartParser, UploadedFile, and FieldFile allowed directory traversal via uploaded files with suitably crafted file names.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-32052",
-      "published": "2021-05-06T16:15:07.520",
-      "lastModified": "2024-11-21T06:06:46.180",
-      "description": "In Django 2.2 before 2.2.22, 3.1 before 3.1.10, and 3.2 before 3.2.2 (with Python 3.9.5+), URLValidator does not prohibit newlines and tabs (unless the URLField form field is used). If an application uses values with newlines in an HTTP response, header injection can occur. Django itself is unaffected because HttpResponse prohibits newlines in HTTP headers.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-33203",
-      "published": "2021-06-08T18:15:08.480",
-      "lastModified": "2024-11-21T06:08:30.487",
-      "description": "Django before 2.2.24, 3.x before 3.1.12, and 3.2.x before 3.2.4 has a potential directory traversal via django.contrib.admindocs. Staff members could use the TemplateDetailView view to check the existence of arbitrary files. Additionally, if (and only if) the default admindocs templates have been customized by application developers to also show file contents, then not only the existence but also the file contents would have been exposed. In other words, there is directory traversal outside of the template root directories.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.9,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-33571",
-      "published": "2021-06-08T18:15:08.517",
-      "lastModified": "2024-11-21T06:09:06.823",
-      "description": "In Django 2.2 before 2.2.24, 3.x before 3.1.12, and 3.2 before 3.2.4, URLValidator, validate_ipv4_address, and validate_ipv46_address do not prohibit leading zero characters in octal literals. This may allow a bypass of access control that is based on IP addresses. (validate_ipv4_address and validate_ipv46_address are unaffected with Python 3.9.5+..) .",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-32681",
-      "published": "2021-06-17T17:15:07.510",
-      "lastModified": "2024-11-21T06:07:31.270",
-      "description": "Wagtail is an open source content management system built on Django. A cross-site scripting vulnerability exists in versions 2.13-2.13.1, versions 2.12-2.12.4, and versions prior to 2.11.8. When the `{% include_block %}` template tag is used to output the value of a plain-text StreamField block (`CharBlock`, `TextBlock` or a similar user-defined block derived from `FieldBlock`), and that block does not specify a template for rendering, the tag output is not properly escaped as HTML. This could allow users to insert arbitrary HTML or scripting. This vulnerability is only exploitable by users with the ability to author StreamField content (i.e. users with \u0026#39;editor\u0026#39; access to the Wagtail admin). Patched versions have been released as Wagtail 2.11.8 (for the LTS 2.11 branch), Wagtail 2.12.5, and Wagtail 2.13.2 (for the current 2.13 branch). As a workaround, site implementors who are unable to upgrade to a current supported version should audit their use of `{% include_block %}` to ensure it is not used to output `CharBlock` / `TextBlock` values with no associated template. Note that this only applies where `{% include_block %}` is used directly on that block (uses of `include_block` on a block _containing_ a CharBlock / TextBlock, such as a StructBlock, are unaffected). In these cases, the tag can be replaced with Django\u0026#39;s `{{ ... }}` syntax - e.g. `{% include_block my_title_block %}` becomes `{{ my_title_block }}`.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-35042",
-      "published": "2021-07-02T10:15:07.653",
-      "lastModified": "2024-11-21T06:11:43.993",
-      "description": "Django 3.1.x before 3.1.13 and 3.2.x before 3.2.5 allows QuerySet.order_by SQL injection if order_by is untrusted input from a client of a web application.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2020-18704",
-      "published": "2021-08-16T18:15:07.207",
-      "lastModified": "2024-11-21T05:08:43.867",
-      "description": "Unrestricted Upload of File with Dangerous Type in Django-Widgy v0.8.4 allows remote attackers to execute arbitrary code via the \u0026#39;image\u0026#39; widget in the component \u0026#39;Change Widgy Page\u0026#39;.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-32831",
-      "published": "2021-08-30T21:15:09.287",
-      "lastModified": "2024-11-21T06:07:50.480",
-      "description": "Total.js framework (npm package total.js) is a framework for Node.js platfrom written in pure JavaScript similar to PHP\u0026#39;s Laravel or Python\u0026#39;s Django or ASP.NET MVC. In total.js framework before version 3.4.9, calling the utils.set function with user-controlled values leads to code-injection. This can cause a variety of impacts that include arbitrary code execution. This is fixed in version 3.4.9.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-42053",
-      "published": "2021-10-07T06:15:06.857",
-      "lastModified": "2024-11-21T06:27:09.067",
-      "description": "The Unicorn framework through 0.35.3 for Django allows XSS via component.name.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-42134",
-      "published": "2021-10-11T01:15:06.883",
-      "lastModified": "2024-11-21T06:27:19.863",
-      "description": "The Unicorn framework before 0.36.1 for Django allows XSS via a component. NOTE: this issue exists because of an incomplete fix for CVE-2021-42053.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-3945",
-      "published": "2021-11-13T09:15:07.137",
-      "lastModified": "2024-11-21T06:23:12.893",
-      "description": "django-helpdesk is vulnerable to Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;)",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-3950",
-      "published": "2021-11-19T12:15:08.813",
-      "lastModified": "2024-11-21T06:23:13.360",
-      "description": "django-helpdesk is vulnerable to Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;)",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-25986",
-      "published": "2021-11-23T20:15:10.583",
-      "lastModified": "2024-11-21T05:55:44.260",
-      "description": "In Django-wiki, versions 0.0.20 to 0.7.8 are vulnerable to Stored Cross-Site Scripting (XSS) in Notifications Section. An attacker who has access to edit pages can inject JavaScript payload in the title field. When a victim gets a notification regarding the changes made in the application, the payload in the notification panel renders and loads external JavaScript.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-3994",
-      "published": "2021-12-01T11:15:08.153",
-      "lastModified": "2024-11-21T06:23:20.067",
-      "description": "django-helpdesk is vulnerable to Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;)",
-      "severity": "CRITICAL",
-      "cvss_score": 9.6,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-44420",
-      "published": "2021-12-08T00:15:07.757",
-      "lastModified": "2024-11-21T06:30:56.037",
-      "description": "In Django 2.2 before 2.2.25, 3.1 before 3.1.14, and 3.2 before 3.2.10, HTTP requests for URLs with trailing newlines could bypass upstream access control based on URL paths.",
-      "severity": "HIGH",
-      "cvss_score": 7.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-43410",
-      "published": "2021-12-09T09:15:07.137",
-      "lastModified": "2024-11-21T06:29:11.283",
-      "description": "Apache Airavata Django Portal allows CRLF log injection because of lack of escaping log statements. In particular, some HTTP request parameters are logged without first being escaped. Versions affected: master branch before commit 3c5d8c7 [1] of airavata-django-portal [1] https://github.com/apache/airavata-django-portal/commit/3c5d8c72bfc3eb0af8693a655a5d60f9273f8170",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-45115",
-      "published": "2022-01-05T00:15:07.907",
-      "lastModified": "2024-11-21T06:31:59.330",
-      "description": "An issue was discovered in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1. UserAttributeSimilarityValidator incurred significant overhead in evaluating a submitted password that was artificially large in relation to the comparison values. In a situation where access to user registration was unrestricted, this provided a potential vector for a denial-of-service attack.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-45116",
-      "published": "2022-01-05T00:15:07.953",
-      "lastModified": "2025-05-22T19:15:27.573",
-      "description": "An issue was discovered in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1. Due to leveraging the Django Template Language\u0026#39;s variable resolution logic, the dictsort template filter was potentially vulnerable to information disclosure, or an unintended method call, if passed a suitably crafted key.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-45452",
-      "published": "2022-01-05T00:15:07.997",
-      "lastModified": "2024-11-21T06:32:14.330",
-      "description": "Storage.save in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1 allows directory traversal if crafted filenames are directly passed to it.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-44649",
-      "published": "2022-01-12T13:15:07.737",
-      "lastModified": "2024-11-21T06:31:18.960",
-      "description": "Django CMS 3.7.3 does not validate the plugin_type parameter while generating error messages for an invalid plugin type, resulting in a Cross Site Scripting (XSS) vulnerability. The vulnerability allows an attacker to execute arbitrary JavaScript code in the web browser of the affected user.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-21683",
-      "published": "2022-01-18T18:15:08.430",
-      "lastModified": "2024-11-21T06:45:13.483",
-      "description": "Wagtail is a Django based content management system focused on flexibility and user experience. When notifications for new replies in comment threads are sent, they are sent to all users who have replied or commented anywhere on the site, rather than only in the relevant threads. This means that a user could listen in to new comment replies on pages they have not have editing access to, as long as they have left a comment or reply somewhere on the site. A patched version has been released as Wagtail 2.15.2, which restores the intended behaviour - to send notifications for new replies to the participants in the active thread only (editing permissions are not considered). New comments can be disabled by setting `WAGTAILADMIN_COMMENTS_ENABLED = False` in the Django settings file.",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-22818",
-      "published": "2022-02-03T02:15:07.580",
-      "lastModified": "2024-11-21T06:47:30.683",
-      "description": "The {% debug %} template tag in Django 2.2 before 2.2.27, 3.2 before 3.2.12, and 4.0 before 4.0.2 does not properly encode the current context. This may lead to XSS.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-23833",
-      "published": "2022-02-03T02:15:07.623",
-      "lastModified": "2024-11-21T06:49:20.623",
-      "description": "An issue was discovered in MultiPartParser in Django 2.2 before 2.2.27, 3.2 before 3.2.12, and 4.0 before 4.0.2. Passing certain inputs to multipart forms could result in an infinite loop when parsing files.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-28346",
-      "published": "2022-04-12T05:15:06.927",
-      "lastModified": "2024-11-21T06:57:11.007",
-      "description": "An issue was discovered in Django 2.2 before 2.2.28, 3.2 before 3.2.13, and 4.0 before 4.0.4. QuerySet.annotate(), aggregate(), and extra() methods are subject to SQL injection in column aliases via a crafted dictionary (with dictionary expansion) as the passed **kwargs.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-28347",
-      "published": "2022-04-12T05:15:07.357",
-      "lastModified": "2024-11-21T06:57:11.167",
-      "description": "A SQL injection issue was discovered in QuerySet.explain() in Django 2.2 before 2.2.28, 3.2 before 3.2.13, and 4.0 before 4.0.4. This occurs by passing a crafted dictionary (with dictionary expansion) as the **options argument, and placing the injection payload in an option name.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-24857",
-      "published": "2022-04-15T19:15:12.447",
-      "lastModified": "2024-11-21T06:51:14.910",
-      "description": "django-mfa3 is a library that implements multi factor authentication for the django web framework. It achieves this by modifying the regular login view. Django however has a second login view for its admin area. This second login view was not modified, so the multi factor authentication can be bypassed. Users are affected if they have activated both django-mfa3 (\u0026lt; 0.5.0) and django.contrib.admin and have not taken any other measures to prevent users from accessing the admin login view. The issue has been fixed in django-mfa3 0.5.0. It is possible to work around the issue by overwriting the admin login route, e.g. by adding the following URL definition *before* the admin routes: url(\u0026#39;admin/login/\u0026#39;, lambda request: redirect(settings.LOGIN_URL)",
-      "severity": "HIGH",
-      "cvss_score": 7.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-24840",
-      "published": "2022-06-09T04:15:10.707",
-      "lastModified": "2024-11-21T06:51:12.843",
-      "description": "django-s3file is a lightweight file upload input for Django and Amazon S3 . In versions prior to 5.5.1 it was possible to traverse the entire AWS S3 bucket and in most cases to access or delete files. If the `AWS_LOCATION` setting was set, traversal was limited to that location only. The issue was discovered by the maintainer. There were no reports of the vulnerability being known to or exploited by a third party, prior to the release of the patch. The vulnerability has been fixed in version 5.5.1 and above. There is no feasible workaround. We must urge all users to immediately updated to a patched version.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-32996",
-      "published": "2022-06-24T21:15:07.967",
-      "lastModified": "2024-11-21T07:07:23.103",
-      "description": "The django-navbar-client package of v0.9.50 to v1.0.1 was discovered to contain a code execution backdoor via the request package. This vulnerability allows attackers to access sensitive user information and digital currency keys, as well as escalate privileges.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-34265",
-      "published": "2022-07-04T16:15:09.260",
-      "lastModified": "2024-11-21T07:09:10.777",
-      "description": "An issue was discovered in Django 3.2 before 3.2.14 and 4.0 before 4.0.6. The Trunc() and Extract() database functions are subject to SQL injection if untrusted data is used as a kind/lookup_name value. Applications that constrain the lookup name and kind choice to a known safe list are unaffected.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2018-25045",
-      "published": "2022-07-23T02:15:07.267",
-      "lastModified": "2024-11-21T04:03:25.850",
-      "description": "Django REST framework (aka django-rest-framework) before 3.9.1 allows XSS because the default DRF Browsable API view templates disable autoescaping.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-36359",
-      "published": "2022-08-03T14:15:08.710",
-      "lastModified": "2024-11-21T07:12:51.800",
-      "description": "An issue was discovered in the HTTP FileResponse class in Django 3.2 before 3.2.15 and 4.0 before 4.0.7. An application is vulnerable to a reflected file download (RFD) attack that sets the Content-Disposition header of a FileResponse when the filename is derived from user-supplied input.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-42731",
-      "published": "2022-10-11T14:15:10.053",
-      "lastModified": "2025-05-20T14:15:26.163",
-      "description": "mfa/FIDO2.py in django-mfa2 before 2.5.1 and 2.6.x before 2.6.1 allows a replay attack that could be used to register another device for a user. The device registration challenge is not invalidated after usage.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-41323",
-      "published": "2022-10-16T06:15:09.650",
-      "lastModified": "2025-05-14T15:15:49.787",
-      "description": "In Django 3.2 before 3.2.16, 4.0 before 4.0.8, and 4.1 before 4.1.2, internationalized URLs were subject to a potential denial of service attack via the locale parameter, which is treated as a regular expression.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-4526",
-      "published": "2022-12-15T21:15:13.207",
-      "lastModified": "2024-11-21T07:35:26.110",
-      "description": "A vulnerability was found in django-photologue up to 3.15.1 and classified as problematic. Affected by this issue is some unknown functionality of the file photologue/templates/photologue/photo_detail.html of the component Default Template Handler. The manipulation of the argument object.caption leads to cross site scripting. The attack may be launched remotely. Upgrading to version 3.16 is able to address this issue. The name of the patch is 960cb060ce5e2964e6d716ff787c72fc18a371e7. It is recommended to apply a patch to fix this issue. VDB-215906 is the identifier assigned to this vulnerability.",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2022-4595",
-      "published": "2022-12-18T11:15:10.327",
-      "lastModified": "2024-11-21T07:35:33.850",
-      "description": "A vulnerability classified as problematic has been found in django-openipam. This affects an unknown part of the file openipam/report/templates/report/exposed_hosts.html. The manipulation of the argument description leads to cross site scripting. It is possible to initiate the attack remotely. The name of the patch is a6223a1150d60cd036106ba6a8e676c1bfc3cc85. It is recommended to apply a patch to fix this issue. The identifier VDB-216189 was assigned to this vulnerability.",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2016-15010",
-      "published": "2023-01-05T09:15:08.380",
-      "lastModified": "2024-11-21T02:45:29.280",
-      "description": "** UNSUPPORTED WHEN ASSIGNED ** A vulnerability classified as problematic was found in University of Cambridge django-ucamlookup up to 1.9.1. Affected by this vulnerability is an unknown functionality of the component Lookup Handler. The manipulation leads to cross site scripting. The attack can be launched remotely. Upgrading to version 1.9.2 is able to address this issue. The identifier of the patch is 5e25e4765637ea4b9e0bf5fcd5e9a922abee7eb3. It is recommended to upgrade the affected component. The identifier VDB-217441 was assigned to this vulnerability. NOTE: This vulnerability only affects products that are no longer supported by the maintainer.",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-23969",
-      "published": "2023-02-01T19:15:08.763",
-      "lastModified": "2025-03-27T15:15:45.150",
-      "description": "In Django 3.2 before 3.2.17, 4.0 before 4.0.9, and 4.1 before 4.1.6, the parsed values of Accept-Language headers are cached in order to avoid repetitive parsing. This leads to a potential denial-of-service vector via excessive memory usage if the raw value of Accept-Language headers is very large.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-24580",
-      "published": "2023-02-15T01:15:10.687",
-      "lastModified": "2025-03-18T20:15:18.837",
-      "description": "An issue was discovered in the Multipart Request Parser in Django 3.2 before 3.2.18, 4.0 before 4.0.10, and 4.1 before 4.1.7. Passing certain inputs (e.g., an excessive number of parts) to multipart forms could result in too many open files or memory exhaustion, and provided a potential vector for a denial-of-service attack.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-25657",
-      "published": "2023-02-21T21:15:11.243",
-      "lastModified": "2024-11-21T07:49:53.090",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform. All users of Nautobot versions earlier than 1.5.7 are impacted by a remote code execution vulnerability. Nautobot did not properly sandbox Jinja2 template rendering. In Nautobot 1.5.7 has enabled sandboxed environments for the Jinja2 template engine used internally for template rendering for the following objects: `extras.ComputedField`, `extras.CustomLink`, `extras.ExportTemplate`, `extras.Secret`, `extras.Webhook`. While no active exploits of this vulnerability are known this change has been made as a preventative measure to protect against any potential remote code execution attacks utilizing maliciously crafted template code. This change forces the Jinja2 template engine to use a `SandboxedEnvironment` on all new installations of Nautobot. This addresses any potential unsafe code execution everywhere the helper function `nautobot.utilities.utils.render_jinja2` is called. Additionally, the documentation that had previously suggesting the direct use of `jinja2.Template` has been revised to suggest `render_jinja2`. Users are advised to upgrade to Nautobot 1.5.7 or newer. For users that are unable to upgrade to the latest release of Nautobot, you may add the following setting to your `nautobot_config.py` to apply the sandbox environment enforcement: `TEMPLATES[1][\u0026#34;OPTIONS\u0026#34;][\u0026#34;environment\u0026#34;] = \u0026#34;jinja2.sandbox.SandboxedEnvironment\u0026#34;` After applying this change, you must restart all Nautobot services, including any Celery worker processes. **Note:** *Nautobot specifies two template engines by default, the first being “django” for the Django built-in template engine, and the second being “jinja” for the Jinja2 template engine. This recommended setting will update the second item in the list of template engines, which is the Jinja2 engine.* For users that are unable to immediately update their configuration such as if a Nautobot service restart is too disruptive to operations, access to provide custom Jinja2 template values may be mitigated using permissions to restrict “change” (write) actions to the affected object types listed in the first section. **Note:** *This solution is intended to be stopgap until you can successfully update your `nautobot_config.py` or upgrade your Nautobot instance to apply the sandboxed environment enforcement.*",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2017-20182",
-      "published": "2023-03-10T02:15:58.250",
-      "lastModified": "2024-11-21T03:22:49.660",
-      "description": "A vulnerability was found in Mobile Vikings Django AJAX Utilities up to 1.2.1 and classified as problematic. This issue affects the function Pagination of the file django_ajax/static/ajax-utilities/js/pagination.js of the component Backslash Handler. The manipulation of the argument url leads to cross site scripting. The attack may be initiated remotely. The patch is named 329eb1dd1580ca1f9d4f95bc69939833226515c9. It is recommended to apply a patch to fix this issue. The associated identifier of this vulnerability is VDB-222611.",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-28117",
-      "published": "2023-03-22T20:15:12.793",
-      "lastModified": "2024-11-21T07:54:26.437",
-      "description": "Sentry SDK is the official Python SDK for Sentry, real-time crash reporting software. When using the Django integration of versions prior to 1.14.0 of the Sentry SDK in a specific configuration it is possible to leak sensitive cookies values, including the session cookie to Sentry. These sensitive cookies could then be used by someone with access to your Sentry issues to impersonate or escalate their privileges within your application.\n\nIn order for these sensitive values to be leaked, the Sentry SDK configuration must have `sendDefaultPII` set to `True`; one must use a custom name for either `SESSION_COOKIE_NAME` or `CSRF_COOKIE_NAME` in one\u0026#39;s Django settings; and one must not be configured in one\u0026#39;s organization or project settings to use Sentry\u0026#39;s data scrubbing features to account for the custom cookie names.\n\nAs of version 1.14.0, the Django integration of the `sentry-sdk` will detect the custom cookie names based on one\u0026#39;s Django settings and will remove the values from the payload before sending the data to Sentry. As a workaround, use the SDK\u0026#39;s filtering mechanism to remove the cookies from the payload that is sent to Sentry. For error events, this can be done with the `before_send` callback method and for performance related events (transactions) one can use the `before_send_transaction` callback method. Those who want to handle filtering of these values on the server-side can also use Sentry\u0026#39;s advanced data scrubbing feature to account for the custom cookie names. Look for the `$http.cookies`, `$http.headers`, `$request.cookies`, or `$request.headers` fields to target with a scrubbing rule.",
-      "severity": "HIGH",
-      "cvss_score": 7.6,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-28836",
-      "published": "2023-04-03T17:15:06.957",
-      "lastModified": "2024-11-21T07:56:07.463",
-      "description": "Wagtail is an open source content management system built on Django. Starting in version 1.5 and prior to versions 4.1.4 and 4.2.2, a stored cross-site scripting (XSS) vulnerability exists on ModelAdmin views within the Wagtail admin interface. A user with a limited-permission editor account for the Wagtail admin could potentially craft pages and documents that, when viewed by a user with higher privileges, could perform actions with that user\u0026#39;s credentials. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin, and only affects sites with ModelAdmin enabled. For page, the vulnerability is in the \u0026#34;Choose a parent page\u0026#34; ModelAdmin view (`ChooseParentView`), available when managing pages via ModelAdmin. For documents, the vulnerability is in the ModelAdmin Inspect view (`InspectView`) when displaying document fields. Patched versions have been released as Wagtail 4.1.4 and Wagtail 4.2.2. Site owners who are unable to upgrade to the new versions can disable or override the corresponding functionality.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-28837",
-      "published": "2023-04-03T17:15:07.030",
-      "lastModified": "2024-11-21T07:56:07.607",
-      "description": "Wagtail is an open source content management system built on Django. Prior to versions 4.1.4 and 4.2.2, a memory exhaustion bug exists in Wagtail\u0026#39;s handling of uploaded images and documents. For both images and documents, files are loaded into memory during upload for additional processing. A user with access to upload images or documents through the Wagtail admin interface could upload a file so large that it results in a crash of denial of service.\n\nThe vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. It can only be exploited by admin users with permission to upload images or documents.\n\nImage uploads are restricted to 10MB by default, however this validation only happens on the frontend and on the backend after the vulnerable code. \n\nPatched versions have been released as Wagtail 4.1.4 and Wagtail 4.2.2). Site owners who are unable to upgrade to the new versions are encouraged to add extra protections outside of Wagtail to limit the size of uploaded files.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.9,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-31047",
-      "published": "2023-05-07T02:15:08.917",
-      "lastModified": "2025-01-29T16:15:42.863",
-      "description": "In Django 3.2 before 3.2.19, 4.x before 4.1.9, and 4.2 before 4.2.1, it was possible to bypass validation when using one form field to upload multiple files. This multiple upload has never been supported by forms.FileField or forms.ImageField (only the last uploaded file was validated). However, Django\u0026#39;s \u0026#34;Uploading multiple files\u0026#34; documentation suggested otherwise.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-33185",
-      "published": "2023-05-26T21:15:20.527",
-      "lastModified": "2024-11-21T08:05:04.537",
-      "description": "Django-SES is a drop-in mail backend for Django. The django_ses library implements a mail backend for Django using AWS Simple Email Service. The library exports the `SESEventWebhookView class` intended to receive signed requests from AWS to handle email bounces, subscriptions, etc. These requests are signed by AWS and are verified by django_ses, however the verification of this signature was found to be flawed as it allowed users to specify arbitrary public certificates. This issue was patched in version 3.5.0.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.6,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-36053",
-      "published": "2023-07-03T13:15:09.737",
-      "lastModified": "2025-11-04T18:15:40.560",
-      "description": "In Django 3.2 before 3.2.20, 4 before 4.1.10, and 4.2 before 4.2.3, EmailValidator and URLValidator are subject to a potential ReDoS (regular expression denial of service) attack via a very large number of domain name labels of emails and URLs.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-38941",
-      "published": "2023-08-04T00:15:13.757",
-      "lastModified": "2024-11-21T08:14:29.567",
-      "description": "django-sspanel v2022.2.2 was discovered to contain a remote command execution (RCE) vulnerability via the component sspanel/admin_view.py -\u0026gt; GoodsCreateView._post.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-45809",
-      "published": "2023-10-19T19:15:15.867",
-      "lastModified": "2024-11-21T08:27:23.907",
-      "description": "Wagtail is an open source content management system built on Django. A user with a limited-permission editor account for the Wagtail admin can make a direct URL request to the admin view that handles bulk actions on user accounts. While authentication rules prevent the user from making any changes, the error message discloses the display names of user accounts, and by modifying URL parameters, the user can retrieve the display name for any user. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. Patched versions have been released as Wagtail 4.1.8 (LTS), 5.0.5 and 5.1.3. The fix is also included in Release Candidate 1 of the forthcoming Wagtail 5.2 release. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
-      "severity": "LOW",
-      "cvss_score": 2.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2021-46898",
-      "published": "2023-10-22T19:15:08.297",
-      "lastModified": "2024-11-21T06:34:53.027",
-      "description": "views/switch.py in django-grappelli (aka Django Grappelli) before 2.15.2 attempts to prevent external redirection with startswith(\u0026#34;/\u0026#34;) but this does not consider a protocol-relative URL (e.g., //example.com) attack.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-46128",
-      "published": "2023-10-25T18:17:36.607",
-      "lastModified": "2024-11-21T08:27:56.323",
-      "description": "Nautobot is a Network Automation Platform built as a web application atop the Django Python framework with a PostgreSQL or MySQL database. In Nautobot 2.0.x, certain REST API endpoints, in combination with the `?depth=\u0026lt;N\u0026gt;` query parameter, can expose hashed user passwords as stored in the database to any authenticated user with access to these endpoints. The passwords are not exposed in plaintext. This vulnerability has been patched in version 2.0.3.\n\n",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-46695",
-      "published": "2023-11-02T06:15:08.000",
-      "lastModified": "2024-11-21T08:29:05.987",
-      "description": "An issue was discovered in Django 3.2 before 3.2.23, 4.1 before 4.1.13, and 4.2 before 4.2.7. The NFKC normalization is slow on Windows. As a consequence, django.contrib.auth.forms.UsernameField is subject to a potential DoS (denial of service) attack via certain inputs with a very large number of Unicode characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-41164",
-      "published": "2023-11-03T05:15:29.447",
-      "lastModified": "2025-11-04T18:15:41.020",
-      "description": "In Django 3.2 before 3.2.21, 4.1 before 4.1.11, and 4.2 before 4.2.5, django.utils.encoding.uri_to_iri() is subject to a potential DoS (denial of service) attack via certain inputs with a very large number of Unicode characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-43665",
-      "published": "2023-11-03T05:15:30.047",
-      "lastModified": "2025-11-04T18:15:41.420",
-      "description": "In Django 3.2 before 3.2.22, 4.1 before 4.1.12, and 4.2 before 4.2.6, the django.utils.text.Truncator chars() and words() methods (when used with html=True) are subject to a potential DoS (denial of service) attack via certain inputs with very long, potentially malformed HTML text. The chars() and words() methods are used to implement the truncatechars_html and truncatewords_html template filters, which are thus also vulnerable. NOTE: this issue exists because of an incomplete fix for CVE-2019-14232.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-43791",
-      "published": "2023-11-09T15:15:08.743",
-      "lastModified": "2024-11-21T08:24:47.447",
-      "description": "Label Studio is a multi-type data labeling and annotation tool with standardized output format. There is a vulnerability that can be chained within the ORM Leak vulnerability to impersonate any account on Label Studio. An attacker could exploit these vulnerabilities to escalate their privileges from a low privilege user to a Django Super Administrator user. The vulnerability was found to affect versions before `1.8.2`, where a patch was introduced.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-47117",
-      "published": "2023-11-13T21:15:08.317",
-      "lastModified": "2024-11-21T08:29:48.757",
-      "description": "Label Studio is an open source data labeling tool. In all current versions of Label Studio prior to 1.9.2post0, the application allows users to insecurely set filters for filtering tasks. An attacker can construct a filter chain to filter tasks based on sensitive fields for all user accounts on the platform by exploiting Django\u0026#39;s Object Relational Mapper (ORM). Since the results of query can be manipulated by the ORM filter, an attacker can leak these sensitive fields character by character. In addition, Label Studio had a hard coded secret key that an attacker can use to forge a session token of any user by exploiting this ORM Leak vulnerability to leak account password hashes. This vulnerability has been addressed in commit `f931d9d129` which is included in the 1.9.2post0 release. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-48705",
-      "published": "2023-11-22T16:15:09.627",
-      "lastModified": "2024-11-21T08:32:17.830",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform built as a web application All users of Nautobot versions earlier than 1.6.6 or 2.0.5 are potentially affected by a cross-site scripting vulnerability. Due to incorrect usage of Django\u0026#39;s `mark_safe()` API when rendering certain types of user-authored content; including custom links, job buttons, and computed fields; it is possible that users with permission to create or edit these types of content could craft a malicious payload (such as JavaScript code) that would be executed when rendering pages containing this content. The maintainers have fixed the incorrect uses of `mark_safe()` (generally by replacing them with appropriate use of `format_html()` instead) to prevent such malicious data from being executed. Users on Nautobot 1.6.x LTM should upgrade to v1.6.6 and users on Nautobot 2.0.x should upgrade to v2.0.5. Appropriate object permissions can and should be applied to restrict which users are permitted to create or edit the aforementioned types of user-authored content. Other than that, there is no direct workaround available.",
-      "severity": "HIGH",
-      "cvss_score": 7.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-49277",
-      "published": "2023-12-01T21:15:08.857",
-      "lastModified": "2024-11-21T08:33:10.167",
-      "description": "dpaste is an open source pastebin application written in Python using the Django framework. A security vulnerability has been identified in the expires parameter of the dpaste API, allowing for a POST Reflected XSS attack. This vulnerability can be exploited by an attacker to execute arbitrary JavaScript code in the context of a user\u0026#39;s browser, potentially leading to unauthorized access, data theft, or other malicious activities. Users are strongly advised to upgrade to dpaste release v3.8 or later versions, as dpaste versions older than v3.8 are susceptible to the identified security vulnerability. No known workarounds have been identified, and applying the patch is the most effective way to remediate the vulnerability.",
-      "severity": "HIGH",
-      "cvss_score": 8.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-50263",
-      "published": "2023-12-12T23:15:07.270",
-      "lastModified": "2024-11-21T08:36:46.563",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform built as a web application atop the Django Python framework with a PostgreSQL or MySQL database. In Nautobot 1.x and 2.0.x prior to 1.6.7 and 2.0.6, the URLs `/files/get/?name=...` and `/files/download/?name=...` are used to provide admin access to files that have been uploaded as part of a run request for a Job that has FileVar inputs. Under normal operation these files are ephemeral and are deleted once the Job in question runs. \n\nIn the default implementation used in Nautobot, as provided by `django-db-file-storage`, these URLs do not by default require any user authentication to access; they should instead be restricted to only users who have permissions to view Nautobot\u0026#39;s `FileProxy` model instances.\n\nNote that no URL mechanism is provided for listing or traversal of the available file `name` values, so in practice an unauthenticated user would have to guess names to discover arbitrary files for download, but if a user knows the file name/path value, they can access it without authenticating, so we are considering this a vulnerability.\n\nFixes are included in Nautobot 1.6.7 and Nautobot 2.0.6. No known workarounds are available other than applying the patches included in those versions.",
-      "severity": "LOW",
-      "cvss_score": 3.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-51649",
-      "published": "2023-12-22T17:15:10.197",
-      "lastModified": "2024-11-21T08:38:32.163",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform built as a web application atop the Django Python framework with a PostgreSQL or MySQL database. When submitting a Job to run via a Job Button, only the model-level `extras.run_job` permission is checked (i.e., does the user have permission to run Jobs in general). Object-level permissions (i.e., does the user have permission to run this specific Job?) are not enforced by the URL/view used in this case. A user with permissions to run even a single Job can actually run all configured JobButton Jobs. Fix will be available in Nautobot 1.6.8 and 2.1.0 ",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-47115",
-      "published": "2024-01-23T23:15:08.100",
-      "lastModified": "2024-11-21T08:29:48.500",
-      "description": "Label Studio is an a popular open source data labeling tool. Versions prior to 1.9.2 have a cross-site scripting (XSS) vulnerability that could be exploited when an authenticated user uploads a crafted image file for their avatar that gets rendered as a HTML file on the website. Executing arbitrary JavaScript could result in an attacker performing malicious actions on Label Studio users if they visit the crafted avatar image. For an example, an attacker can craft a JavaScript payload that adds a new Django Super Administrator user if a Django administrator visits the image.\n\nThe file `users/functions.py` lines 18-49 show that the only verification check is that the file is an image by extracting the dimensions from the file. Label Studio serves avatar images using Django\u0026#39;s built-in `serve` view, which is not secure for production use according to Django\u0026#39;s documentation. The issue with the Django `serve` view is that it determines the `Content-Type` of the response by the file extension in the URL path. Therefore, an attacker can upload an image that contains malicious HTML code and name the file with a `.html` extension to be rendered as a HTML page. The only file extension validation is performed on the client-side, which can be easily bypassed.\n\nVersion 1.9.2 fixes this issue. Other remediation strategies include validating the file extension on the server side, not in client-side code; removing the use of Django\u0026#39;s `serve` view and implement a secure controller for viewing uploaded avatar images; saving file content in the database rather than on the filesystem to mitigate against other file related vulnerabilities; and avoiding trusting user controlled inputs.",
-      "severity": "HIGH",
-      "cvss_score": 7.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-23633",
-      "published": "2024-01-24T00:15:08.373",
-      "lastModified": "2024-11-21T08:58:02.923",
-      "description": "Label Studio, an open source data labeling tool had a remote import feature allowed users to import data from a remote web source, that was downloaded and could be viewed on the website. Prior to version 1.10.1, this feature could had been abused to download a HTML file that executed malicious JavaScript code in the context of the Label Studio website. Executing arbitrary JavaScript could result in an attacker performing malicious actions on Label Studio users if they visit the crafted avatar image. For an example, an attacker can craft a JavaScript payload that adds a new Django Super Administrator user if a Django administrator visits the image.\n\n`data_import/uploader.py` lines 125C5 through 146 showed that if a URL passed the server side request forgery verification checks, the contents of the file would be downloaded using the filename in the URL. The downloaded file path could then be retrieved by sending a request to `/api/projects/{project_id}/file-uploads?ids=[{download_id}]` where `{project_id}` was the ID of the project and `{download_id}` was the ID of the downloaded file. Once the downloaded file path was retrieved by the previous API endpoint, `data_import/api.py`lines 595C1 through 616C62 demonstrated that the `Content-Type` of the response was determined by the file extension, since `mimetypes.guess_type` guesses the `Content-Type` based on the file extension. Since the `Content-Type` was determined by the file extension of the downloaded file, an attacker could import in a `.html` file that would execute JavaScript when visited.\n\nVersion 1.10.1 contains a patch for this issue. Other remediation strategies are also available. For all user provided files that are downloaded by Label Studio, set the `Content-Security-Policy: sandbox;` response header when viewed on the site. The `sandbox` directive restricts a page\u0026#39;s actions to prevent popups, execution of plugins and scripts and enforces a `same-origin` policy. Alternatively, restrict the allowed file extensions that may be downloaded.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-24680",
-      "published": "2024-02-06T22:16:15.470",
-      "lastModified": "2025-11-04T19:16:57.523",
-      "description": "An issue was discovered in Django 3.2 before 3.2.24, 4.2 before 4.2.10, and Django 5.0 before 5.0.2. The intcomma template filter was subject to a potential denial-of-service attack when used with very long strings.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2023-5457",
-      "published": "2024-03-05T12:15:47.793",
-      "lastModified": "2025-04-09T20:34:52.100",
-      "description": "A CWE-1269 “Product Released in Non-Release Configuration” vulnerability in the Django web framework used by the web application (due to the “debug” configuration parameter set to “True”) allows a remote unauthenticated attacker to access critical information and have other unspecified impacts to the confidentiality, integrity, and availability of the application. This issue affects: AiLux imx6 bundle below version imx6_1.0.7-2.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-2319",
-      "published": "2024-03-08T14:15:52.307",
-      "lastModified": "2025-02-26T17:50:40.050",
-      "description": "Cross-Site Scripting (XSS) vulnerability in the Django MarkdownX project, affecting version 4.0.2. An attacker could store a specially crafted JavaScript payload in the upload functionality due to lack of proper sanitisation of JavaScript elements.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-26164",
-      "published": "2024-03-12T17:15:55.643",
-      "lastModified": "2024-12-06T17:14:53.333",
-      "description": "Microsoft Django Backend for SQL Server Remote Code Execution Vulnerability",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-27351",
-      "published": "2024-03-15T20:15:09.303",
-      "lastModified": "2025-11-04T19:17:03.553",
-      "description": "In Django 3.2 before 3.2.25, 4.2 before 4.2.11, and 5.0 before 5.0.3, the django.utils.text.Truncator.words() method (with html=True) and the truncatewords_html template filter are subject to a potential regular expression denial-of-service attack via a crafted string. NOTE: this issue exists because of an incomplete fix for CVE-2019-14232 and CVE-2023-43665.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-22513",
-      "published": "2024-03-16T07:15:06.513",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "djangorestframework-simplejwt version 5.3.1 and before is vulnerable to information disclosure. A user can access web application resources even after their account has been disabled due to missing user validation checks via the for_user method.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-28865",
-      "published": "2024-03-18T22:15:09.510",
-      "lastModified": "2026-01-13T15:21:57.733",
-      "description": "django-wiki is a wiki system for Django. Installations of django-wiki prior to version 0.10.1 are vulnerable to maliciously crafted article content that can cause severe use of server CPU through a regular expression loop. Version 0.10.1 fixes this issue. As a workaround, close off access to create and edit articles by anonymous users.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-32979",
-      "published": "2024-05-01T11:15:47.407",
-      "lastModified": "2025-08-26T18:54:06.693",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform built as a web application atop the Django Python framework with a PostgreSQL or MySQL database. It was discovered that due to improper handling and escaping of user-provided query parameters, a maliciously crafted Nautobot URL could potentially be used to execute a Reflected Cross-Site Scripting (Reflected XSS) attack against users. All filterable object-list views in Nautobot are vulnerable. This issue has been fixed in Nautobot versions 1.6.20 and 2.2.3. There are no known workarounds for this vulnerability.\n",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-32882",
-      "published": "2024-05-02T07:15:20.967",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Wagtail is an open source content management system built on Django. In affected versions if a model has been made available for editing through the `wagtail.contrib.settings` module or `ModelViewSet`, and the `permission` argument on `FieldPanel` has been used to further restrict access to one or more fields of the model, a user with edit permission over the model but not the specific field can craft an HTTP POST request that bypasses the permission check on the individual field, allowing them to update its value. This vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin, or by a user who has not been granted edit access to the model in question. The editing interfaces for pages and snippets are also unaffected. Patched versions have been released as Wagtail 6.0.3 and 6.1. Wagtail releases prior to 6.0 are unaffected. Users are advised to upgrade. Site owners who are unable to upgrade to a patched version can avoid the vulnerability as follows: 1.For models registered through `ModelViewSet`, register the model as a snippet instead; 2. For settings models, place the restricted fields in a separate settings model, and configure permission at the model level.",
-      "severity": "LOW",
-      "cvss_score": 2.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-35228",
-      "published": "2024-05-30T19:15:16.747",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Wagtail is an open source content management system built on Django. Due to an improperly applied permission check in the `wagtail.contrib.settings` module, a user with access to the Wagtail admin and knowledge of the URL of the edit view for a settings model can access and update that setting, even when they have not been granted permission over the model. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. Patched versions have been released as Wagtail 6.0.5 and 6.1.2. Wagtail releases prior to 6.0 are unaffected. Users are advised to upgrade. Site owners who are unable to upgrade to a patched version can avoid the vulnerability in `ModelViewSet` by registering the model as a snippet instead. No workaround is available for `wagtail.contrib.settings`.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-21520",
-      "published": "2024-06-26T05:15:50.093",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Versions of the package djangorestframework before 3.15.2 are vulnerable to Cross-site Scripting (XSS) via the break_long_headers template filter due to improper input sanitization before splitting and joining with \u0026lt;br\u0026gt; tags.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-38875",
-      "published": "2024-07-10T05:15:12.020",
-      "lastModified": "2025-11-04T17:15:54.243",
-      "description": "An issue was discovered in Django 4.2 before 4.2.14 and 5.0 before 5.0.7. urlize and urlizetrunc were subject to a potential denial of service attack via certain inputs with a very large number of brackets.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-39329",
-      "published": "2024-07-10T05:15:12.097",
-      "lastModified": "2025-11-04T17:15:54.510",
-      "description": "An issue was discovered in Django 5.0 before 5.0.7 and 4.2 before 4.2.14. The django.contrib.auth.backends.ModelBackend.authenticate() method allows remote attackers to enumerate users via a timing attack involving login requests for users with an unusable password.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-39330",
-      "published": "2024-07-10T05:15:12.167",
-      "lastModified": "2025-11-04T17:15:54.693",
-      "description": "An issue was discovered in Django 5.0 before 5.0.7 and 4.2 before 4.2.14. Derived classes of the django.core.files.storage.Storage base class, when they override generate_filename() without replicating the file-path validations from the parent class, potentially allow directory traversal via certain inputs during a save() call. (Built-in Storage sub-classes are unaffected.)",
-      "severity": "MEDIUM",
-      "cvss_score": 4.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-39614",
-      "published": "2024-07-10T05:15:12.237",
-      "lastModified": "2025-11-04T17:15:55.123",
-      "description": "An issue was discovered in Django 5.0 before 5.0.7 and 4.2 before 4.2.14. get_supported_language_variant() was subject to a potential denial-of-service attack when used with very long strings containing specific characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-39317",
-      "published": "2024-07-11T16:15:02.477",
-      "lastModified": "2026-03-20T18:34:00.577",
-      "description": "Wagtail is an open source content management system built on Django. A bug in Wagtail\u0026#39;s `parse_query_string` would result in it taking a long time to process suitably crafted inputs. When used to parse sufficiently long strings of characters without a space, `parse_query_string` would take an unexpectedly large amount of time to process, resulting in a denial of service. In an initial Wagtail installation, the vulnerability can be exploited by any Wagtail admin user. It cannot be exploited by end users. If your Wagtail site has a custom search implementation which uses `parse_query_string`, it may be exploitable by other users (e.g. unauthenticated users). Patched versions have been released as Wagtail 5.2.6, 6.0.6 and 6.1.3.\n",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-41806",
-      "published": "2024-07-25T15:15:11.210",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "The Open edX Platform is a learning management platform. Instructors can upload csv files containing learner information to create cohorts in the instructor dashboard. These files are uploaded using the django default storage. With certain storage backends, uploads may become publicly available when the uploader uses versions master, palm, olive, nutmeg, maple, lilac, koa, or juniper. The patch in commit cb729a3ced0404736dfa0ae768526c82b608657b ensures that cohorts data uploaded to AWS S3 buckets is written with a private ACL. Beyond patching, deployers should also ensure that existing cohorts uploads have a private ACL, or that other precautions are taken to avoid public access.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-41989",
-      "published": "2024-08-07T15:15:56.030",
-      "lastModified": "2025-11-04T17:16:03.127",
-      "description": "An issue was discovered in Django 5.0 before 5.0.8 and 4.2 before 4.2.15. The floatformat template filter is subject to significant memory consumption when given a string representation of a number in scientific notation with a large exponent.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-41990",
-      "published": "2024-08-07T15:15:56.100",
-      "lastModified": "2025-11-04T17:16:03.383",
-      "description": "An issue was discovered in Django 5.0 before 5.0.8 and 4.2 before 4.2.15. The urlize() and urlizetrunc() template filters are subject to a potential denial-of-service attack via very large inputs with a specific sequence of characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-41991",
-      "published": "2024-08-07T15:15:56.160",
-      "lastModified": "2025-11-04T17:16:03.640",
-      "description": "An issue was discovered in Django 5.0 before 5.0.8 and 4.2 before 4.2.15. The urlize and urlizetrunc template filters, and the AdminURLFieldWidget widget, are subject to a potential denial-of-service attack via certain inputs with a very large number of Unicode characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-42005",
-      "published": "2024-08-07T15:15:56.220",
-      "lastModified": "2025-11-04T17:16:04.410",
-      "description": "An issue was discovered in Django 5.0 before 5.0.8 and 4.2 before 4.2.15. QuerySet.values() and values_list() methods on models with a JSONField are subject to SQL injection in column aliases via a crafted JSON object key as a passed *arg.",
-      "severity": "HIGH",
-      "cvss_score": 7.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-47082",
-      "published": "2024-09-25T18:15:05.417",
-      "lastModified": "2024-10-01T20:01:13.367",
-      "description": "Strawberry GraphQL is a library for creating GraphQL APIs. Prior to version 0.243.0, multipart file upload support as defined in the GraphQL multipart request specification was enabled by default in all Strawberry HTTP view integrations. This made all Strawberry HTTP view integrations vulnerable to cross-site request forgery (CSRF) attacks if users did not explicitly enable CSRF preventing security mechanism for their servers. Additionally, the Django HTTP view integration, in particular, had an exemption for Django\u0026#39;s built-in CSRF protection (i.e., the `CsrfViewMiddleware` middleware) by default. In affect, all Strawberry integrations were vulnerable to CSRF attacks by default. Version `v0.243.0` is the first `strawberry-graphql` including a patch.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.6,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-45230",
-      "published": "2024-10-08T16:15:11.903",
-      "lastModified": "2025-03-17T15:15:41.520",
-      "description": "An issue was discovered in Django 5.1 before 5.1.1, 5.0 before 5.0.9, and 4.2 before 4.2.16. The urlize() and urlizetrunc() template filters are subject to a potential denial-of-service attack via very large inputs with a specific sequence of characters.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-45231",
-      "published": "2024-10-08T16:15:11.997",
-      "lastModified": "2025-03-17T18:15:17.730",
-      "description": "An issue was discovered in Django v5.1.1, v5.0.9, and v4.2.16. The django.contrib.auth.forms.PasswordResetForm class, when used in a view implementing password reset flows, allows remote attackers to enumerate user e-mail addresses by sending password reset requests and observing the outcome (only when e-mail sending is consistently failing).",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-9953",
-      "published": "2024-10-14T22:15:03.957",
-      "lastModified": "2025-03-20T19:15:36.063",
-      "description": "A potential denial-of-service (DoS) vulnerability exists in CERT VINCE software versions prior to 3.0.8. An authenticated administrative user can inject an arbitrary pickle object into a user’s profile, which may lead to a DoS condition when the profile is accessed. While the Django server restricts unpickling to prevent server crashes, this vulnerability could still disrupt operations.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.9,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-11319",
-      "published": "2024-11-18T12:15:17.853",
-      "lastModified": "2025-09-12T07:15:32.930",
-      "description": "Improper Neutralization of Input During Web Page Generation (XSS or \u0026#39;Cross-site Scripting\u0026#39;) vulnerability in django CMS Association django-cms allows Cross-Site Scripting (XSS).This issue affects django-cms: 3.11.7, 3.11.8, 4.1.2, 4.1.3.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-11404",
-      "published": "2024-11-20T12:15:18.640",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Unrestricted Upload of File with Dangerous Type, Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in django CMS Association django Filer allows Input Data Manipulation, Stored XSS.This issue affects django Filer: from 3 before 3.3.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-11406",
-      "published": "2024-11-20T12:15:18.890",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Improper Neutralization of Input During Web Page Generation (XSS or \u0026#39;Cross-site Scripting\u0026#39;) vulnerability in django CMS Association django CMS Attributes Fields allows Stored XSS.This issue affects django CMS Attributes Fields: before 4.0.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.9,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-53907",
-      "published": "2024-12-06T12:15:17.730",
-      "lastModified": "2025-06-24T14:55:06.263",
-      "description": "An issue was discovered in Django 5.1 before 5.1.4, 5.0 before 5.0.10, and 4.2 before 4.2.17. The strip_tags() method and striptags template filter are subject to a potential denial-of-service attack via certain inputs containing large sequences of nested incomplete HTML entities.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-53908",
-      "published": "2024-12-06T12:15:18.583",
-      "lastModified": "2025-06-09T19:51:17.797",
-      "description": "An issue was discovered in Django 5.1 before 5.1.4, 5.0 before 5.0.10, and 4.2 before 4.2.17. Direct usage of the django.db.models.fields.json.HasKey lookup, when an Oracle database is used, is subject to SQL injection if untrusted data is used as an lhs value. (Applications that use the jsonfield.has_key lookup via __ are unaffected.)",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-56363",
-      "published": "2024-12-23T18:15:07.767",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "APTRS (Automated Penetration Testing Reporting System) is a Python and Django-based automated reporting tool designed for penetration testers and security organizations. In 1.0, there is a vulnerability in the web application\u0026#39;s handling of user-supplied input that is incorporated into a Jinja2 template. Specifically, when user input is improperly sanitized or validated, an attacker can inject Jinja2 syntax into the template, causing the server to execute arbitrary code. For example, an attacker might be able to inject expressions like {{ config }}, {{ self.class.mro[1].subclasses() }}, or more dangerous payloads that trigger execution of arbitrary Python code. The vulnerability can be reproduced by submitting crafted input to all the template fields handled by ckeditor, that are passed directly to a Jinja2 template. If the input is rendered without sufficient sanitization, it results in the execution of malicious Jinja2 code on the server.",
-      "severity": "HIGH",
-      "cvss_score": 7.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-56113",
-      "published": "2025-01-09T20:15:39.603",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Smart Toilet Lab - Motius 1.3.11 is running with debug mode turned on (DEBUG = True) and exposing sensitive information defined in Django settings file through verbose error page.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2024-56374",
-      "published": "2025-01-14T19:15:32.510",
-      "lastModified": "2025-10-03T13:16:13.223",
-      "description": "An issue was discovered in Django 5.1 before 5.1.5, 5.0 before 5.0.11, and 4.2 before 4.2.18. Lack of upper-bound limit enforcement in strings passed when performing IPv6 validation could lead to a potential denial-of-service attack. The undocumented and private functions clean_ipv6_address and is_valid_ipv6_address are vulnerable, as is the django.forms.GenericIPAddressField form field. (The django.db.models.GenericIPAddressField model field is not affected.)",
-      "severity": "MEDIUM",
-      "cvss_score": 5.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-26699",
-      "published": "2025-03-06T19:15:27.683",
-      "lastModified": "2025-10-03T00:32:38.420",
-      "description": "An issue was discovered in Django 5.1 before 5.1.7, 5.0 before 5.0.13, and 4.2 before 4.2.20. The django.utils.text.wrap() method and wordwrap template filter are subject to a potential denial-of-service attack when used with very long strings.",
-      "severity": "MEDIUM",
-      "cvss_score": 5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-27556",
-      "published": "2025-04-02T13:15:44.373",
-      "lastModified": "2025-10-03T15:34:09.950",
-      "description": "An issue was discovered in Django 5.1 before 5.1.8 and 5.0 before 5.0.14. The NFKC normalization is slow on Windows. As a consequence, django.contrib.auth.views.LoginView, django.contrib.auth.views.LogoutView, and django.views.i18n.set_language are subject to a potential denial-of-service attack via certain inputs with a very large number of Unicode characters.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-32873",
-      "published": "2025-05-08T04:17:18.157",
-      "lastModified": "2025-09-02T18:58:27.083",
-      "description": "An issue was discovered in Django 4.2 before 4.2.21, 5.1 before 5.1.9, and 5.2 before 5.2.1. The django.utils.html.strip_tags() function is vulnerable to a potential denial-of-service (slow performance) when processing inputs containing large sequences of incomplete HTML tags. The template filter striptags is also vulnerable, because it is built on top of strip_tags().",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-4894",
-      "published": "2025-05-18T20:15:18.803",
-      "lastModified": "2025-06-05T19:39:01.520",
-      "description": "A vulnerability classified as problematic was found in calmkart Django-sso-server up to 057247929a94ffc358788a37ab99e391379a4d15. This vulnerability affects the function gen_rsa_keys of the file common/crypto.py. The manipulation leads to inadequate encryption strength. The attack can be initiated remotely. The complexity of an attack is rather high. The exploitation appears to be difficult. This product is using a rolling release to provide continious delivery. Therefore, no version details for affected nor updated releases are available.",
-      "severity": "LOW",
-      "cvss_score": 3.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-48383",
-      "published": "2025-05-27T15:15:35.143",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Django-Select2 is a Django integration for Select2. Prior to version 8.4.1, instances of HeavySelect2Mixin subclasses like the ModelSelect2MultipleWidget and ModelSelect2Widget can leak secret access tokens across requests. This can allow users to access restricted query sets and restricted data. This issue has been patched in version 8.4.1.",
-      "severity": "HIGH",
-      "cvss_score": 8.2,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2018-25111",
-      "published": "2025-05-31T01:15:19.123",
-      "lastModified": "2025-06-16T16:25:41.307",
-      "description": "django-helpdesk before 1.0.0 allows Sensitive Data Exposure because of os.umask(0) in models.py.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-48432",
-      "published": "2025-06-05T03:15:25.563",
-      "lastModified": "2025-10-15T17:47:56.647",
-      "description": "An issue was discovered in Django 5.2 before 5.2.3, 5.1 before 5.1.11, and 4.2 before 4.2.23. Internal HTTP response logging does not escape request.path, which allows remote attackers to potentially manipulate log output via crafted URLs. This may lead to log injection or forgery when logs are viewed in terminals or processed by external systems.",
-      "severity": "MEDIUM",
-      "cvss_score": 4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-57833",
-      "published": "2025-09-03T21:15:32.850",
-      "lastModified": "2025-11-04T22:16:31.930",
-      "description": "An issue was discovered in Django 4.2 before 4.2.24, 5.1 before 5.1.12, and 5.2 before 5.2.6. FilteredRelation is subject to SQL injection in column aliases, using a suitably crafted dictionary, with dictionary expansion, as the **kwargs passed QuerySet.annotate() or QuerySet.alias().",
-      "severity": "HIGH",
-      "cvss_score": 7.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-59340",
-      "published": "2025-09-17T20:15:36.430",
-      "lastModified": "2025-09-26T13:11:40.227",
-      "description": "jinjava is a Java-based template engine based on django template syntax, adapted to render jinja templates. Priori to 2.8.1, by using mapper.getTypeFactory().constructFromCanonical(), it is possible to instruct the underlying ObjectMapper to deserialize attacker-controlled input into arbitrary classes. This enables the creation of semi-arbitrary class instances without directly invoking restricted methods or class literals. As a result, an attacker can escape the sandbox and instantiate classes such as java.net.URL, opening up the ability to access local files and URLs(e.g., file:///etc/passwd). With further chaining, this primitive can potentially lead to remote code execution (RCE). This vulnerability is fixed in 2.8.1.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-48868",
-      "published": "2025-09-24T14:15:49.593",
-      "lastModified": "2025-09-29T14:06:57.020",
-      "description": "Horilla is a free and open source Human Resource Management System (HRMS). An authenticated Remote Code Execution (RCE) vulnerability exists in Horilla 1.3.0 due to the unsafe use of Python’s eval() function on a user-controlled query parameter in the project_bulk_archive view. This allows privileged users (e.g., administrators) to execute arbitrary system commands on the server. While having Django’s DEBUG=True makes exploitation visibly easier by returning command output in the HTTP response, this is not required. The vulnerability can still be exploited in DEBUG=False mode by using blind payloads such as a reverse shell, leading to full remote code execution. This issue has been patched in version 1.3.1.",
-      "severity": "HIGH",
-      "cvss_score": 7.2,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-59681",
-      "published": "2025-10-01T19:15:36.487",
-      "lastModified": "2025-11-04T22:16:35.547",
-      "description": "An issue was discovered in Django 4.2 before 4.2.25, 5.1 before 5.1.13, and 5.2 before 5.2.7. QuerySet.annotate(), QuerySet.alias(), QuerySet.aggregate(), and QuerySet.extra() are subject to SQL injection in column aliases, when using a suitably crafted dictionary, with dictionary expansion, as the **kwargs passed to these methods (on MySQL and MariaDB).",
-      "severity": "HIGH",
-      "cvss_score": 7.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-59682",
-      "published": "2025-10-01T19:15:37.007",
-      "lastModified": "2025-11-04T22:16:35.727",
-      "description": "An issue was discovered in Django 4.2 before 4.2.25, 5.1 before 5.1.13, and 5.2 before 5.2.7. The django.utils.archive.extract() function, used by the \u0026#34;startapp --template\u0026#34; and \u0026#34;startproject --template\u0026#34; commands, allows partial directory traversal via an archive with file paths sharing a common prefix with the target directory.",
-      "severity": "LOW",
-      "cvss_score": 3.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-64458",
-      "published": "2025-11-05T15:15:40.940",
-      "lastModified": "2025-11-10T18:33:02.957",
-      "description": "An issue was discovered in 5.1 before 5.1.14, 4.2 before 4.2.26, and 5.2 before 5.2.8.\nNFKC normalization in Python is slow on Windows. As a consequence, `django.http.HttpResponseRedirect`, `django.http.HttpResponsePermanentRedirect`, and the shortcut `django.shortcuts.redirect`  were subject to a potential  denial-of-service attack via certain inputs with a very large number of Unicode characters.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Seokchan Yoon for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-64459",
-      "published": "2025-11-05T15:15:41.080",
-      "lastModified": "2025-11-10T18:25:59.883",
-      "description": "An issue was discovered in 5.1 before 5.1.14, 4.2 before 4.2.26, and 5.2 before 5.2.8.\nThe methods `QuerySet.filter()`, `QuerySet.exclude()`, and `QuerySet.get()`, and the class `Q()`, are subject to SQL injection when using a suitably crafted dictionary, with dictionary expansion, as the `_connector` argument.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank cyberstan for reporting this issue.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-64484",
-      "published": "2025-11-10T22:15:37.490",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "OAuth2-Proxy is an open-source tool that can act as either a standalone reverse proxy or a middleware component integrated into existing reverse proxy or load balancer setups. In versions prior to 7.13.0, all deployments of OAuth2 Proxy in front of applications that normalize underscores to dashes in HTTP headers (e.g., WSGI-based frameworks such as Django, Flask, FastAPI, and PHP applications). Authenticated users can inject underscore variants of X-Forwarded-* headers that bypass the proxy’s filtering logic, potentially escalating privileges in the upstream app. OAuth2 Proxy authentication/authorization itself is not compromised. The problem has been patched with v7.13.0. By default all specified headers will now be normalized, meaning that both capitalization and the use of underscores (_) versus dashes (-) will be ignored when matching headers to be stripped. For example, both `X-Forwarded-For` and `X_Forwarded-for` will now be treated as equivalent and stripped away. For those who have a rational that requires keeping a similar looking header and not stripping it, the maintainers introduced a new configuration field for Headers managed through the AlphaConfig called `InsecureSkipHeaderNormalization`. As a workaround, ensure filtering and processing logic in upstream services don\u0026#39;t treat underscores and hyphens in Headers the same way.",
-      "severity": "HIGH",
-      "cvss_score": 8.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-13372",
-      "published": "2025-12-02T16:15:53.907",
-      "lastModified": "2025-12-12T12:57:23.833",
-      "description": "An issue was discovered in 5.2 before 5.2.9, 5.1 before 5.1.15, and 4.2 before 4.2.27.\n`FilteredRelation` is subject to SQL injection in column aliases, using a suitably crafted dictionary, with dictionary expansion, as the `**kwargs` passed to `QuerySet.annotate()` or `QuerySet.alias()` on PostgreSQL.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Stackered for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 4.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-64460",
-      "published": "2025-12-02T16:15:56.013",
-      "lastModified": "2025-12-10T21:47:14.340",
-      "description": "An issue was discovered in 5.2 before 5.2.9, 5.1 before 5.1.15, and 4.2 before 4.2.27.\nAlgorithmic complexity in `django.core.serializers.xml_serializer.getInnerText()` allows a remote attacker to cause a potential denial-of-service attack triggering CPU and memory exhaustion via specially crafted XML input processed by the XML `Deserializer`.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Seokchan Yoon for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-54303",
-      "published": "2025-12-04T15:15:58.633",
-      "lastModified": "2025-12-16T21:00:13.787",
-      "description": "The Thermo Fisher Torrent Suite Django application 5.18.1 has weak default credentials, which are stored as fixtures for the Django ORM API. The ionadmin user account can be used to authenticate to default deployments with the password ionadmin. The user guide recommends changing default credentials; however, a password change policy for default administrative accounts is not enforced. Many deployments may retain default credentials, in which case an attacker is likely to be able to successfully authenticate with administrative privileges.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-54305",
-      "published": "2025-12-04T15:15:58.893",
-      "lastModified": "2025-12-16T18:50:09.257",
-      "description": "An issue was discovered in the Thermo Fisher Torrent Suite Django application 5.18.1. One of the middlewares included in this application, LocalhostAuthMiddleware, authenticates users as ionadmin if the REMOTE_ADDR property in request.META is set to 127.0.0.1, to 127.0.1.1, or to ::1. Any user with local access to the server may bypass authentication.",
-      "severity": "HIGH",
-      "cvss_score": 7.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-54306",
-      "published": "2025-12-04T15:15:59.030",
-      "lastModified": "2025-12-16T18:47:26.113",
-      "description": "An issue was discovered in the Thermo Fisher Torrent Suite Django application 5.18.1. A remote code execution vulnerability exists in the network configuration functionality, stemming from insufficient input validation when processing network configuration parameters through administrative endpoints. The application allows administrators to modify the server\u0026#39;s network configuration through the Django application. This configuration is processed by Bash scripts (TSsetnoproxy and TSsetproxy) that write user-controlled data directly to environment variables without proper sanitization. After updating environment variables, the scripts execute a source command on /etc/environment; if an attacker injects malicious data into environment variables, this command can enable arbitrary command execution. The vulnerability begins with the /admin/network endpoint, which passes user-supplied form data as arguments to subprocess.Popen calls. The user-supplied input is then used to update environment variables in TSsetnoproxy and TSsetproxy, and finally source $environment is executed.",
-      "severity": "HIGH",
-      "cvss_score": 7.2,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-54307",
-      "published": "2025-12-04T15:15:59.163",
-      "lastModified": "2025-12-16T18:46:24.243",
-      "description": "An issue was discovered in the Thermo Fisher Torrent Suite Django application 5.18.1. The /configure/plugins/plugin/upload/zip/ and /configure/newupdates/offline/bundle/upload/ endpoints allow low-privilege users to upload ZIP files to the server. The plupload_file_upload function handles these file uploads and constructs the destination file path by using either the name parameter or the uploaded filename, neither of which is properly sanitized. The file extension is extracted by splitting the filename, and a format string is used to construct the final file path, leaving the destination path vulnerable to path traversal. An authenticated attacker with network connectivity can write arbitrary files to the server, enabling remote code execution after overwriting an executable file. An example is the pdflatex executable, which is executed through subprocess.Popen in the write_report_pdf function after requests to a /report/latex/(\\d+).pdf endpoint.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-13473",
-      "published": "2026-02-03T15:16:11.593",
-      "lastModified": "2026-02-04T17:10:36.833",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\nThe `django.contrib.auth.handlers.modwsgi.check_password()` function for authentication via `mod_wsgi` allows remote attackers to enumerate users via a timing attack.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Stackered for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2025-14550",
-      "published": "2026-02-03T15:16:11.750",
-      "lastModified": "2026-02-04T17:09:58.100",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\n`ASGIRequest` allows a remote attacker to cause a potential denial-of-service via a crafted request with multiple duplicate headers.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Jiyong Yang for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-1207",
-      "published": "2026-02-03T15:16:13.433",
-      "lastModified": "2026-02-04T17:34:46.147",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\nRaster lookups on ``RasterField`` (only implemented on PostGIS) allows remote attackers to inject SQL via the band index parameter.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Tarek Nakkouch for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-1285",
-      "published": "2026-02-03T15:16:13.570",
-      "lastModified": "2026-02-04T17:09:01.357",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\n`django.utils.text.Truncator.chars()` and `Truncator.words()` methods (with `html=True`) and the `truncatechars_html` and `truncatewords_html` template filters allow a remote attacker to cause a potential denial-of-service via crafted inputs containing a large number of unmatched HTML end tags.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Seokchan Yoon for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-1287",
-      "published": "2026-02-03T15:16:13.703",
-      "lastModified": "2026-02-04T17:35:11.553",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\n`FilteredRelation` is subject to SQL injection in column aliases via control characters, using a suitably crafted dictionary, with dictionary expansion, as the `**kwargs` passed to `QuerySet` methods `annotate()`, `aggregate()`, `extra()`, `values()`, `values_list()`, and `alias()`.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Solomon Kebede for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-1312",
-      "published": "2026-02-03T15:16:13.833",
-      "lastModified": "2026-02-04T17:35:02.120",
-      "description": "An issue was discovered in 6.0 before 6.0.2, 5.2 before 5.2.11, and 4.2 before 4.2.28.\n`.QuerySet.order_by()` is subject to SQL injection in column aliases containing periods when the same alias is, using a suitably crafted dictionary, with dictionary expansion, used in `FilteredRelation`.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Solomon Kebede for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.4,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-25517",
-      "published": "2026-02-04T21:16:02.540",
-      "lastModified": "2026-02-20T21:20:34.090",
-      "description": "Wagtail is an open source content management system built on Django. Prior to versions 6.3.6, 7.0.4, 7.1.3, 7.2.2, and 7.3, due to a missing permission check on the preview endpoints, a user with access to the Wagtail admin and knowledge of a model\u0026#39;s fields can craft a form submission to obtain a preview rendering of any page, snippet or site setting object for which previews are enabled, consisting of any data of the user\u0026#39;s choosing. The existing data of the object itself is not exposed, but depending on the nature of the template being rendered, this may expose other database contents that would otherwise only be accessible to users with edit access over the model. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. This issue has been patched in versions 6.3.6, 7.0.4, 7.1.3, 7.2.2, and 7.3.",
-      "severity": "LOW",
-      "cvss_score": 2.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-25526",
-      "published": "2026-02-04T22:15:59.510",
-      "lastModified": "2026-02-20T21:00:42.130",
-      "description": "JinJava is a Java-based template engine based on django template syntax, adapted to render jinja templates. Prior to versions 2.7.6 and 2.8.3, JinJava is vulnerable to arbitrary Java execution via bypass through ForTag. This allows arbitrary Java class instantiation and file access bypassing built-in sandbox restrictions. This issue has been patched in versions 2.7.6 and 2.8.3.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-2250",
-      "published": "2026-02-11T15:16:17.760",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "The /dbviewer/ web endpoint in METIS WIC devices is exposed without authentication. A remote attacker can access and export the internal telemetry SQLite database containing sensitive operational data. Additionally, the application is configured with debug mode enabled, causing malformed requests to return verbose Django tracebacks that disclose backend source code, local file paths, and system configuration.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-25673",
-      "published": "2026-03-03T15:16:19.103",
-      "lastModified": "2026-03-05T14:12:38.110",
-      "description": "An issue was discovered in 6.0 before 6.0.3, 5.2 before 5.2.12, and 4.2 before 4.2.29.\n`URLField.to_python()` in Django calls `urllib.parse.urlsplit()`, which performs NFKC normalization on Windows that is disproportionately slow for certain Unicode characters, allowing a remote attacker to cause denial of service via large URL inputs containing these characters.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Seokchan Yoon for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-25674",
-      "published": "2026-03-03T15:16:19.280",
-      "lastModified": "2026-03-05T14:07:03.600",
-      "description": "An issue was discovered in 6.0 before 6.0.3, 5.2 before 5.2.12, and 4.2 before 4.2.29.\nRace condition in file-system storage and file-based cache backends in Django allows an attacker to cause file system objects to be created with incorrect permissions via concurrent requests, where one thread\u0026#39;s temporary `umask` change affects other threads in multi-threaded environments.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Tarek Nakkouch for reporting this issue.",
-      "severity": "LOW",
-      "cvss_score": 3.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-27982",
-      "published": "2026-03-05T06:16:30.100",
-      "lastModified": "2026-03-09T18:41:21.237",
-      "description": "An open redirect vulnerability exists in django-allauth versions prior to 65.14.1 when SAML IdP initiated SSO is enabled (it is disabled by default), which may allow an attacker to redirect users to an arbitrary external website via a crafted URL.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-28222",
-      "published": "2026-03-05T20:16:15.277",
-      "lastModified": "2026-03-09T20:54:53.927",
-      "description": "Wagtail is an open source content management system built on Django. Prior to versions 6.3.8, 7.0.6, 7.2.3, and 7.3.1, a stored cross-site scripting (XSS) vulnerability exists on rendering TableBlock blocks within a StreamField. A user with access to create or edit pages containing TableBlock StreamField blocks is able to set specially-crafted class attributes on the block which run arbitrary JavaScript code when the page is viewed. When viewed by a user with higher privileges, this could lead to performing actions with that user\u0026#39;s credentials. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin, and only affects sites using TableBlock. This issue has been patched in versions 6.3.8, 7.0.6, 7.2.3, and 7.3.1.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-28223",
-      "published": "2026-03-05T20:16:15.493",
-      "lastModified": "2026-03-09T20:54:40.870",
-      "description": "Wagtail is an open source content management system built on Django. Prior to versions 6.3.8, 7.0.6, 7.2.3, and 7.3.1, a stored cross-site scripting (XSS) vulnerability exists on confirmation messages within the wagtail.contrib.simple_translation module. A user with access to the Wagtail admin area may create a page with a specially-crafted title which, when another user performs the \u0026#34;Translate\u0026#34; action, causes arbitrary JavaScript code to run. This could lead to performing actions with that user\u0026#39;s credentials. The vulnerability is not exploitable by an ordinary site visitor without access to the Wagtail admin. This issue has been patched in versions 6.3.8, 7.0.6, 7.2.3, and 7.3.1.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-30244",
-      "published": "2026-03-06T22:16:01.900",
-      "lastModified": "2026-03-10T16:23:32.280",
-      "description": "Plane is an an open-source project management tool. Prior to version 1.2.2, unauthenticated attackers can enumerate workspace members and extract sensitive information including email addresses, user roles, and internal identifiers. The vulnerability stems from Django REST Framework permission classes being incorrectly configured to allow anonymous access to protected endpoints. This issue has been patched in version 1.2.2.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-31815",
-      "published": "2026-03-10T22:16:19.000",
-      "lastModified": "2026-03-18T19:36:52.713",
-      "description": "Unicorn adds modern reactive component functionality to your Django templates. Prior to 0.67.0, component state manipulation is possible in django-unicorn due to missing access control checks during property updates and method calls. An attacker can bypass the intended _is_public protection to modify internal attributes such as template_name or trigger protected methods. This vulnerability is fixed in 0.67.0.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33149",
-      "published": "2026-03-26T19:17:02.967",
-      "lastModified": "2026-04-23T15:11:56.983",
-      "description": "Tandoor Recipes is an application for managing recipes, planning meals, and building shopping lists. Versions up to and including 2.5.3 set ALLOWED_HOSTS = \u0026#39;*\u0026#39; by default, which causes Django to accept any value in the HTTP Host header without validation. The application uses request.build_absolute_uri() to generate absolute URLs in multiple contexts, including invite link emails, API pagination, and OpenAPI schema generation. An attacker who can send requests to the application with a crafted Host header can manipulate all server-generated absolute URLs. The most critical impact is invite link poisoning: when an admin creates an invite and the application sends the invite email, the link points to the attacker\u0026#39;s server instead of the real application. When the victim clicks the link, the invite token is sent to the attacker, who can then use it at the real application. As of time of publication, it is unknown if a patched version is available.",
-      "severity": "HIGH",
-      "cvss_score": 8.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33152",
-      "published": "2026-03-26T19:17:03.147",
-      "lastModified": "2026-03-30T19:18:18.253",
-      "description": "Tandoor Recipes is an application for managing recipes, planning meals, and building shopping lists. In versions prior to 2.6.0, Tandoor Recipes configures Django REST Framework with BasicAuthentication as one of the default authentication backends. The AllAuth rate limiting configuration (ACCOUNT_RATE_LIMITS: login: 5/m/ip) only applies to the HTML-based login endpoint at /accounts/login/. Any API endpoint that accepts authenticated requests can be targeted via Authorization: Basic headers with zero rate limiting, zero account lockout, and unlimited attempts. An attacker can perform high-speed password guessing against any known username. Version 2.6.0 patches the issue.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33153",
-      "published": "2026-03-26T19:17:03.313",
-      "lastModified": "2026-03-30T19:16:16.650",
-      "description": "Tandoor Recipes is an application for managing recipes, planning meals, and building shopping lists. In versions prior to 2.6.0, the Recipe API endpoint exposes a hidden `?debug=true` query parameter that returns the complete raw SQL query being executed, including all table names, column names, JOIN relationships, WHERE conditions (revealing access control logic), and multi-tenant space IDs. This parameter works even when Django\u0026#39;s `DEBUG=False` (production mode) and is accessible to any authenticated user regardless of their privilege level. This allows a low-privilege attacker to map the entire database schema and reverse-engineer the authorization model. Version 2.6.0 patches the issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33530",
-      "published": "2026-03-26T20:16:15.237",
-      "lastModified": "2026-04-01T18:48:48.383",
-      "description": "InvenTree is an Open Source Inventory Management System. Prior to version 1.2.6, certain API endpoints associated with bulk data operations can be hijacked to exfiltrate sensitive information from the database. The bulk operation API endpoints (e.g. `/api/part/`, `/api/stock/`, `/api/order/so/allocation/`, and others) accept a filters parameter that is passed directly to Django\u0026#39;s ORM queryset.filter(**filters) without any field allowlisting. This enables any authenticated user to traverse model relationships using Django\u0026#39;s __ lookup syntax and perform blind boolean-based data extraction. This issue is patched in version 1.2.6, and 1.3.0 (or above). Users should update to the patched versions. No known workarounds are available.",
-      "severity": "HIGH",
-      "cvss_score": 7.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-34231",
-      "published": "2026-03-31T16:16:32.603",
-      "lastModified": "2026-04-03T14:51:03.493",
-      "description": "Slippers is a UI component framework for Django. Prior to version 0.6.3, a Cross-Site Scripting (XSS) vulnerability exists in the {% attrs %} template tag of the slippers Django package. When a context variable containing untrusted data is passed to {% attrs %}, the value is interpolated into an HTML attribute string without escaping, allowing an attacker to break out of the attribute context and inject arbitrary HTML or JavaScript into the rendered page. This issue has been patched in version 0.6.3.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-34203",
-      "published": "2026-03-31T20:16:28.360",
-      "lastModified": "2026-04-07T16:10:20.773",
-      "description": "Nautobot is a Network Source of Truth and Network Automation Platform. Prior to versions 2.4.30 and 3.0.10, user creation and editing via the REST API fails to apply the password validation rules defined by Django\u0026#39;s AUTH_PASSWORD_VALIDATORS setting (which defaults to an empty list, i.e., no specific rules, but can be configured in Nautobot\u0026#39;s nautobot_config.py to apply various rules if desired). This can potentially allow for the creation or modification of users to have passwords that are weak or otherwise do not comply with configured standards. This issue has been patched in versions 2.4.30 and 3.0.10.",
-      "severity": "LOW",
-      "cvss_score": 2.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-34406",
-      "published": "2026-03-31T22:16:18.990",
-      "lastModified": "2026-04-10T15:43:33.397",
-      "description": "APTRS (Automated Penetration Testing Reporting System) is a Python and Django-based automated reporting tool designed for penetration testers and security organizations. Prior to version 2.0.1, the edit_user endpoint (POST /api/auth/edituser/\u0026lt;pk\u0026gt;) allows Any user who can reach that endpoint and submit crafted permission to escalate their own account (or any other account) to superuser by including \u0026#34;is_superuser\u0026#34;: true in the request body. The root cause is that CustomUserSerializer explicitly includes is_superuser in its fields list but omits it from read_only_fields, making it a writable field. The edit_user view performs no additional validation to prevent non-superusers from modifying this field. Once is_superuser is set to true, gaining unrestricted access to all application functionality without requiring re-authentication. This issue has been patched in version 2.0.1.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33033",
-      "published": "2026-04-07T15:17:39.220",
-      "lastModified": "2026-04-13T17:39:05.543",
-      "description": "An issue was discovered in 6.0 before 6.0.4, 5.2 before 5.2.13, and 4.2 before 4.2.30.\n`MultiPartParser` allows remote attackers to degrade performance by submitting multipart uploads with `Content-Transfer-Encoding: base64` including excessive whitespace.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Seokchan Yoon for reporting this issue.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-33034",
-      "published": "2026-04-07T15:17:39.393",
-      "lastModified": "2026-04-13T17:38:35.420",
-      "description": "An issue was discovered in 6.0 before 6.0.4, 5.2 before 5.2.13, and 4.2 before 4.2.30.\nASGI requests with a missing or understated `Content-Length` header could\r\nbypass the `DATA_UPLOAD_MAX_MEMORY_SIZE` limit when reading\r\n`HttpRequest.body`, allowing remote attackers to load an unbounded request body into\r\nmemory.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Superior for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-3902",
-      "published": "2026-04-07T15:17:46.353",
-      "lastModified": "2026-04-13T17:38:05.533",
-      "description": "An issue was discovered in 6.0 before 6.0.4, 5.2 before 5.2.13, and 4.2 before 4.2.30.\n`ASGIRequest` allows a remote attacker to spoof headers by exploiting an ambiguous mapping of two header variants (with hyphens or with underscores) to a single version with underscores.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Tarek Nakkouch for reporting this issue.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-4277",
-      "published": "2026-04-07T15:17:46.500",
-      "lastModified": "2026-04-13T17:37:29.620",
-      "description": "An issue was discovered in 6.0 before 6.0.4, 5.2 before 5.2.13, and 4.2 before 4.2.30.\nAdd permissions on inline model instances were not validated on submission of\r\nforged `POST` data in `GenericInlineModelAdmin`.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank N05ec@LZU-DSLab for reporting this issue.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-4292",
-      "published": "2026-04-07T15:17:46.650",
-      "lastModified": "2026-04-13T17:34:48.397",
-      "description": "An issue was discovered in 6.0 before 6.0.4, 5.2 before 5.2.13, and 4.2 before 4.2.30.\nAdmin changelist forms using `ModelAdmin.list_editable` incorrectly allowed new\r\ninstances to be created via forged `POST` data.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Cantina for reporting this issue.",
-      "severity": "LOW",
-      "cvss_score": 2.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-39362",
-      "published": "2026-04-08T20:16:25.077",
-      "lastModified": "2026-04-21T13:34:53.997",
-      "description": "InvenTree is an Open Source Inventory Management System. Prior to 1.2.7 and 1.3.0, when INVENTREE_DOWNLOAD_FROM_URL is enabled (opt-in), authenticated users can supply remote_image URLs that are fetched server-side via requests.get() with only Django\u0026#39;s URLValidator check. There is no validation against private IP ranges or internal hostnames. Redirects are followed (allow_redirects=True), enabling bypass of any URL-format checks. This vulnerability is fixed in 1.2.7 and 1.3.0.",
-      "severity": "HIGH",
-      "cvss_score": 7.1,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-40316",
-      "published": "2026-04-15T23:16:10.220",
-      "lastModified": "2026-04-17T15:38:09.243",
-      "description": "OWASP BLT is a QA testing and vulnerability disclosure platform that encompasses websites, apps, git repositories, and more. Versions prior to 2.1.1 contain an RCE vulnerability in the .github/workflows/regenerate-migrations.yml workflow. The workflow uses the pull_request_target trigger to run with full GITHUB_TOKEN write permissions, copies attacker-controlled files from untrusted pull requests into the trusted runner workspace via git show, and then executes python manage.py makemigrations, which imports Django model modules including attacker-controlled website/models.py at runtime. Any module-level Python code in the attacker\u0026#39;s models.py is executed during import, enabling arbitrary code execution in the privileged CI environment with access to GITHUB_TOKEN and repository secrets. The attack is triggerable by any external contributor who can open a pull request, provided a maintainer applies the regenerate-migrations label, potentially leading to secret exfiltration, repository compromise, and supply chain attacks. A patch for this issue is expected to be released in version 2.1.1.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6576",
-      "published": "2026-04-19T19:16:14.347",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A vulnerability was determined in liangliangyy DjangoBlog up to 2.1.0.0. The affected element is the function CommandHandler of the file servermanager/api/commonapi.py of the component WeChat Bot Interface. Executing a manipulation of the argument Source can lead to command injection. It is possible to launch the attack remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6577",
-      "published": "2026-04-19T20:16:28.837",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A vulnerability was identified in liangliangyy DjangoBlog up to 2.1.0.0. The impacted element is an unknown function of the file owntracks/views.py of the component logtracks Endpoint. The manipulation leads to missing authentication. The attack can be initiated remotely. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "HIGH",
-      "cvss_score": 7.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6578",
-      "published": "2026-04-19T22:16:35.133",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A security flaw has been discovered in liangliangyy DjangoBlog up to 2.1.0.0. This affects an unknown function of the file djangoblog/settings.py of the component Setting Handler. The manipulation of the argument SECRET_KEY results in hard-coded credentials. The attack can be launched remotely. The attack requires a high level of complexity. The exploitability is reported as difficult. The exploit has been released to the public and may be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.6,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6579",
-      "published": "2026-04-19T22:16:35.320",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A weakness has been identified in liangliangyy DjangoBlog up to 2.1.0.0. This impacts an unknown function of the file blog/views.py of the component Clean Endpoint. This manipulation causes missing authentication. The attack may be initiated remotely. The exploit has been made available to the public and could be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6580",
-      "published": "2026-04-19T23:16:33.697",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A security vulnerability has been detected in liangliangyy DjangoBlog up to 2.1.0.0. Affected is an unknown function of the file owntracks/views.py of the component Amap API Call Handler. Such manipulation of the argument key leads to use of hard-coded cryptographic key\r . The attack may be launched remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "HIGH",
-      "cvss_score": 7.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6609",
-      "published": "2026-04-20T06:16:22.050",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A flaw has been found in liangliangyy DjangoBlog up to 2.1.0.0. The affected element is the function form_valid of the file oauth/views.py. This manipulation of the argument oauthid causes improper authorization. The attack may be initiated remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.3,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6610",
-      "published": "2026-04-20T06:16:22.233",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A vulnerability has been found in liangliangyy DjangoBlog up to 2.1.0.0. The impacted element is an unknown function of the file djangoblog/settings.py of the component Setting Handler. Such manipulation of the argument USER/PASSWORD leads to hard-coded credentials. The attack may be launched remotely. The attack requires a high level of complexity. The exploitability is regarded as difficult. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "LOW",
-      "cvss_score": 3.7,
-      "affected_package": "Django"
-    },
-    {
-      "cve_id": "CVE-2026-6611",
-      "published": "2026-04-20T07:16:15.650",
-      "lastModified": "2026-04-22T20:22:50.570",
-      "description": "A vulnerability was found in liangliangyy DjangoBlog up to 2.1.0.0. This affects an unknown function of the file djangoblog/settings.py of the component File Upload Endpoint. Performing a manipulation of the argument SECRET_KEY results in use of hard-coded cryptographic key\r . Remote exploitation of the attack is possible. The attack\u0026#39;s complexity is rated as high. The exploitability is reported as difficult. The exploit has been made public and could be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-      "severity": "LOW",
-      "cvss_score": 3.1,
-      "affected_package": "Django"
     },
     {
       "cve_id": "CVE-2005-1744",
@@ -9800,6 +8169,15 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2024-44011",
+      "published": "2024-10-05T11:15:11.050",
+      "lastModified": "2026-04-23T15:18:58.710",
+      "description": "Improper Limitation of a Pathname to a Restricted Directory (\u0026#39;Path Traversal\u0026#39;) vulnerability in ExpressTech Systems WP Ticket Ultra Help Desk \u0026amp; Support Plugin wp-ticket-ultra allows PHP Local File Inclusion.This issue affects WP Ticket Ultra Help Desk \u0026amp; Support Plugin: from n/a through \u0026lt;= 1.0.5.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2024-25885",
       "published": "2024-10-08T18:15:05.423",
       "lastModified": "2026-04-15T00:35:42.020",
@@ -10034,6 +8412,15 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2024-52474",
+      "published": "2024-11-28T11:15:48.860",
+      "lastModified": "2026-04-23T15:21:15.200",
+      "description": "Improper Neutralization of Special Elements used in an SQL Command (\u0026#39;SQL Injection\u0026#39;) vulnerability in Сервис \u0026#34;Экспресс Платежи\u0026#34; Express Payments Module express-pay allows Blind SQL Injection.This issue affects Express Payments Module: from n/a through \u0026lt;= 1.1.8.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.3,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2024-53111",
       "published": "2024-12-02T14:15:11.903",
       "lastModified": "2025-10-01T21:16:32.597",
@@ -10063,10 +8450,19 @@
     {
       "cve_id": "CVE-2023-37984",
       "published": "2024-12-13T15:15:18.597",
-      "lastModified": "2026-04-15T00:35:42.020",
-      "description": "Missing Authorization vulnerability in ExpressTech Quiz And Survey Master allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Quiz And Survey Master: from n/a through 8.1.10.",
+      "lastModified": "2026-04-23T15:17:34.990",
+      "description": "Missing Authorization vulnerability in ExpressTech Systems Quiz And Survey Master quiz-master-next allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Quiz And Survey Master: from n/a through \u0026lt;= 8.1.10.",
       "severity": "MEDIUM",
       "cvss_score": 4.3,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2024-54305",
+      "published": "2024-12-13T15:15:35.033",
+      "lastModified": "2026-04-23T15:22:06.187",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in jtexpress J\u0026amp;T Express Malaysia jt-express allows Reflected XSS.This issue affects J\u0026amp;T Express Malaysia: from n/a through \u0026lt;= 2.0.13.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
       "affected_package": "express"
     },
     {
@@ -10112,6 +8508,15 @@
       "description": "The Email Subscribers by Icegram Express  WordPress plugin before 5.7.44 does not sanitize and escape a parameter before using it in a SQL statement, allowing admins to perform SQL injection attacks",
       "severity": "MEDIUM",
       "cvss_score": 6.5,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2024-49249",
+      "published": "2025-01-07T11:15:07.243",
+      "lastModified": "2026-04-23T15:19:30.740",
+      "description": "Path Traversal: \u0026#39;.../...//\u0026#39; vulnerability in SMSA Express SMSA Shipping smsa-shipping-official allows Path Traversal.This issue affects SMSA Shipping: from n/a through \u0026lt;= 2.3.",
+      "severity": "HIGH",
+      "cvss_score": 8.6,
       "affected_package": "express"
     },
     {
@@ -10205,6 +8610,24 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2025-24664",
+      "published": "2025-01-27T14:15:29.197",
+      "lastModified": "2026-04-23T15:25:14.630",
+      "description": "Improper Neutralization of Special Elements used in an SQL Command (\u0026#39;SQL Injection\u0026#39;) vulnerability in enituretechnology LTL Freight Quotes – Worldwide Express Edition ltl-freight-quotes-worldwide-express-edition allows SQL Injection.This issue affects LTL Freight Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.0.20.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.3,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-24667",
+      "published": "2025-01-27T15:15:15.563",
+      "lastModified": "2026-04-23T15:25:14.980",
+      "description": "Improper Neutralization of Special Elements used in an SQL Command (\u0026#39;SQL Injection\u0026#39;) vulnerability in enituretechnology Small Package Quotes – Worldwide Express Edition small-package-quotes-wwe-edition allows SQL Injection.This issue affects Small Package Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.2.17.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.3,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2025-24374",
       "published": "2025-01-29T16:15:44.090",
       "lastModified": "2026-04-15T00:35:42.020",
@@ -10281,6 +8704,24 @@
       "published": "2025-02-14T20:15:35.593",
       "lastModified": "2026-04-15T00:35:42.020",
       "description": "@octokit/request sends parameterized requests to GitHub’s APIs with sensible defaults in browsers and Node. Starting in version 1.0.0 and prior to versions 9.2.1 and 8.4.1, the regular expression `/\u0026lt;([^\u0026gt;]+)\u0026gt;; rel=\u0026#34;deprecation\u0026#34;/` used to match the `link` header in HTTP responses is vulnerable to a ReDoS (Regular Expression Denial of Service) attack. This vulnerability arises due to the unbounded nature of the regex\u0026#39;s matching behavior, which can lead to catastrophic backtracking when processing specially crafted input. An attacker could exploit this flaw by sending a malicious `link` header, resulting in excessive CPU usage and potentially causing the server to become unresponsive, impacting service availability. Versions 9.2.1 and 8.4.1 fix the issue.",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-22286",
+      "published": "2025-02-16T23:15:09.427",
+      "lastModified": "2026-04-23T15:22:56.890",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in enituretechnology LTL Freight Quotes – Worldwide Express Edition ltl-freight-quotes-worldwide-express-edition allows Reflected XSS.This issue affects LTL Freight Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.0.21.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-22291",
+      "published": "2025-02-16T23:15:09.877",
+      "lastModified": "2026-04-23T15:22:57.240",
+      "description": "Missing Authorization vulnerability in enituretechnology LTL Freight Quotes – Worldwide Express Edition ltl-freight-quotes-worldwide-express-edition allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects LTL Freight Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.0.20.",
       "severity": "MEDIUM",
       "cvss_score": 5.3,
       "affected_package": "express"
@@ -10364,6 +8805,15 @@
       "description": "IBM EntireX 11.1 could allow a local user to cause a denial of service due to use of a regular expression with an inefficient complexity that consumes excessive CPU cycles.",
       "severity": "MEDIUM",
       "cvss_score": 5.5,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-27268",
+      "published": "2025-03-03T14:15:58.260",
+      "lastModified": "2026-04-23T15:26:15.957",
+      "description": "Improper Neutralization of Special Elements used in an SQL Command (\u0026#39;SQL Injection\u0026#39;) vulnerability in enituretechnology Small Package Quotes – Worldwide Express Edition small-package-quotes-wwe-edition allows SQL Injection.This issue affects Small Package Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.2.18.",
+      "severity": "CRITICAL",
+      "cvss_score": 9.3,
       "affected_package": "express"
     },
     {
@@ -10493,6 +8943,24 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2025-31078",
+      "published": "2025-04-01T21:15:46.297",
+      "lastModified": "2026-04-23T15:27:39.860",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in enituretechnology Small Package Quotes – Worldwide Express Edition small-package-quotes-wwe-edition allows Reflected XSS.This issue affects Small Package Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.2.18.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-30915",
+      "published": "2025-04-03T14:15:34.623",
+      "lastModified": "2026-04-23T15:27:19.160",
+      "description": "Missing Authorization vulnerability in enituretechnology Small Package Quotes – Worldwide Express Edition small-package-quotes-wwe-edition allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Small Package Quotes – Worldwide Express Edition: from n/a through \u0026lt;= 5.2.19.",
+      "severity": "MEDIUM",
+      "cvss_score": 6.5,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2025-32379",
       "published": "2025-04-09T16:15:25.903",
       "lastModified": "2026-01-14T14:36:06.413",
@@ -10520,12 +8988,30 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2025-32605",
+      "published": "2025-04-17T16:15:46.147",
+      "lastModified": "2026-04-23T15:29:11.817",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in expresstechsoftware MemberPress Discord Addon expresstechsoftwares-memberpress-discord-add-on allows Reflected XSS.This issue affects MemberPress Discord Addon: from n/a through \u0026lt;= 1.1.1.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2024-13926",
       "published": "2025-04-19T06:15:18.347",
       "lastModified": "2025-05-28T15:50:23.510",
       "description": "The WP-Syntax WordPress plugin through 1.2 does not properly handle input, allowing an attacker to create a post containing a large number of tags, thereby exploiting a catastrophic backtracking issue in the regular expression processing to cause a DoS.",
       "severity": "HIGH",
       "cvss_score": 7.5,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-46499",
+      "published": "2025-04-24T16:15:40.780",
+      "lastModified": "2026-04-23T15:30:07.270",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in hccoder PayPal Express Checkout paypal-express-checkout allows Stored XSS.This issue affects PayPal Express Checkout: from n/a through \u0026lt;= 2.1.2.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
       "affected_package": "express"
     },
     {
@@ -10889,6 +9375,15 @@
       "affected_package": "express"
     },
     {
+      "cve_id": "CVE-2025-27361",
+      "published": "2025-06-27T12:15:31.760",
+      "lastModified": "2026-04-23T15:26:26.650",
+      "description": "Improper Neutralization of Input During Web Page Generation (\u0026#39;Cross-site Scripting\u0026#39;) vulnerability in thhake Photo Express for Google photo-express-for-google allows Reflected XSS.This issue affects Photo Express for Google: from n/a through \u0026lt;= 0.3.2.",
+      "severity": "HIGH",
+      "cvss_score": 7.1,
+      "affected_package": "express"
+    },
+    {
       "cve_id": "CVE-2025-49521",
       "published": "2025-06-30T21:15:31.063",
       "lastModified": "2026-04-15T00:35:42.020",
@@ -11057,6 +9552,15 @@
       "description": "Fiber is an Express inspired web framework written in Go. In versions 2.52.8 and below, when using Fiber\u0026#39;s Ctx.BodyParser to parse form data containing a large numeric key that represents a slice index (e.g., test.18446744073704), the application crashes due to an out-of-bounds slice allocation in the underlying schema decoder. The root cause is that the decoder attempts to allocate a slice of length idx + 1 without validating whether the index is within a safe or reasonable range. If the idx is excessively large, this leads to an integer overflow or memory exhaustion, causing a panic or crash. This is fixed in version 2.52.9.",
       "severity": "HIGH",
       "cvss_score": 7.5,
+      "affected_package": "express"
+    },
+    {
+      "cve_id": "CVE-2025-55708",
+      "published": "2025-08-14T19:15:42.677",
+      "lastModified": "2026-04-23T15:32:56.057",
+      "description": "Improper Neutralization of Special Elements used in an SQL Command (\u0026#39;SQL Injection\u0026#39;) vulnerability in ExpressTech Systems Quiz And Survey Master quiz-master-next allows SQL Injection.This issue affects Quiz And Survey Master: from n/a through \u0026lt;= 10.2.4.",
+      "severity": "HIGH",
+      "cvss_score": 8.5,
       "affected_package": "express"
     },
     {
@@ -11413,7 +9917,7 @@
     {
       "cve_id": "CVE-2025-62052",
       "published": "2025-10-22T15:16:04.667",
-      "lastModified": "2026-04-15T00:35:42.020",
+      "lastModified": "2026-04-23T15:34:28.153",
       "description": "Missing Authorization vulnerability in Horea Radu One Page Express Companion one-page-express-companion.This issue affects One Page Express Companion: from n/a through \u0026lt;= 1.6.43.",
       "severity": "MEDIUM",
       "cvss_score": 4.3,
@@ -11566,7 +10070,7 @@
     {
       "cve_id": "CVE-2025-63054",
       "published": "2025-12-09T16:18:10.703",
-      "lastModified": "2026-04-15T00:35:42.020",
+      "lastModified": "2026-04-23T15:35:01.223",
       "description": "Missing Authorization vulnerability in ExpressTech Systems Quiz And Survey Master quiz-master-next allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Quiz And Survey Master: from n/a through \u0026lt;= 10.3.2.",
       "severity": "MEDIUM",
       "cvss_score": 5.3,
@@ -11719,10 +10223,10 @@
     {
       "cve_id": "CVE-2025-68038",
       "published": "2025-12-24T13:16:19.807",
-      "lastModified": "2026-04-15T00:35:42.020",
+      "lastModified": "2026-04-23T15:35:51.853",
       "description": "Deserialization of Untrusted Data vulnerability in Icegram Icegram Express Pro email-subscribers-premium allows Object Injection.This issue affects Icegram Express Pro: from n/a through \u0026lt; 5.9.14.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
+      "severity": "HIGH",
+      "cvss_score": 7.2,
       "affected_package": "express"
     },
     {
@@ -11908,10 +10412,10 @@
     {
       "cve_id": "CVE-2026-24358",
       "published": "2026-01-22T17:16:39.570",
-      "lastModified": "2026-04-15T00:35:42.020",
+      "lastModified": "2026-04-23T15:36:41.997",
       "description": "Missing Authorization vulnerability in ExpressTech Systems Quiz And Survey Master quiz-master-next allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Quiz And Survey Master: from n/a through \u0026lt;= 10.3.3.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
+      "severity": "MEDIUM",
+      "cvss_score": 4.3,
       "affected_package": "express"
     },
     {
@@ -12282,375 +10786,15 @@
       "severity": "HIGH",
       "cvss_score": 7.5,
       "affected_package": "express"
-    },
-    {
-      "cve_id": "CVE-2001-0827",
-      "published": "2001-12-06T05:00:00.000",
-      "lastModified": "2026-04-16T00:27:16.627",
-      "description": "Cerberus FTP server 1.0 - 1.5 allows remote attackers to cause a denial of service (crash) via a large number of \u0026#34;PASV\u0026#34; requests.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2003-0252",
-      "published": "2003-08-18T04:00:00.000",
-      "lastModified": "2026-04-16T00:27:16.627",
-      "description": "Off-by-one error in the xlog function of mountd in the Linux NFS utils package (nfs-utils) before 1.0.4 allows remote attackers to cause a denial of service and possibly execute arbitrary code via certain RPC requests to mountd that do not contain newlines.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2003-0899",
-      "published": "2003-11-03T05:00:00.000",
-      "lastModified": "2026-04-16T00:27:16.627",
-      "description": "Buffer overflow in defang in libhttpd.c for thttpd 2.21 to 2.23b1 allows remote attackers to execute arbitrary code via requests that contain \u0026#39;\u0026lt;\u0026#39; or \u0026#39;\u0026gt;\u0026#39; characters, which trigger the overflow when the characters are expanded to \u0026#34;\u0026amp;lt;\u0026#34; and \u0026#34;\u0026amp;gt;\u0026#34; sequences.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2003-0981",
-      "published": "2004-01-05T05:00:00.000",
-      "lastModified": "2026-04-16T00:27:16.627",
-      "description": "FreeScripts VisitorBook LE (visitorbook.pl) logs the reverse DNS name of a visiting host, which allows remote attackers to spoof the origin of their incoming requests and facilitate cross-site scripting (XSS) attacks.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.1,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2004-0389",
-      "published": "2004-06-01T04:00:00.000",
-      "lastModified": "2026-04-16T00:27:16.627",
-      "description": "RealNetworks Helix Universal Server 9.0.1 and 9.0.2 allows remote attackers to cause a denial of service (crash) via malformed requests that trigger a null dereference, as demonstrated using (1) GET_PARAMETER or (2) DESCRIBE requests.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2006-5779",
-      "published": "2006-11-07T18:07:00.000",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "OpenLDAP before 2.3.29 allows remote attackers to cause a denial of service (daemon crash) via LDAP BIND requests with long authcid names, which triggers an assertion failure.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2007-3194",
-      "published": "2007-06-12T23:30:00.000",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Multiple PHP remote file inclusion vulnerabilities in myBloggie 2.1.5 allow remote attackers to execute arbitrary PHP code via a URL in the bloggie_root_path parameter to (1) config.php; (2) db.php, (3) template.php, (4) functions.php, and (5) classes.php in includes/; (6) viewmode.php; and (7) blog_body.php.  NOTE: another researcher disputes the vulnerability because the files are protected against direct requests, contain no relevant include statements, or do not exist",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2007-4290",
-      "published": "2007-08-09T21:17:00.000",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Multiple PHP remote file inclusion vulnerabilities in Guestbook Script 1.9 allow remote attackers to execute arbitrary PHP code via a URL in the script_root parameter to (1) delete.php, (2) edit.php, or (3) inc/common.inc.php; or (4) database.php, (5) entries.php, (6) index.php, (7) logout.php, or (8) settings.php in admin/.  NOTE: a third party disputes this vulnerability, noting that these scripts defend against direct requests",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2007-5097",
-      "published": "2007-09-26T22:17:00.000",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "PHP remote file inclusion vulnerability in lib/classes/offl_nflteam.php in Online Fantasy Football League (OFFL) 0.2.6 allows remote attackers to execute arbitrary PHP code via a URL in the DOC_ROOT parameter.  NOTE: this issue is disputed by CVE because a __FILE__ test protects offl_nflteam.php against direct requests",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2008-5038",
-      "published": "2008-11-12T21:09:03.050",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Use-after-free vulnerability in the NetWare Core Protocol (NCP) feature in Novell eDirectory 8.7.3 SP10 before 8.7.3 SP10 FTF1 and 8.8 SP2 for Windows allows remote attackers to cause a denial of service and possibly execute arbitrary code via a sequence of \u0026#34;Get NCP Extension Information By Name\u0026#34; requests that cause one thread to operate on memory after it has been freed in another thread, which triggers memory corruption, aka Novell Bug 373852.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2008-5180",
-      "published": "2008-11-20T15:30:00.390",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Microsoft Communicator, and Communicator in Microsoft Office 2010 beta, allows remote attackers to cause a denial of service (memory consumption) via a large number of SIP INVITE requests, which trigger the creation of many sessions.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2009-3022",
-      "published": "2009-08-31T20:30:01.047",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Cross-site request forgery (CSRF) vulnerability in bingo!CMS 1.2 and earlier allows remote attackers to hijack the authentication of other users for requests that modify configuration or change content via unspecified vectors.",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2009-3520",
-      "published": "2009-10-01T15:30:00.420",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Cross-site request forgery (CSRF) vulnerability in the Your_account module in CMSphp 0.21 allows remote attackers to hijack the authentication of administrators for requests that change an administrator password via the pseudo, pwd, and uid parameters in an admin_info_user_verif action.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2009-2699",
-      "published": "2009-10-13T10:30:00.313",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "The Solaris pollset feature in the Event Port backend in poll/unix/port.c in the Apache Portable Runtime (APR) library before 1.3.9, as used in the Apache HTTP Server before 2.2.14 and other products, does not properly handle errors, which allows remote attackers to cause a denial of service (daemon hang) via unspecified HTTP requests, related to the prefork and event MPMs.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2009-3759",
-      "published": "2009-10-22T17:30:00.517",
-      "lastModified": "2026-04-23T00:35:47.467",
-      "description": "Multiple cross-site request forgery (CSRF) vulnerabilities in sample code in the XenServer Resource Kit in Citrix XenCenterWeb allow remote attackers to hijack the authentication of administrators for (1) requests that change the password via the username parameter to config/changepw.php or (2) stop a virtual machine via the stop_vmname parameter to hardstopvm.php.  NOTE: some of these details are obtained from third party information.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2010-0738",
-      "published": "2010-04-28T22:30:00.447",
-      "lastModified": "2026-04-22T14:37:41.760",
-      "description": "The JMX-Console web application in JBossAs in Red Hat JBoss Enterprise Application Platform (aka JBoss EAP or JBEAP) 4.2 before 4.2.0.CP09 and 4.3 before 4.3.0.CP08 performs access control only for the GET and POST methods, which allows remote attackers to send requests to this application\u0026#39;s GET handler by using a different method.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.3,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2010-2076",
-      "published": "2010-08-19T18:00:02.937",
-      "lastModified": "2025-04-11T00:51:21.963",
-      "description": "Apache CXF 2.0.x before 2.0.13, 2.1.x before 2.1.10, and 2.2.x before 2.2.9, as used in Apache ServiceMix, Apache Camel, Apache Chemistry, Apache jUDDI, Apache Geronimo, and other products, does not properly reject DTDs in SOAP messages, which allows remote attackers to read arbitrary files, send HTTP requests to intranet servers, or cause a denial of service (CPU and memory consumption) via a crafted DTD, as demonstrated by an entity declaration in a request to samples/wsdl_first_pure_xml, a similar issue to CVE-2010-1632.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2011-1889",
-      "published": "2011-06-16T20:55:02.543",
-      "lastModified": "2026-04-22T10:35:29.293",
-      "description": "The NSPLookupServiceNext function in the client in Microsoft Forefront Threat Management Gateway (TMG) 2010 allows remote attackers to execute arbitrary code via vectors involving unspecified requests, aka \u0026#34;TMG Firewall Client Memory Corruption Vulnerability.\u0026#34;",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2011-2189",
-      "published": "2011-10-10T10:55:05.503",
-      "lastModified": "2025-04-11T00:51:21.963",
-      "description": "net/core/net_namespace.c in the Linux kernel 2.6.32 and earlier does not properly handle a high rate of creation and cleanup of network namespaces, which makes it easier for remote attackers to cause a denial of service (memory consumption) via requests to a daemon that requires a separate namespace per connection, as demonstrated by vsftpd.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2012-0929",
-      "published": "2012-01-28T01:55:01.487",
-      "lastModified": "2025-04-11T00:51:21.963",
-      "description": "Multiple buffer overflows in Schneider Electric Modicon Quantum PLC allow remote attackers to cause a denial of service via malformed requests to the (1) FTP server or (2) HTTP server.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2012-6068",
-      "published": "2013-01-21T21:55:01.103",
-      "lastModified": "2025-07-02T20:15:28.747",
-      "description": "The Runtime Toolkit in CODESYS Runtime System 2.3.x and 2.4.x does not require authentication, which allows remote attackers to execute commands via the command-line interface in the TCP listener service or transfer files via requests to the TCP listener service.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2014-0780",
-      "published": "2014-04-25T05:12:07.787",
-      "lastModified": "2026-04-22T16:07:06.523",
-      "description": "Directory traversal vulnerability in NTWebServer in InduSoft Web Studio 7.1 before SP2 Patch 4 allows remote attackers to read administrative passwords in APP files, and consequently execute arbitrary code, via unspecified web requests.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2014-7255",
-      "published": "2014-12-05T17:59:03.993",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "Internet Initiative Japan Inc. SEIL Series routers SEIL/X1 2.50 through 4.62, SEIL/X2 2.50 through 4.62, SEIL/B1 2.50 through 4.62, and SEIL/x86 Fuji 1.70 through 3.22 allow remote attackers to cause a denial of service (CPU and traffic consumption) via a large number of NTP requests within a short time, which causes unnecessary NTP responses to be sent.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2014-100005",
-      "published": "2015-01-13T11:59:04.477",
-      "lastModified": "2026-04-22T13:57:50.393",
-      "description": "Multiple cross-site request forgery (CSRF) vulnerabilities in D-Link DIR-600 router (rev. Bx) with firmware before 2.17b02 allow remote attackers to hijack the authentication of administrators for requests that (1) create an administrator account or (2) enable remote management via a crafted configuration module to hedwig.cgi, (3) activate new configuration settings via a SETCFG,SAVE,ACTIVATE action to pigwidgeon.cgi, or (4) send a ping via a ping action to diagnostic.php.",
-      "severity": "HIGH",
-      "cvss_score": 8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2015-1635",
-      "published": "2015-04-14T20:59:01.263",
-      "lastModified": "2026-04-22T16:42:38.730",
-      "description": "HTTP.sys in Microsoft Windows 7 SP1, Windows Server 2008 R2 SP1, Windows 8, Windows 8.1, and Windows Server 2012 Gold and R2 allows remote attackers to execute arbitrary code via crafted HTTP requests, aka \u0026#34;HTTP.sys Remote Code Execution Vulnerability.\u0026#34;",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2015-8840",
-      "published": "2016-04-08T00:59:00.120",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "The XML Data Archiving Service (XML DAS) in SAP NetWeaver AS Java does not check authorization, which allows remote authenticated users to obtain sensitive information, gain privileges, or possibly have unspecified other impact via requests to (1) webcontent/cas/cas_enter.jsp, (2) webcontent/cas/cas_validate.jsp, or (3) webcontent/aas/aas_store.jsp, aka SAP Security Note 1945215.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-0878",
-      "published": "2016-05-31T01:59:03.117",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "Moxa Secure Router EDR-G903 devices before 3.4.12 allow remote attackers to cause a denial of service (cold start) by sending two crafted ping requests.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-3956",
-      "published": "2016-07-02T14:59:19.417",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "The CLI in npm before 2.15.1 and 3.x before 3.8.3, as used in Node.js 0.10 before 0.10.44, 0.12 before 0.12.13, 4 before 4.4.2, and 5 before 5.10.0, includes bearer tokens with arbitrary requests, which allows remote HTTP servers to obtain sensitive information by reading Authorization headers.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-5403",
-      "published": "2016-08-02T16:59:03.153",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "The virtqueue_pop function in hw/virtio/virtio.c in QEMU allows local guest OS administrators to cause a denial of service (memory consumption and QEMU process crash) by submitting requests without waiting for completion.",
-      "severity": "MEDIUM",
-      "cvss_score": 5.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-1469",
-      "published": "2016-09-12T01:59:00.130",
-      "lastModified": "2025-04-12T10:46:40.837",
-      "description": "The HTTP framework on Cisco SPA300, SPA500, and SPA51x devices allows remote attackers to cause a denial of service (device outage) via a series of malformed HTTP requests, aka Bug ID CSCut67385.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-5521",
-      "published": "2017-01-17T09:59:00.333",
-      "lastModified": "2026-04-21T18:00:22.283",
-      "description": "An issue was discovered on NETGEAR R8500, R8300, R7000, R6400, R7300, R7100LG, R6300v2, WNDR3400v3, WNR3500Lv2, R6250, R6700, R6900, and R8000 devices. They are prone to password disclosure via simple crafted requests to the web management server. The bug is exploitable remotely if the remote management option is set, and can also be exploited given access to the router over LAN or WLAN. When trying to access the web panel, a user is asked to authenticate; if the authentication is canceled and password recovery is not enabled, the user is redirected to a page that exposes a password recovery token. If a user supplies the correct token to the page /passwordrecovered.cgi?id=TOKEN (and password recovery is not enabled), they will receive the admin password for the router. If password recovery is set the exploit will fail, as it will ask the user for the recovery questions that were previously set when enabling that feature. This is persistent (even after disabling the recovery option, the exploit will fail) because the router will ask for the security questions.",
-      "severity": "HIGH",
-      "cvss_score": 8.1,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-10181",
-      "published": "2017-01-30T04:59:00.390",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An issue was discovered on the D-Link DWR-932B router. qmiweb provides sensitive information for CfgType=get_homeCfg requests.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-5168",
-      "published": "2017-02-13T21:59:03.050",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An issue was discovered in Hanwha Techwin Smart Security Manager Versions 1.5 and prior. Multiple Path Traversal vulnerabilities have been identified. The flaws exist within the ActiveMQ Broker service that is installed as part of the product. By issuing specific HTTP requests, if a user visits a malicious page, an attacker can gain access to arbitrary files on the server. Smart Security Manager Versions 1.4 and prior to 1.31 are affected by these vulnerabilities. These vulnerabilities can allow for remote code execution.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-5169",
-      "published": "2017-02-13T21:59:03.067",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An issue was discovered in Hanwha Techwin Smart Security Manager Versions 1.5 and prior. Multiple Cross Site Request Forgery vulnerabilities have been identified. The flaws exist within the Redis and Apache Felix Gogo servers that are installed as part of this product. By issuing specific HTTP Post requests, an attacker can gain system level access to a remote shell session. Smart Security Manager Versions 1.5 and prior are affected by these vulnerabilities. These vulnerabilities can allow for remote code execution.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2012-1301",
-      "published": "2017-04-13T17:59:00.170",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "The FeedProxy.aspx script in Umbraco 4.7.0 allows remote attackers to proxy requests on their behalf via the \u0026#34;url\u0026#34; parameter.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-8712",
-      "published": "2017-04-13T19:59:00.207",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An exploitable nonce reuse vulnerability exists in the Web Application functionality of Moxa AWK-3131A Wireless AP running firmware 1.1. The device uses one nonce for all session authentication requests and only changes the nonce if the web application has been idle for 300 seconds.",
-      "severity": "HIGH",
-      "cvss_score": 8.1,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2016-8723",
-      "published": "2017-04-13T19:59:00.317",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "An exploitable null pointer dereference exists in the Web Application functionality of Moxa AWK-3131A Wireless Access Point running firmware 1.1. Any HTTP GET request not preceded by an \u0026#39;/\u0026#39; will cause a segmentation fault in the web server. An attacker can send any of a multitude of potentially unexpected HTTP get requests to trigger this vulnerability.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-7408",
-      "published": "2017-04-14T14:59:00.337",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "Palo Alto Networks Traps ESM Console before 3.4.4 allows attackers to cause a denial of service by leveraging improper validation of requests to revoke a Traps agent license.",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-7852",
-      "published": "2017-04-24T10:59:00.160",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "D-Link DCS cameras have a weak/insecure CrossDomain.XML file that allows sites hosting malicious Flash objects to access and/or change the device\u0026#39;s settings via a CSRF attack. This is because of the \u0026#39;allow-access-from domain\u0026#39; child element set to *, thus accepting requests from any domain. If a victim logged into the camera\u0026#39;s web console visits a malicious site hosting a malicious Flash file from another Browser tab, the malicious Flash file then can send requests to the victim\u0026#39;s DCS series Camera without knowing the credentials. An attacker can host a malicious Flash file that can retrieve Live Feeds or information from the victim\u0026#39;s DCS series Camera, add new admin users, or make other changes to the device. Known affected devices are DCS-933L with firmware before 1.13.05, DCS-5030L, DCS-5020L, DCS-2530L, DCS-2630L, DCS-930L, DCS-932L, and DCS-932LB1.",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "affected_package": "requests"
-    },
-    {
-      "cve_id": "CVE-2017-7895",
-      "published": "2017-04-28T10:59:00.160",
-      "lastModified": "2025-04-20T01:37:25.860",
-      "description": "The NFSv2 and NFSv3 server implementations in the Linux kernel through 4.10.13 lack certain checks for the end of a buffer, which allows remote attackers to trigger pointer-arithmetic errors or possibly have unspecified other impact via crafted requests, related to fs/nfsd/nfs3xdr.c and fs/nfsd/nfsxdr.c.",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "affected_package": "requests"
     }
   ],
   "statistics": {
-    "Total": 1396,
-    "Critical": 226,
-    "High": 550,
-    "Medium": 548,
-    "Low": 72
+    "Total": 1188,
+    "Critical": 194,
+    "High": 464,
+    "Medium": 477,
+    "Low": 53
   },
-  "total_deps": 17,
-  "scan_date": "2026-04-23 20:14:34"
+  "total_deps": 21,
+  "scan_date": "2026-04-23 20:40:13"
 }

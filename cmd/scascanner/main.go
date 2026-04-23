@@ -78,7 +78,7 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 
 	var mu sync.Mutex
 
-	workerCount := 5
+	workerCount := 2
 	jobs := make(chan models.Dependency, len(deps))
 
 	bar := progressbar.NewOptions(len(deps),

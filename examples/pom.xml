@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.vulnerable</groupId>
+    <artifactId>vulnerable-app</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <log4j.version>2.14.1</log4j.version> <!-- 🔥 Log4Shell -->
+        <spring.version>5.2.0.RELEASE</spring.version> <!-- старый Spring -->
+        <jackson.version>2.9.9</jackson.version> <!-- уязвимости десериализации -->
+    </properties>
+
+    <dependencies>
+
+        <!-- 🔥 CRITICAL: Log4Shell -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- 🔥 HIGH: уязвимый Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- ⚠️ устаревший Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- ⚠️ Apache Commons с уязвимостями -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <!-- ❌ test (должен игнорироваться) -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+</project>
