@@ -17,6 +17,7 @@ var (
 	projectPath string
 	outputPath  string
 	format      string
+	language    string
 )
 
 func main() {
@@ -30,6 +31,7 @@ func main() {
 	rootCmd.Flags().StringVarP(&projectPath, "path", "p", ".", "Path to the project to scan")
 	rootCmd.Flags().StringVarP(&outputPath, "out", "o", ".", "Path to the create report")
 	rootCmd.Flags().StringVarP(&format, "format", "f", "", "format of the report (html or json)")
+	rootCmd.Flags().StringVarP(&language, "language", "l", "all", "Programming language to scan (go, node, java, python, rust, or all)")
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("Error executing command: %v", err)
 	}
@@ -38,7 +40,7 @@ func main() {
 func rootExecuteble(projectPath string) {
 	fmt.Printf("Scanning project at path: %s\n", projectPath)
 	s := scanner.New()
-	deps, err := s.Scan(projectPath)
+	deps, err := s.Scan(projectPath, language)
 	if err != nil {
 		log.Fatalf("Error during scanning: %v", err)
 	}
@@ -102,6 +104,8 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 				vuln, err := s.SearchCVE(dep.Name, dep.Version)
 				if err != nil {
 					log.Printf("Error searching CVE for %s: %v", dep.Name, err)
+					bar.Add(1)
+					continue
 				}
 				if vuln != nil && len(vuln) > 0 {
 					mu.Lock()
