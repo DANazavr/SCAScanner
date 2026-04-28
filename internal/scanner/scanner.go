@@ -28,7 +28,7 @@ func (vs *VulnScanner) Scan(projectPath string) ([]models.Dependency, error) {
 		"package.json":     parsers.ParsePackageJSON,
 		"pom.xml":          parsers.ParsePomXML,
 		"requirements.txt": parsers.ParseRequirementsTxt,
-		"Cargo.toml":       parsers.ParseCargoToml,
+		"Сargo.toml":       parsers.ParseCargoToml,
 	}
 
 	err := filepath.WalkDir(projectPath, func(path string, d fs.DirEntry, err error) error {

@@ -78,7 +78,8 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 
 	var mu sync.Mutex
 
-	workerCount := 2
+	// Reduced to 1 worker since rate limiting is now handled per-request
+	workerCount := 1
 	jobs := make(chan models.Dependency, len(deps))
 
 	bar := progressbar.NewOptions(len(deps),
@@ -100,8 +101,9 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 			for dep := range jobs {
 				vuln, err := s.SearchCVE(dep.Name, dep.Version)
 				if err != nil {
-					log.Printf("Error searching CVE for %s: %v", dep.Name, err)
-				} else {
+					log.Printf("Warning: Could not find CVEs for %s (%s): %v", dep.Name, dep.Version, err)
+				}
+				if vuln != nil {
 					mu.Lock()
 					vulnerabilities = append(vulnerabilities, vuln...)
 					mu.Unlock()
