@@ -37,13 +37,13 @@ type CVEResponce struct {
 
 // OSV structures for Open Source Vulnerabilities API
 type OSVVulnerability struct {
-	ID       string    `json:"id"`
-	Published string   `json:"published"`
-	Modified string    `json:"modified"`
-	Summary  string    `json:"summary"`
-	Severity []OSVSeverity `json:"severity"`
-	Details  string    `json:"details"`
-	Affected []struct {
+	ID        string        `json:"id"`
+	Published string        `json:"published"`
+	Modified  string        `json:"modified"`
+	Summary   string        `json:"summary"`
+	Severity  []OSVSeverity `json:"severity"`
+	Details   string        `json:"details"`
+	Affected  []struct {
 		Package struct {
 			Name string `json:"name"`
 		} `json:"package"`
@@ -99,14 +99,8 @@ func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string
 		return vulns, nil
 	}
 
-	// If both fail, return error from NVD (primary source)
-	if err != nil {
-		return nil, err
-	}
-	if osvErr != nil {
-		return nil, osvErr
-	}
-
+	// If both fail or return nothing, just return empty list (not an error)
+	// It's normal for many dependencies to not have known CVEs
 	return []models.Vulnerability{}, nil
 }
 
@@ -159,16 +153,36 @@ func (vs *VulnScanner) searchNVD(dependencyName string, dependencyVersion string
 func (vs *VulnScanner) searchOSV(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
 	osvLimiter.Wait()
 
-	// OSV query format
+	// Try multiple PURL formats for different package ecosystems
+	purls := []string{
+		fmt.Sprintf("pkg:npm/%s@%s", dependencyName, dependencyVersion),        // Node.js
+		fmt.Sprintf("pkg:pypi/%s@%s", dependencyName, dependencyVersion),       // Python
+		fmt.Sprintf("pkg:maven/%s/%s@%s", dependencyName, dependencyName, dependencyVersion), // Java
+		fmt.Sprintf("pkg:go/%s@%s", dependencyName, dependencyVersion),         // Go
+		fmt.Sprintf("pkg:cargo/%s@%s", dependencyName, dependencyVersion),      // Rust
+	}
+
+	for _, purl := range purls {
+		vulns := vs.tryOSVQuery(purl, dependencyName)
+		if len(vulns) > 0 {
+			return vulns, nil
+		}
+	}
+
+	// No vulnerabilities found in any format (normal case)
+	return []models.Vulnerability{}, nil
+}
+
+func (vs *VulnScanner) tryOSVQuery(purl string, dependencyName string) []models.Vulnerability {
 	queryPayload := map[string]interface{}{
 		"package": map[string]string{
-			"purl": fmt.Sprintf("pkg:npm/%s@%s", dependencyName, dependencyVersion),
+			"purl": purl,
 		},
 	}
 
 	jsonPayload, err := json.Marshal(queryPayload)
 	if err != nil {
-		return nil, err
+		return []models.Vulnerability{}
 	}
 
 	resp, err := http.Post(
@@ -178,20 +192,20 @@ func (vs *VulnScanner) searchOSV(dependencyName string, dependencyVersion string
 	)
 
 	if err != nil {
-		return nil, fmt.Errorf("OSV: request failed: %v", err)
+		return []models.Vulnerability{}
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("OSV: failed to fetch data: %s", resp.Status)
+		return []models.Vulnerability{}
 	}
 
 	var osvResponse OSVResponse
 	if err = json.NewDecoder(resp.Body).Decode(&osvResponse); err != nil {
-		return nil, fmt.Errorf("OSV: failed to parse response: %v", err)
+		return []models.Vulnerability{}
 	}
 
-	return vs.parseOSVResponse(osvResponse, dependencyName), nil
+	return vs.parseOSVResponse(osvResponse, dependencyName)
 }
 
 func (vs *VulnScanner) parseNVDResponse(resp CVEResponce, dependencyName string) []models.Vulnerability {

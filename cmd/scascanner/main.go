@@ -101,9 +101,9 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 			for dep := range jobs {
 				vuln, err := s.SearchCVE(dep.Name, dep.Version)
 				if err != nil {
-					log.Printf("Warning: Could not find CVEs for %s (%s): %v", dep.Name, dep.Version, err)
+					log.Printf("Error searching CVE for %s: %v", dep.Name, err)
 				}
-				if vuln != nil {
+				if vuln != nil && len(vuln) > 0 {
 					mu.Lock()
 					vulnerabilities = append(vulnerabilities, vuln...)
 					mu.Unlock()
