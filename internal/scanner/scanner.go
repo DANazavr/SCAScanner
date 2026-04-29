@@ -1,8 +1,8 @@
-// Package scanner provides scanning the target file
 package scanner
 
 import (
 	"SCAScanner/internal/models"
+	"SCAScanner/pkg/cache"
 	"SCAScanner/pkg/parsers"
 	"io/fs"
 	"os"
@@ -14,10 +14,16 @@ type Scanner interface {
 	Analyze() error
 }
 
-type VulnScanner struct{}
+type VulnScanner struct {
+	cache cache.Cache
+}
 
 func New() *VulnScanner {
 	return &VulnScanner{}
+}
+
+func (vs *VulnScanner) SetCache(c cache.Cache) {
+	vs.cache = c
 }
 
 func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Dependency, error) {

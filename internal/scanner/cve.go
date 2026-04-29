@@ -3,6 +3,7 @@ package scanner
 import (
 	"SCAScanner/internal/models"
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -87,21 +88,46 @@ func (rl *RateLimiter) Wait() {
 }
 
 func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	cacheKey := fmt.Sprintf("cve:%s:%s", dependencyName, dependencyVersion)
+
+	// Try to get from cache first
+	if vs.cache != nil {
+		if vulns, err := vs.cache.Get(ctx, cacheKey); err == nil {
+			return vulns, nil
+		}
+	}
+
 	// Try NVD first with backoff
 	vulns, err := vs.searchNVD(dependencyName, dependencyVersion)
 	if err == nil && len(vulns) > 0 {
+		// Cache the result
+		if vs.cache != nil {
+			_ = vs.cache.Set(ctx, cacheKey, vulns)
+		}
 		return vulns, nil
 	}
 
 	// If NVD fails or returns nothing, try OSV as fallback
 	vulns, osvErr := vs.searchOSV(dependencyName, dependencyVersion)
 	if osvErr == nil && len(vulns) > 0 {
+		// Cache the result
+		if vs.cache != nil {
+			_ = vs.cache.Set(ctx, cacheKey, vulns)
+		}
 		return vulns, nil
 	}
 
-	// If both fail or return nothing, just return empty list (not an error)
+	// If both fail or return nothing, cache empty result to avoid repeated API calls
+	emptyVulns := []models.Vulnerability{}
+	if vs.cache != nil {
+		_ = vs.cache.Set(ctx, cacheKey, emptyVulns)
+	}
+
 	// It's normal for many dependencies to not have known CVEs
-	return []models.Vulnerability{}, nil
+	return emptyVulns, nil
 }
 
 func (vs *VulnScanner) searchNVD(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
@@ -155,11 +181,11 @@ func (vs *VulnScanner) searchOSV(dependencyName string, dependencyVersion string
 
 	// Try multiple PURL formats for different package ecosystems
 	purls := []string{
-		fmt.Sprintf("pkg:npm/%s@%s", dependencyName, dependencyVersion),        // Node.js
-		fmt.Sprintf("pkg:pypi/%s@%s", dependencyName, dependencyVersion),       // Python
+		fmt.Sprintf("pkg:npm/%s@%s", dependencyName, dependencyVersion),                      // Node.js
+		fmt.Sprintf("pkg:pypi/%s@%s", dependencyName, dependencyVersion),                     // Python
 		fmt.Sprintf("pkg:maven/%s/%s@%s", dependencyName, dependencyName, dependencyVersion), // Java
-		fmt.Sprintf("pkg:go/%s@%s", dependencyName, dependencyVersion),         // Go
-		fmt.Sprintf("pkg:cargo/%s@%s", dependencyName, dependencyVersion),      // Rust
+		fmt.Sprintf("pkg:go/%s@%s", dependencyName, dependencyVersion),                       // Go
+		fmt.Sprintf("pkg:cargo/%s@%s", dependencyName, dependencyVersion),                    // Rust
 	}
 
 	for _, purl := range purls {
