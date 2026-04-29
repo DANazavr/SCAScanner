@@ -5,9 +5,9 @@ import (
 	"SCAScanner/internal/reporters"
 	"SCAScanner/internal/scanner"
 	"SCAScanner/pkg/cache"
+	"SCAScanner/pkg/config"
 	"fmt"
 	"log"
-	"os"
 	"sync"
 	"time"
 
@@ -16,11 +16,13 @@ import (
 )
 
 var (
-	projectPath string
-	outputPath  string
-	format      string
-	language    string
-	redisAddr   string
+	projectPath  string
+	outputPath   string
+	format       string
+	language     string
+	redisAddr    string
+	configPath   string
+	saveConfig   bool
 )
 
 func main() {
@@ -35,7 +37,9 @@ func main() {
 	rootCmd.Flags().StringVarP(&outputPath, "out", "o", ".", "Path to the create report")
 	rootCmd.Flags().StringVarP(&format, "format", "f", "", "format of the report (html or json)")
 	rootCmd.Flags().StringVarP(&language, "language", "l", "all", "Programming language to scan (go, node, java, python, rust, or all)")
-	rootCmd.Flags().StringVarP(&redisAddr, "redis-addr", "r", getRedisAddr(), "Redis address for caching (format: host:port)")
+	rootCmd.Flags().StringVarP(&redisAddr, "redis-addr", "r", "", "Redis address for caching (overrides config)")
+	rootCmd.Flags().StringVarP(&configPath, "config", "c", "", "Path to configuration file (default: ~/.scascanner/config.json)")
+	rootCmd.Flags().BoolVar(&saveConfig, "save-config", false, "Save current configuration to default location")
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("Error executing command: %v", err)
 	}
@@ -44,12 +48,69 @@ func main() {
 func rootExecuteble(projectPath string) {
 	fmt.Printf("Scanning project at path: %s\n", projectPath)
 
-	// Initialize cache (Redis + LocalCache with 24h TTL)
-	cacheInstance := cache.NewMultiLevelCache(redisAddr, "", 0, 24*time.Hour)
-	defer cacheInstance.Close()
+	// Load configuration
+	var cfg *config.Config
+	if configPath != "" {
+		// Load from specified path
+		var err error
+		cfg, err = config.LoadFromFile(configPath)
+		if err != nil {
+			log.Fatalf("Error loading config from %s: %v", configPath, err)
+		}
+	} else {
+		// Load from default locations
+		cfg = config.Load()
+	}
+
+	// Apply command-line overrides
+	override := config.Override{
+		RedisAddr: redisAddr,
+	}
+	cfg.ApplyOverride(override)
+
+	// Save config if requested
+	if saveConfig {
+		if err := cfg.Save(config.GetConfigPath()); err != nil {
+			log.Printf("Warning: Failed to save config: %v", err)
+		}
+		fmt.Println("Configuration saved successfully")
+		return
+	}
+
+	// Parse cache TTL
+	ttl, err := time.ParseDuration(cfg.Cache.TTL)
+	if err != nil {
+		log.Printf("Warning: Invalid cache TTL %s, using default 24h: %v", cfg.Cache.TTL, err)
+		ttl = 24 * time.Hour
+	}
+
+	// Initialize cache based on config
+	var cacheInstance cache.Cache
+	if cfg.Cache.EnableRedis && cfg.Redis.Enabled {
+		cacheInstance = cache.NewMultiLevelCache(
+			cfg.Redis.Address,
+			cfg.Redis.Password,
+			cfg.Redis.DB,
+			ttl,
+		)
+	} else if cfg.Cache.EnableLocal {
+		cacheInstance = cache.NewLocalCache()
+	}
+
+	if cacheInstance == nil {
+		log.Printf("Warning: Cache disabled, CVE lookups will be slower")
+	}
+
+	defer func() {
+		if cacheInstance != nil {
+			_ = cacheInstance.Close()
+		}
+	}()
 
 	s := scanner.New()
-	s.SetCache(cacheInstance)
+	if cacheInstance != nil {
+		s.SetCache(cacheInstance)
+	}
 
 	deps, err := s.Scan(projectPath, language)
 	if err != nil {
@@ -84,15 +145,6 @@ func rootExecuteble(projectPath string) {
 		}
 		fmt.Printf("\nReports generated successfully at: %s/report.html and %s/report.json\n", outputPath, outputPath)
 	}
-}
-
-func getRedisAddr() string {
-	// Check environment variable first
-	if addr := os.Getenv("REDIS_ADDR"); addr != "" {
-		return addr
-	}
-	// Default to localhost:6379
-	return "localhost:6379"
 }
 
 func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]models.Vulnerability, error) {
