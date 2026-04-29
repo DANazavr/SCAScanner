@@ -10,10 +10,10 @@ import (
 
 // Config holds all application configuration
 type Config struct {
-	Redis       RedisConfig `json:"redis"`
-	Cache       CacheConfig `json:"cache"`
-	API         APIConfig   `json:"api"`
-	Scan        ScanConfig  `json:"scan"`
+	Redis RedisConfig `json:"redis"`
+	Cache CacheConfig `json:"cache"`
+	API   APIConfig   `json:"api"`
+	Scan  ScanConfig  `json:"scan"`
 }
 
 // RedisConfig holds Redis-specific settings
@@ -26,17 +26,17 @@ type RedisConfig struct {
 
 // CacheConfig holds cache-specific settings
 type CacheConfig struct {
-	TTL            string `json:"ttl"`            // Duration string like "24h", "7d"
-	EnableLocal    bool   `json:"enable_local"`   // Enable in-memory cache
-	EnableRedis    bool   `json:"enable_redis"`   // Enable Redis cache
-	MaxLocalSize   int    `json:"max_local_size"` // Max items in local cache
+	TTL          string `json:"ttl"`            // Duration string like "24h", "7d"
+	EnableLocal  bool   `json:"enable_local"`   // Enable in-memory cache
+	EnableRedis  bool   `json:"enable_redis"`   // Enable Redis cache
+	MaxLocalSize int    `json:"max_local_size"` // Max items in local cache
 }
 
 // APIConfig holds API-specific settings
 type APIConfig struct {
-	NVDRateLimit string `json:"nvd_rate_limit"`     // Duration like "200ms"
-	OSVRateLimit string `json:"osv_rate_limit"`     // Duration like "100ms"
-	Timeout      string `json:"timeout"`            // API timeout like "30s"
+	NVDRateLimit string `json:"nvd_rate_limit"` // Duration like "200ms"
+	OSVRateLimit string `json:"osv_rate_limit"` // Duration like "100ms"
+	Timeout      string `json:"timeout"`        // API timeout like "30s"
 }
 
 // ScanConfig holds scanning-specific settings
@@ -180,12 +180,12 @@ func SaveDefault() error {
 
 // Override applies command-line overrides to the config
 type Override struct {
-	RedisAddr    string
-	RedisPwd     string
-	LogLevel     string
-	CacheTTL     string
-	EnableRedis  *bool
-	EnableLocal  *bool
+	RedisAddr   string
+	RedisPwd    string
+	LogLevel    string
+	CacheTTL    string
+	EnableRedis *bool
+	EnableLocal *bool
 }
 
 // ApplyOverride applies command-line overrides to configuration

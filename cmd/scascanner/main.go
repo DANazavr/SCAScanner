@@ -1,11 +1,11 @@
 package main
 
 import (
+	"SCAScanner/config"
 	"SCAScanner/internal/models"
 	"SCAScanner/internal/reporters"
 	"SCAScanner/internal/scanner"
 	"SCAScanner/pkg/cache"
-	"SCAScanner/pkg/config"
 	"fmt"
 	"log"
 	"sync"
@@ -16,13 +16,13 @@ import (
 )
 
 var (
-	projectPath  string
-	outputPath   string
-	format       string
-	language     string
-	redisAddr    string
-	configPath   string
-	saveConfig   bool
+	projectPath string
+	outputPath  string
+	format      string
+	language    string
+	redisAddr   string
+	configPath  string
+	saveConfig  bool
 )
 
 func main() {
