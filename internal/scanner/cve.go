@@ -3,291 +3,269 @@ package scanner
 import (
 	"SCAScanner/internal/models"
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
-	"math"
 	"net/http"
-	"net/url"
+	"regexp"
+	"strings"
 	"time"
 )
 
-type CVEItem struct {
-	CVE struct {
-		ID           string `json:"id"`
-		PubishedDate string `json:"published"`
-		LastModified string `json:"lastModified"`
-		Description  []struct {
-			Lang  string `json:"lang"`
-			Value string `json:"value"`
-		} `json:"descriptions"`
-		Metrics struct {
-			CVSSMetricsV31 []struct {
-				CVSSData struct {
-					BaseScore    float64 `json:"baseScore"`
-					BaseSeverity string  `json:"baseSeverity"`
-				} `json:"cvssData"`
-			} `json:"cvssMetricV31"`
-		} `json:"metrics"`
-	} `json:"cve"`
+// OSV API структуры
+type OSVRequest struct {
+	Package OSVPackage `json:"package"`
+	Version string     `json:"version,omitempty"`
 }
 
-type CVEResponce struct {
-	Vulnerabilities []CVEItem `json:"vulnerabilities"`
-}
-
-// OSV structures for Open Source Vulnerabilities API
-type OSVVulnerability struct {
-	ID        string        `json:"id"`
-	Published string        `json:"published"`
-	Modified  string        `json:"modified"`
-	Summary   string        `json:"summary"`
-	Severity  []OSVSeverity `json:"severity"`
-	Details   string        `json:"details"`
-	Affected  []struct {
-		Package struct {
-			Name string `json:"name"`
-		} `json:"package"`
-	} `json:"affected"`
-}
-
-type OSVSeverity struct {
-	Type  string `json:"type"`
-	Score string `json:"score"`
+type OSVPackage struct {
+	Name      string `json:"name"`
+	Ecosystem string `json:"ecosystem"`
 }
 
 type OSVResponse struct {
 	Vulns []OSVVulnerability `json:"vulns"`
 }
 
-// RateLimiter controls request rate
-type RateLimiter struct {
-	ticker *time.Ticker
-	done   chan bool
+type OSVVulnerability struct {
+	ID      string `json:"id"`
+	Summary string `json:"summary"`
+	Details string `json:"details"`
+
+	Severity []struct {
+		Type  string `json:"type"`
+		Score string `json:"score"`
+	} `json:"severity"`
+
+	DatabaseSpecific map[string]interface{} `json:"database_specific"`
+
+	Modified  string   `json:"modified"`
+	Published string   `json:"published"`
+	Aliases   []string `json:"aliases"`
 }
 
-var nvdLimiter *RateLimiter
-var osvLimiter *RateLimiter
-
-func init() {
-	// NVD API allows ~6 requests per second (with recommended delay)
-	nvdLimiter = NewRateLimiter(200 * time.Millisecond)
-	// OSV API has more lenient limits
-	osvLimiter = NewRateLimiter(100 * time.Millisecond)
+func (vs *VulnScanner) SearchCVE(packageName string, packageVersion string, ecosystem string) ([]models.Vulnerability, error) {
+	// Временный метод, который просто вызывает OSV поиск
+	// В будущем можно добавить кэширование или более сложную логику
+	return vs.SearchOSV(packageName, packageVersion, ecosystem)
 }
 
-func NewRateLimiter(interval time.Duration) *RateLimiter {
-	return &RateLimiter{
-		ticker: time.NewTicker(interval),
-		done:   make(chan bool),
-	}
-}
-
-func (rl *RateLimiter) Wait() {
-	<-rl.ticker.C
-}
-
-func (vs *VulnScanner) SearchCVE(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-
-	cacheKey := fmt.Sprintf("cve:%s:%s", dependencyName, dependencyVersion)
-
-	// Try to get from cache first
-	if vs.cache != nil {
-		if vulns, err := vs.cache.Get(ctx, cacheKey); err == nil {
-			return vulns, nil
-		}
+func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecosystem string) ([]models.Vulnerability, error) {
+	client := &http.Client{
+		Timeout: 30 * time.Second,
 	}
 
-	// Try NVD first with backoff
-	vulns, err := vs.searchNVD(dependencyName, dependencyVersion)
-	if err == nil && len(vulns) > 0 {
-		// Cache the result
-		if vs.cache != nil {
-			_ = vs.cache.Set(ctx, cacheKey, vulns)
-		}
-		return vulns, nil
-	}
-
-	// If NVD fails or returns nothing, try OSV as fallback
-	vulns, osvErr := vs.searchOSV(dependencyName, dependencyVersion)
-	if osvErr == nil && len(vulns) > 0 {
-		// Cache the result
-		if vs.cache != nil {
-			_ = vs.cache.Set(ctx, cacheKey, vulns)
-		}
-		return vulns, nil
-	}
-
-	// If both fail or return nothing, cache empty result to avoid repeated API calls
-	emptyVulns := []models.Vulnerability{}
-	if vs.cache != nil {
-		_ = vs.cache.Set(ctx, cacheKey, emptyVulns)
-	}
-
-	// It's normal for many dependencies to not have known CVEs
-	return emptyVulns, nil
-}
-
-func (vs *VulnScanner) searchNVD(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
-	nvdLimiter.Wait()
-
-	requestURL := fmt.Sprintf("https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=%s", url.QueryEscape(dependencyName))
-
-	// Implement exponential backoff for rate limiting
-	maxRetries := 3
-	var resp *http.Response
-	var err error
-
-	for attempt := 0; attempt < maxRetries; attempt++ {
-		resp, err = http.Get(requestURL)
-		if err != nil {
-			return nil, err
-		}
-
-		// Handle rate limiting
-		if resp.StatusCode == http.StatusTooManyRequests {
-			resp.Body.Close()
-			backoffDuration := time.Duration(math.Pow(2, float64(attempt))) * time.Second
-			fmt.Printf("NVD rate limit hit, waiting %v before retry...\n", backoffDuration)
-			time.Sleep(backoffDuration)
-			continue
-		}
-
-		if resp.StatusCode != http.StatusOK {
-			resp.Body.Close()
-			return nil, fmt.Errorf("NVD: failed to fetch CVE data: %s", resp.Status)
-		}
-
-		break
-	}
-
-	if resp == nil {
-		return nil, fmt.Errorf("NVD: failed after retries")
-	}
-	defer resp.Body.Close()
-
-	var cveResponse CVEResponce
-	if err = json.NewDecoder(resp.Body).Decode(&cveResponse); err != nil {
-		return nil, err
-	}
-
-	return vs.parseNVDResponse(cveResponse, dependencyName), nil
-}
-
-func (vs *VulnScanner) searchOSV(dependencyName string, dependencyVersion string) ([]models.Vulnerability, error) {
-	osvLimiter.Wait()
-
-	// Try multiple PURL formats for different package ecosystems
-	purls := []string{
-		fmt.Sprintf("pkg:npm/%s@%s", dependencyName, dependencyVersion),                      // Node.js
-		fmt.Sprintf("pkg:pypi/%s@%s", dependencyName, dependencyVersion),                     // Python
-		fmt.Sprintf("pkg:maven/%s/%s@%s", dependencyName, dependencyName, dependencyVersion), // Java
-		fmt.Sprintf("pkg:go/%s@%s", dependencyName, dependencyVersion),                       // Go
-		fmt.Sprintf("pkg:cargo/%s@%s", dependencyName, dependencyVersion),                    // Rust
-	}
-
-	for _, purl := range purls {
-		vulns := vs.tryOSVQuery(purl, dependencyName)
-		if len(vulns) > 0 {
-			return vulns, nil
-		}
-	}
-
-	// No vulnerabilities found in any format (normal case)
-	return []models.Vulnerability{}, nil
-}
-
-func (vs *VulnScanner) tryOSVQuery(purl string, dependencyName string) []models.Vulnerability {
-	queryPayload := map[string]interface{}{
-		"package": map[string]string{
-			"purl": purl,
+	// Формируем запрос
+	reqBody := OSVRequest{
+		Package: OSVPackage{
+			Name:      packageName,
+			Ecosystem: ecosystem,
 		},
 	}
 
-	jsonPayload, err := json.Marshal(queryPayload)
-	if err != nil {
-		return []models.Vulnerability{}
+	// Добавляем версию только если указана
+	if packageVersion != "" {
+		reqBody.Version = cleanVersion(packageVersion)
 	}
 
-	resp, err := http.Post(
+	jsonData, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	// Отправляем POST запрос
+	resp, err := client.Post(
 		"https://api.osv.dev/v1/query",
 		"application/json",
-		bytes.NewReader(jsonPayload),
+		bytes.NewBuffer(jsonData),
 	)
-
 	if err != nil {
-		return []models.Vulnerability{}
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return []models.Vulnerability{}
+		return nil, fmt.Errorf("OSV API error: %s", resp.Status)
 	}
 
-	var osvResponse OSVResponse
-	if err = json.NewDecoder(resp.Body).Decode(&osvResponse); err != nil {
-		return []models.Vulnerability{}
+	// Парсим ответ
+	var osvResp OSVResponse
+	if err := json.NewDecoder(resp.Body).Decode(&osvResp); err != nil {
+		return nil, err
 	}
 
-	return vs.parseOSVResponse(osvResponse, dependencyName)
-}
-
-func (vs *VulnScanner) parseNVDResponse(resp CVEResponce, dependencyName string) []models.Vulnerability {
+	// Преобразуем в наши модели
 	var vulnerabilities []models.Vulnerability
+	for _, vuln := range osvResp.Vulns {
+		// Извлекаем CVE ID из aliases
+		cveID := extractCVEID(vuln)
 
-	for _, item := range resp.Vulnerabilities {
-		severity := "UNKNOWN"
-		cvssScore := 0.0
+		// Извлекаем severity и CVSS
+		severity, cvssScore := extractSeverityAndScore(vuln)
 
-		if len(item.CVE.Metrics.CVSSMetricsV31) > 0 {
-			severity = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseSeverity
-			cvssScore = item.CVE.Metrics.CVSSMetricsV31[0].CVSSData.BaseScore
-		} else {
+		// Пропускаем если нет severity
+		if severity == "" || severity == "UNKNOWN" {
 			continue
 		}
 
+		// Формируем описание
 		description := ""
-		if len(item.CVE.Description) > 0 {
-			description = item.CVE.Description[0].Value
+
+		if vuln.Summary != "" && vuln.Details != "" {
+			// Если есть оба - объединяем
+			description = vuln.Summary + ". " + vuln.Details
+		} else if vuln.Details != "" {
+			// Если только details
+			description = vuln.Details
+		} else if vuln.Summary != "" {
+			// Если только summary
+			description = vuln.Summary
 		}
 
 		vulnerabilities = append(vulnerabilities, models.Vulnerability{
-			CVEID:           item.CVE.ID,
-			PublishedDate:   item.CVE.PubishedDate,
-			LastModified:    item.CVE.LastModified,
-			Description:     description,
-			Severity:        severity,
-			AffectedPackage: dependencyName,
-			CVSSScore:       cvssScore,
-		})
-	}
-
-	return vulnerabilities
-}
-
-func (vs *VulnScanner) parseOSVResponse(resp OSVResponse, dependencyName string) []models.Vulnerability {
-	var vulnerabilities []models.Vulnerability
-
-	for _, vuln := range resp.Vulns {
-		severity := "UNKNOWN"
-		cvssScore := 0.0
-
-		if len(vuln.Severity) > 0 {
-			severity = vuln.Severity[0].Type
-		}
-
-		vulnerabilities = append(vulnerabilities, models.Vulnerability{
-			CVEID:           vuln.ID,
+			CVEID:           cveID,
 			PublishedDate:   vuln.Published,
 			LastModified:    vuln.Modified,
-			Description:     vuln.Summary,
+			Description:     description,
 			Severity:        severity,
-			AffectedPackage: dependencyName,
 			CVSSScore:       cvssScore,
+			AffectedPackage: packageName,
 		})
 	}
 
-	return vulnerabilities
+	return vulnerabilities, nil
+}
+
+// Извлекает CVE ID из aliases или использует OSV ID
+func extractCVEID(vuln OSVVulnerability) string {
+	// Ищем CVE в aliases
+	for _, alias := range vuln.Aliases {
+		if strings.HasPrefix(alias, "CVE-") {
+			return alias
+		}
+	}
+
+	// Если нет CVE, используем OSV ID
+	return vuln.ID
+}
+
+// Извлекает severity и CVSS score
+func extractSeverityAndScore(vuln OSVVulnerability) (string, float64) {
+	// Пробуем извлечь из severity массива
+	for _, sev := range vuln.Severity {
+		if sev.Type == "CVSS_V3" {
+			score := parseCVSSScore(sev.Score)
+			severity := scoreToSeverity(score)
+			return severity, score
+		}
+	}
+
+	// Пробуем database_specific
+	if vuln.DatabaseSpecific != nil {
+		if sevStr, ok := vuln.DatabaseSpecific["severity"].(string); ok {
+			severity := normalizeSeverity(sevStr)
+			// Пробуем найти score
+			if cvssScore, ok := vuln.DatabaseSpecific["cvss_score"].(float64); ok {
+				return severity, cvssScore
+			}
+			// Если нет score, оцениваем примерно
+			score := severityToScore(severity)
+			return severity, score
+		}
+	}
+
+	return "UNKNOWN", 0.0
+}
+
+// Парсит CVSS score из строки типа "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+func parseCVSSScore(cvssString string) float64 {
+	// Упрощённый парсинг - ищем базовый score
+	// Для полноценного парсинга нужна CVSS библиотека
+
+	// Пробуем найти число в начале после двоеточия
+	re := regexp.MustCompile(`CVSS:[\d.]+/.*`)
+	if !re.MatchString(cvssString) {
+		return 0.0
+	}
+
+	// Вычисляем приблизительный score на основе компонентов
+	// Это упрощение - в реальности нужен полный CVSS калькулятор
+	score := 0.0
+
+	if strings.Contains(cvssString, "C:H") {
+		score += 3.0
+	} else if strings.Contains(cvssString, "C:L") {
+		score += 1.0
+	}
+
+	if strings.Contains(cvssString, "I:H") {
+		score += 3.0
+	} else if strings.Contains(cvssString, "I:L") {
+		score += 1.0
+	}
+
+	if strings.Contains(cvssString, "A:H") {
+		score += 3.0
+	} else if strings.Contains(cvssString, "A:L") {
+		score += 1.0
+	}
+
+	if score > 10.0 {
+		score = 10.0
+	}
+
+	return score
+}
+
+// Конвертирует CVSS score в severity
+func scoreToSeverity(score float64) string {
+	switch {
+	case score >= 9.0:
+		return "CRITICAL"
+	case score >= 7.0:
+		return "HIGH"
+	case score >= 4.0:
+		return "MEDIUM"
+	case score > 0.0:
+		return "LOW"
+	default:
+		return "UNKNOWN"
+	}
+}
+
+// Нормализует severity строку
+func normalizeSeverity(sev string) string {
+	sev = strings.ToUpper(strings.TrimSpace(sev))
+
+	switch sev {
+	case "CRITICAL", "HIGH", "MEDIUM", "LOW":
+		return sev
+	case "MODERATE":
+		return "MEDIUM"
+	default:
+		return "UNKNOWN"
+	}
+}
+
+// Примерный score для severity
+func severityToScore(severity string) float64 {
+	switch severity {
+	case "CRITICAL":
+		return 9.5
+	case "HIGH":
+		return 7.5
+	case "MEDIUM":
+		return 5.0
+	case "LOW":
+		return 2.5
+	default:
+		return 0.0
+	}
+}
+
+// Очищает версию от префиксов
+func cleanVersion(version string) string {
+	version = strings.TrimSpace(version)
+	version = strings.TrimPrefix(version, "v")
+	version = strings.TrimPrefix(version, "V")
+	return version
 }

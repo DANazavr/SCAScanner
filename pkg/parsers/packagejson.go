@@ -2,80 +2,60 @@ package parsers
 
 import (
 	"SCAScanner/internal/models"
-	"bufio"
+	"encoding/json"
 	"os"
+	"regexp"
 	"strings"
 )
+
+type PackageJSON struct {
+	Dependencies    map[string]string `json:"dependencies"`
+	DevDependencies map[string]string `json:"devDependencies"`
+}
 
 func ParsePackageJSON(filepath string) ([]models.Dependency, error) {
 	var dependencies []models.Dependency
 
-	file, err := os.Open(filepath)
+	// Читаем файл целиком
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
-	isDependenciesSection := false
-	isDevDependenciesSection := false
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-
-		if strings.HasPrefix(line, `"dependencies": {`) {
-			isDependenciesSection = true
-			continue
-		}
-
-		if isDependenciesSection {
-			if strings.HasPrefix(line, `}`) || strings.HasPrefix(line, `},`) {
-				isDependenciesSection = false
-				continue
-			}
-			parts := strings.Split(line, ":")
-			if len(parts) == 2 {
-				parts[0] = cleanVersion(parts[0])
-				parts[1] = cleanVersion(parts[1])
-				dependencies = append(dependencies, models.Dependency{
-					Name:    strings.Trim(parts[0], `"`),
-					Version: strings.Trim(parts[1], `"`),
-				})
-			}
-		}
-		if strings.HasPrefix(line, `"devDependencies": {`) {
-			isDevDependenciesSection = true
-			continue
-		}
-		if isDevDependenciesSection {
-			if strings.HasPrefix(line, `}`) || strings.HasPrefix(line, `},`) {
-				isDevDependenciesSection = false
-				continue
-			}
-			parts := strings.Split(line, ":")
-			if len(parts) == 2 {
-				parts[0] = cleanVersion(parts[0])
-				parts[1] = cleanVersion(parts[1])
-				dependencies = append(dependencies, models.Dependency{
-					Name:    strings.Trim(parts[0], `"`),
-					Version: strings.Trim(parts[1], `"`),
-				})
-			}
-		}
-	}
-	if err := scanner.Err(); err != nil {
+	// Десериализуем JSON в структуру
+	var pkg PackageJSON
+	if err := json.Unmarshal(data, &pkg); err != nil {
 		return nil, err
 	}
+
+	// Обрабатываем обычные зависимости
+	for name, version := range pkg.Dependencies {
+		dependencies = append(dependencies, models.Dependency{
+			Name:      name,
+			Version:   cleanVersion(version),
+			Ecosystem: "npm", // ОБЯЗАТЕЛЬНО
+		})
+	}
+
+	// Обрабатываем dev-зависимости
+	for name, version := range pkg.DevDependencies {
+		dependencies = append(dependencies, models.Dependency{
+			Name:      name,
+			Version:   cleanVersion(version),
+			Ecosystem: "npm",
+		})
+	}
+
 	return dependencies, nil
 }
 
 func cleanVersion(version string) string {
-	// Убрать ^, ~, >=, <= и т.д.
-	version = strings.TrimPrefix(version, "^")
-	version = strings.TrimPrefix(version, "~")
-	version = strings.TrimPrefix(version, ">=")
-	version = strings.TrimPrefix(version, "<=")
-	version = strings.TrimPrefix(version, "=")
-	version = strings.TrimPrefix(version, ">")
-	version = strings.TrimPrefix(version, "<")
-	return version
+	// Убираем кавычки, если они остались
+	version = strings.Trim(version, "\"")
+
+	// Регулярное выражение для удаления ^, ~, >=, <=, >, <
+	re := regexp.MustCompile(`[~^>=<]+`)
+	version = re.ReplaceAllString(version, "")
+
+	return strings.TrimSpace(version)
 }

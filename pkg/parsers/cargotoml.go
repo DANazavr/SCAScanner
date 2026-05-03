@@ -2,92 +2,63 @@ package parsers
 
 import (
 	"SCAScanner/internal/models"
-	"bufio"
+
 	"os"
-	"strings"
+
+	"github.com/pelletier/go-toml/v2"
 )
 
-func ParseCargoToml(filepath string) ([]models.Dependency, error) {
-	var dependencies []models.Dependency
+type CargoToml struct {
+	Dependencies    map[string]interface{} `toml:"dependencies"`
+	DevDependencies map[string]interface{} `toml:"dev-dependencies"`
+}
 
-	file, err := os.Open(filepath)
+func ParseCargoToml(filepath string) ([]models.Dependency, error) {
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
-	inDependenciesSection := false
-	inDevDependenciesSection := false
-
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-
-		if line == "" || strings.HasPrefix(line, "#") {
-			continue
-		}
-
-		if line == "[dependencies]" {
-			inDependenciesSection = true
-			inDevDependenciesSection = false
-			continue
-		}
-		if line == "[dev-dependencies]" {
-			inDevDependenciesSection = true
-			inDependenciesSection = false
-			continue
-		}
-
-		if strings.HasPrefix(line, "[") && line != "[dependencies]" && line != "[dev-dependencies]" {
-			inDependenciesSection = false
-			inDevDependenciesSection = false
-			continue
-		}
-
-		if inDependenciesSection || inDevDependenciesSection {
-			if strings.Contains(line, "=") {
-				parts := strings.Split(line, "=")
-				if len(parts) >= 2 {
-					name := strings.TrimSpace(parts[0])
-					versionPart := strings.TrimSpace(strings.Join(parts[1:], "="))
-
-					version := extractVersion(versionPart)
-					if version != "" && name != "" {
-						dependencies = append(dependencies, models.Dependency{
-							Name:    name,
-							Version: version,
-						})
-					}
-				}
-			}
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
+	var cargo CargoToml
+	if err := toml.Unmarshal(data, &cargo); err != nil {
 		return nil, err
 	}
+
+	var dependencies []models.Dependency
+
+	parseDeps := func(deps map[string]interface{}) {
+		for name, raw := range deps {
+			version := extractCargoVersion(raw)
+			if version == "" {
+				continue
+			}
+
+			dependencies = append(dependencies, models.Dependency{
+				Name:      name,
+				Version:   version,
+				Ecosystem: "crates.io",
+			})
+		}
+	}
+
+	parseDeps(cargo.Dependencies)
+	parseDeps(cargo.DevDependencies)
+
 	return dependencies, nil
 }
 
-func extractVersion(versionString string) string {
-	versionString = strings.TrimSpace(versionString)
+func extractCargoVersion(raw interface{}) string {
+	switch v := raw.(type) {
 
-	if strings.HasPrefix(versionString, "\"") && strings.HasSuffix(versionString, "\"") {
-		version := strings.Trim(versionString, "\"")
-		return cleanCargoVersion(version)
-	}
+	// actix-web = "4.0.1"
+	case string:
+		return cleanCargoVersion(v)
 
-	if strings.HasPrefix(versionString, "{") {
-		if idx := strings.Index(versionString, "version"); idx != -1 {
-			remainder := versionString[idx+7:]
-			if idx := strings.Index(remainder, "="); idx != -1 {
-				remainder = remainder[idx+1:]
-				if strings.Contains(remainder, "\"") {
-					parts := strings.Split(remainder, "\"")
-					if len(parts) >= 2 {
-						return cleanCargoVersion(parts[1])
-					}
-				}
+	// tokio = { version = "1.17.0", features = ["full"] }
+	case map[string]interface{}:
+		if versionRaw, exists := v["version"]; exists {
+			if versionStr, ok := versionRaw.(string); ok {
+				return cleanCargoVersion(versionStr)
 			}
 		}
 	}
@@ -96,13 +67,23 @@ func extractVersion(versionString string) string {
 }
 
 func cleanCargoVersion(version string) string {
-	version = strings.TrimPrefix(version, "^")
-	version = strings.TrimPrefix(version, "~")
-	version = strings.TrimPrefix(version, "*")
-	version = strings.TrimPrefix(version, ">=")
-	version = strings.TrimPrefix(version, "<=")
-	version = strings.TrimPrefix(version, "=")
-	version = strings.TrimPrefix(version, ">")
-	version = strings.TrimPrefix(version, "<")
-	return strings.TrimSpace(version)
+	prefixes := []string{
+		"^", "~", "*",
+		">=", "<=",
+		">", "<",
+		"=",
+	}
+
+	for _, p := range prefixes {
+		version = trimPrefix(version, p)
+	}
+
+	return version
+}
+
+func trimPrefix(s, prefix string) string {
+	if len(s) >= len(prefix) && s[:len(prefix)] == prefix {
+		return s[len(prefix):]
+	}
+	return s
 }

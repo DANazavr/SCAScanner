@@ -117,10 +117,17 @@ func rootExecuteble(projectPath string) {
 		log.Fatalf("Error during scanning: %v", err)
 	}
 
+	fmt.Printf("Found %d dependencies\n", len(deps))
+	for _, dep := range deps {
+		fmt.Printf("  - %s @ %s\n", dep.Name, dep.Version)
+	}
+
 	vulnerabilities, err := searchVulnerabilities(s, deps)
 	if err != nil {
 		log.Fatalf("Error searching vulnerabilities: %v", err)
 	}
+
+	fmt.Printf("Found %d vulnerabilities\n", len(vulnerabilities))
 
 	if format == "json" {
 		if err := reporters.GenerateJSONReport(deps, vulnerabilities, outputPath); err != nil {
@@ -173,7 +180,7 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 			defer wg.Done()
 
 			for dep := range jobs {
-				vuln, err := s.SearchCVE(dep.Name, dep.Version)
+				vuln, err := s.SearchCVE(dep.Name, dep.Version, dep.Ecosystem)
 				if err != nil {
 					log.Printf("Error searching CVE for %s: %v", dep.Name, err)
 					bar.Add(1)

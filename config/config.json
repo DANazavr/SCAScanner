@@ -1,7 +1,8 @@
 {
   "redis": {
-    "address": "localhost:6379",
-    "password": "",
+    "address": "redis-14410.crce218.eu-central-1-1.ec2.cloud.redislabs.com:14410",
+    "username": "default",
+    "password": "0WhdZnMeY5mBiWY5QVpY1lpcrgmFxO3F",
     "db": 0,
     "enabled": true
   },
@@ -10,12 +11,7 @@
     "enable_local": true,
     "enable_redis": true,
     "max_local_size": 10000
-  },
-  "api": {
-    "nvd_rate_limit": "200ms",
-    "osv_rate_limit": "100ms",
-    "timeout": "30s"
-  },
+	},
   "scan": {
     "max_workers": 1,
     "log_level": "info"

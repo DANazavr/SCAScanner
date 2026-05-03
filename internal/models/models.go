@@ -1,8 +1,9 @@
 package models
 
 type Dependency struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
+	Name      string `json:"name"`
+	Version   string `json:"version"`
+	Ecosystem string `json:"ecosystem"`
 }
 
 type Vulnerability struct {

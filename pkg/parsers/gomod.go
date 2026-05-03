@@ -49,8 +49,9 @@ func ParseGoMod(filepath string) ([]models.Dependency, error) {
 			parts := strings.Fields(line)
 			if len(parts) >= 2 {
 				dep := models.Dependency{
-					Name:    parts[0],
-					Version: parts[1],
+					Name:      parts[0],
+					Version:   parts[1],
+					Ecosystem: "Go",
 				}
 				dependencies = append(dependencies, dep)
 			}

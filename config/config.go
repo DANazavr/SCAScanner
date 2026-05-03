@@ -19,6 +19,7 @@ type Config struct {
 // RedisConfig holds Redis-specific settings
 type RedisConfig struct {
 	Address  string `json:"address"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 	DB       int    `json:"db"`
 	Enabled  bool   `json:"enabled"`
@@ -34,6 +35,7 @@ type CacheConfig struct {
 
 // APIConfig holds API-specific settings
 type APIConfig struct {
+	NVDAPIKey    string `json:"nvd_api_key"`    // NVD API key (optional, for higher rate limits)
 	NVDRateLimit string `json:"nvd_rate_limit"` // Duration like "200ms"
 	OSVRateLimit string `json:"osv_rate_limit"` // Duration like "100ms"
 	Timeout      string `json:"timeout"`        // API timeout like "30s"
@@ -49,8 +51,9 @@ type ScanConfig struct {
 func DefaultConfig() *Config {
 	return &Config{
 		Redis: RedisConfig{
-			Address:  "localhost:6379",
-			Password: "",
+			Address:  "redis-14410.crce218.eu-central-1-1.ec2.cloud.redislabs.com:14410",
+			Username: "default",
+			Password: "0WhdZnMeY5mBiWY5QVpY1lpcrgmFxO3F",
 			DB:       0,
 			Enabled:  true,
 		},
@@ -59,11 +62,6 @@ func DefaultConfig() *Config {
 			EnableLocal:  true,
 			EnableRedis:  true,
 			MaxLocalSize: 10000,
-		},
-		API: APIConfig{
-			NVDRateLimit: "200ms",
-			OSVRateLimit: "100ms",
-			Timeout:      "30s",
 		},
 		Scan: ScanConfig{
 			MaxWorkers: 1,
@@ -85,8 +83,8 @@ func GetConfigPath() string {
 	}
 
 	// Check current directory
-	if _, err := os.Stat("scascanner.json"); err == nil {
-		return "scascanner.json"
+	if _, err := os.Stat("./config/config.json"); err == nil {
+		return "./config/config.json"
 	}
 
 	// Check user home directory

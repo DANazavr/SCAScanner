@@ -103,8 +103,9 @@ func parsePom(path string, visited map[string]bool) ([]models.Dependency, error)
 
 		if name != ":" && version != "" {
 			result = append(result, models.Dependency{
-				Name:    name,
-				Version: version,
+				Name:      name,
+				Version:   version,
+				Ecosystem: "Maven",
 			})
 		}
 	}

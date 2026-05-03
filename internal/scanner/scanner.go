@@ -7,11 +7,11 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type Scanner interface {
 	Scan(string, string) ([]models.Dependency, error)
-	Analyze() error
 }
 
 type VulnScanner struct {
@@ -34,7 +34,7 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		"package.json":     parsers.ParsePackageJSON,
 		"pom.xml":          parsers.ParsePomXML,
 		"requirements.txt": parsers.ParseRequirementsTxt,
-		"Сargo.toml":       parsers.ParseCargoToml,
+		"Cargo.toml":       parsers.ParseCargoToml,
 	}
 
 	// Language to file mappings
@@ -43,9 +43,12 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		"node":   {"package.json"},
 		"java":   {"pom.xml"},
 		"python": {"requirements.txt"},
-		"rust":   {"Сargo.toml"},
-		"all":    {"go.mod", "package.json", "pom.xml", "requirements.txt", "Сargo.toml"},
+		"rust":   {"Cargo.toml"},
+		"all":    {"go.mod", "package.json", "pom.xml", "requirements.txt", "Cargo.toml"},
 	}
+
+	// Normalize language to lowercase for case-insensitive matching
+	language = strings.ToLower(language)
 
 	// Get files to scan based on language
 	var filesToScan []string
@@ -87,8 +90,4 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		return nil, err
 	}
 	return dependencies, nil
-}
-
-func (vs *VulnScanner) Analyze() error {
-	return nil
 }

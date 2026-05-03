@@ -31,8 +31,9 @@ func ParseRequirementsTxt(filepath string) ([]models.Dependency, error) {
 				parts := strings.Split(line, "==")
 				if len(parts) == 2 {
 					dependencies = append(dependencies, models.Dependency{
-						Name:    parts[0],
-						Version: parts[1],
+						Name:      parts[0],
+						Version:   parts[1],
+						Ecosystem: "PyPI",
 					})
 				}
 			}
