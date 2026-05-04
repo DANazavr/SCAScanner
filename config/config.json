@@ -11,9 +11,9 @@
     "enable_local": true,
     "enable_redis": true,
     "max_local_size": 10000
-	},
+  },
   "scan": {
-    "max_workers": 1,
+    "max_workers": 5,
     "log_level": "info"
   }
 }

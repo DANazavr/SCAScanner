@@ -174,6 +174,26 @@ const htmlTemplate = `
 				display: block;
 			}
 
+			.vuln-recommendation {
+				background: #e8f5e9;
+				padding: 15px;
+				border-radius: 5px;
+				margin: 15px 0;
+				border-left: 4px solid #4caf50;
+				line-height: 1.6;
+				display: none;
+			}
+
+			.vuln-recommendation h4 {
+				color: #2e7d32;
+				margin-bottom: 10px;
+				font-size: 0.95em;
+			}
+
+			.vuln-item.open .vuln-recommendation {
+				display: block;
+			}
+
 			footer {
 				background: #333;
 				color: white;
@@ -428,6 +448,12 @@ const htmlTemplate = `
 					<div class="vuln-description">
 						{{.Description}}
 					</div>
+					{{if .Recommendation}}
+					<div class="vuln-recommendation">
+						<h4>Recommendation:</h4>
+						{{.Recommendation}}
+					</div>
+					{{end}}
 				</div>
 				{{end}}
 			</div>

@@ -2,13 +2,17 @@ package scanner
 
 import (
 	"SCAScanner/internal/models"
+	"SCAScanner/internal/recommendations"
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/rogpeppe/go-internal/semver"
 )
 
 // OSV API структуры
@@ -38,15 +42,48 @@ type OSVVulnerability struct {
 
 	DatabaseSpecific map[string]interface{} `json:"database_specific"`
 
+	Affected []struct {
+		Ranges []struct {
+			Type   string `json:"type"`
+			Events []struct {
+				Introduced   string `json:"introduced,omitempty"`
+				Fixed        string `json:"fixed,omitempty"`
+				LastAffected string `json:"last_affected,omitempty"`
+			} `json:"events"`
+		} `json:"ranges"`
+	} `json:"affected"`
+
 	Modified  string   `json:"modified"`
 	Published string   `json:"published"`
 	Aliases   []string `json:"aliases"`
 }
 
 func (vs *VulnScanner) SearchCVE(packageName string, packageVersion string, ecosystem string) ([]models.Vulnerability, error) {
-	// Временный метод, который просто вызывает OSV поиск
-	// В будущем можно добавить кэширование или более сложную логику
-	return vs.SearchOSV(packageName, packageVersion, ecosystem)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	cacheKey := fmt.Sprintf("cve:%s:%s", packageName, packageVersion)
+
+	if vs.cache != nil {
+		if vulns, err := vs.cache.Get(ctx, cacheKey); err == nil {
+			return vulns, nil
+		}
+	}
+
+	vuln, err := vs.SearchOSV(packageName, packageVersion, ecosystem)
+	if err == nil && len(vuln) > 0 {
+		if vs.cache != nil {
+			_ = vs.cache.Set(ctx, cacheKey, vuln)
+		}
+		return vuln, nil
+	} else if err != nil {
+		return nil, err
+	}
+	emptyVulns := []models.Vulnerability{}
+	if vs.cache != nil {
+		_ = vs.cache.Set(ctx, cacheKey, emptyVulns)
+	}
+	return emptyVulns, nil
 }
 
 func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecosystem string) ([]models.Vulnerability, error) {
@@ -107,6 +144,8 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 			continue
 		}
 
+		fixedVersion := extractFixedVersion(vuln, cleanVersion(packageVersion))
+
 		// Формируем описание
 		description := ""
 
@@ -121,15 +160,21 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 			description = vuln.Summary
 		}
 
-		vulnerabilities = append(vulnerabilities, models.Vulnerability{
+		v := models.Vulnerability{
 			CVEID:           cveID,
 			PublishedDate:   vuln.Published,
 			LastModified:    vuln.Modified,
+			CurrentVersion:  cleanVersion(packageVersion),
+			FixedVersion:    fixedVersion,
 			Description:     description,
 			Severity:        severity,
 			CVSSScore:       cvssScore,
 			AffectedPackage: packageName,
-		})
+			Ecosystem:       ecosystem,
+		}
+		v.Recommendation = recommendations.GenerateRecommendation(v)
+
+		vulnerabilities = append(vulnerabilities, v)
 	}
 
 	return vulnerabilities, nil
@@ -174,6 +219,57 @@ func extractSeverityAndScore(vuln OSVVulnerability) (string, float64) {
 	}
 
 	return "UNKNOWN", 0.0
+}
+
+func extractFixedVersion(vuln OSVVulnerability, currentVersion string) string {
+	currentVersion = normalize(currentVersion)
+	for _, affected := range vuln.Affected {
+		for _, r := range affected.Ranges {
+			if r.Type != "SEMVER" && r.Type != "ECOSYSTEM" {
+				continue
+			}
+			var introduced string
+			for _, event := range r.Events {
+				if event.Introduced != "" {
+					introduced = normalize(event.Introduced)
+				}
+				if event.Fixed != "" {
+					fixedVersion := normalize(event.Fixed)
+					if versionInRange(currentVersion, introduced, fixedVersion) {
+						return cleanVersion(event.Fixed)
+					}
+				}
+			}
+		}
+	}
+
+	return ""
+}
+
+func normalize(v string) string {
+	if v == "" {
+		return ""
+	}
+	if v[0] != 'v' {
+		return "v" + v
+	}
+	return v
+}
+
+func versionInRange(current, introduced, fixed string) bool {
+	if !semver.IsValid(current) {
+		return false
+	}
+
+	if introduced != "" && semver.Compare(current, introduced) < 0 {
+		return false
+	}
+
+	if fixed != "" && semver.Compare(current, fixed) >= 0 {
+		return false
+	}
+
+	return true
 }
 
 // Парсит CVSS score из строки типа "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"

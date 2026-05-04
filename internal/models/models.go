@@ -10,10 +10,14 @@ type Vulnerability struct {
 	CVEID           string  `json:"cve_id"`
 	PublishedDate   string  `json:"published"`
 	LastModified    string  `json:"lastModified"`
+	CurrentVersion  string  `json:"current_version"`
+	FixedVersion    string  `json:"fixed_version,omitempty"`
 	Description     string  `json:"description"`
 	Severity        string  `json:"severity"`
 	CVSSScore       float64 `json:"cvss_score"`
 	AffectedPackage string  `json:"affected_package"`
+	Recommendation  string  `json:"recommendation,omitempty"`
+	Ecosystem       string  `json:"ecosystem"`
 }
 
 type Statistics struct {

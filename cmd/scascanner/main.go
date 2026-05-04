@@ -160,7 +160,7 @@ func searchVulnerabilities(s *scanner.VulnScanner, deps []models.Dependency) ([]
 	var mu sync.Mutex
 
 	// Reduced to 1 worker since rate limiting is now handled per-request
-	workerCount := 1
+	workerCount := 5
 	jobs := make(chan models.Dependency, len(deps))
 
 	bar := progressbar.NewOptions(len(deps),

@@ -12,7 +12,6 @@ import (
 type Config struct {
 	Redis RedisConfig `json:"redis"`
 	Cache CacheConfig `json:"cache"`
-	API   APIConfig   `json:"api"`
 	Scan  ScanConfig  `json:"scan"`
 }
 
@@ -31,14 +30,6 @@ type CacheConfig struct {
 	EnableLocal  bool   `json:"enable_local"`   // Enable in-memory cache
 	EnableRedis  bool   `json:"enable_redis"`   // Enable Redis cache
 	MaxLocalSize int    `json:"max_local_size"` // Max items in local cache
-}
-
-// APIConfig holds API-specific settings
-type APIConfig struct {
-	NVDAPIKey    string `json:"nvd_api_key"`    // NVD API key (optional, for higher rate limits)
-	NVDRateLimit string `json:"nvd_rate_limit"` // Duration like "200ms"
-	OSVRateLimit string `json:"osv_rate_limit"` // Duration like "100ms"
-	Timeout      string `json:"timeout"`        // API timeout like "30s"
 }
 
 // ScanConfig holds scanning-specific settings
