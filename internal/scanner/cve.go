@@ -15,7 +15,6 @@ import (
 	"github.com/rogpeppe/go-internal/semver"
 )
 
-// OSV API структуры
 type OSVRequest struct {
 	Package OSVPackage `json:"package"`
 	Version string     `json:"version,omitempty"`
@@ -91,7 +90,6 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 		Timeout: 30 * time.Second,
 	}
 
-	// Формируем запрос
 	reqBody := OSVRequest{
 		Package: OSVPackage{
 			Name:      packageName,
@@ -99,7 +97,6 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 		},
 	}
 
-	// Добавляем версию только если указана
 	if packageVersion != "" {
 		reqBody.Version = cleanVersion(packageVersion)
 	}
@@ -109,7 +106,6 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 		return nil, err
 	}
 
-	// Отправляем POST запрос
 	resp, err := client.Post(
 		"https://api.osv.dev/v1/query",
 		"application/json",
@@ -124,39 +120,30 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 		return nil, fmt.Errorf("OSV API error: %s", resp.Status)
 	}
 
-	// Парсим ответ
 	var osvResp OSVResponse
 	if err := json.NewDecoder(resp.Body).Decode(&osvResp); err != nil {
 		return nil, err
 	}
 
-	// Преобразуем в наши модели
 	var vulnerabilities []models.Vulnerability
 	for _, vuln := range osvResp.Vulns {
-		// Извлекаем CVE ID из aliases
 		cveID := extractCVEID(vuln)
 
-		// Извлекаем severity и CVSS
 		severity, cvssScore := extractSeverityAndScore(vuln)
 
-		// Пропускаем если нет severity
 		if severity == "" || severity == "UNKNOWN" {
 			continue
 		}
 
 		fixedVersion := extractFixedVersion(vuln, cleanVersion(packageVersion))
 
-		// Формируем описание
 		description := ""
 
 		if vuln.Summary != "" && vuln.Details != "" {
-			// Если есть оба - объединяем
 			description = vuln.Summary + ". " + vuln.Details
 		} else if vuln.Details != "" {
-			// Если только details
 			description = vuln.Details
 		} else if vuln.Summary != "" {
-			// Если только summary
 			description = vuln.Summary
 		}
 
@@ -180,22 +167,17 @@ func (vs *VulnScanner) SearchOSV(packageName string, packageVersion string, ecos
 	return vulnerabilities, nil
 }
 
-// Извлекает CVE ID из aliases или использует OSV ID
 func extractCVEID(vuln OSVVulnerability) string {
-	// Ищем CVE в aliases
 	for _, alias := range vuln.Aliases {
 		if strings.HasPrefix(alias, "CVE-") {
 			return alias
 		}
 	}
 
-	// Если нет CVE, используем OSV ID
 	return vuln.ID
 }
 
-// Извлекает severity и CVSS score
 func extractSeverityAndScore(vuln OSVVulnerability) (string, float64) {
-	// Пробуем извлечь из severity массива
 	for _, sev := range vuln.Severity {
 		if sev.Type == "CVSS_V3" {
 			score := parseCVSSScore(sev.Score)
@@ -204,15 +186,12 @@ func extractSeverityAndScore(vuln OSVVulnerability) (string, float64) {
 		}
 	}
 
-	// Пробуем database_specific
 	if vuln.DatabaseSpecific != nil {
 		if sevStr, ok := vuln.DatabaseSpecific["severity"].(string); ok {
 			severity := normalizeSeverity(sevStr)
-			// Пробуем найти score
 			if cvssScore, ok := vuln.DatabaseSpecific["cvss_score"].(float64); ok {
 				return severity, cvssScore
 			}
-			// Если нет score, оцениваем примерно
 			score := severityToScore(severity)
 			return severity, score
 		}
@@ -272,19 +251,12 @@ func versionInRange(current, introduced, fixed string) bool {
 	return true
 }
 
-// Парсит CVSS score из строки типа "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
 func parseCVSSScore(cvssString string) float64 {
-	// Упрощённый парсинг - ищем базовый score
-	// Для полноценного парсинга нужна CVSS библиотека
-
-	// Пробуем найти число в начале после двоеточия
 	re := regexp.MustCompile(`CVSS:[\d.]+/.*`)
 	if !re.MatchString(cvssString) {
 		return 0.0
 	}
 
-	// Вычисляем приблизительный score на основе компонентов
-	// Это упрощение - в реальности нужен полный CVSS калькулятор
 	score := 0.0
 
 	if strings.Contains(cvssString, "C:H") {
@@ -312,7 +284,6 @@ func parseCVSSScore(cvssString string) float64 {
 	return score
 }
 
-// Конвертирует CVSS score в severity
 func scoreToSeverity(score float64) string {
 	switch {
 	case score >= 9.0:
@@ -328,7 +299,6 @@ func scoreToSeverity(score float64) string {
 	}
 }
 
-// Нормализует severity строку
 func normalizeSeverity(sev string) string {
 	sev = strings.ToUpper(strings.TrimSpace(sev))
 
@@ -342,7 +312,6 @@ func normalizeSeverity(sev string) string {
 	}
 }
 
-// Примерный score для severity
 func severityToScore(severity string) float64 {
 	switch severity {
 	case "CRITICAL":
@@ -358,7 +327,6 @@ func severityToScore(severity string) float64 {
 	}
 }
 
-// Очищает версию от префиксов
 func cleanVersion(version string) string {
 	version = strings.TrimSpace(version)
 	version = strings.TrimPrefix(version, "v")

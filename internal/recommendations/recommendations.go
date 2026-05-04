@@ -6,13 +6,10 @@ import (
 )
 
 func GenerateRecommendation(v models.Vulnerability) string {
-
-	// 1. Лучший кейс — есть фикс
 	if v.FixedVersion != "" {
 		return buildUpgradeMessage(v)
 	}
 
-	// 2. Если нет фикса — severity влияет
 	switch v.Severity {
 	case "CRITICAL", "HIGH":
 		return fmt.Sprintf(

@@ -37,7 +37,6 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		"Cargo.toml":       parsers.ParseCargoToml,
 	}
 
-	// Language to file mappings
 	languageMap := map[string][]string{
 		"go":     {"go.mod"},
 		"node":   {"package.json"},
@@ -47,10 +46,8 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		"all":    {"go.mod", "package.json", "pom.xml", "requirements.txt", "Cargo.toml"},
 	}
 
-	// Normalize language to lowercase for case-insensitive matching
 	language = strings.ToLower(language)
 
-	// Get files to scan based on language
 	var filesToScan []string
 	if langs, ok := languageMap[language]; ok {
 		filesToScan = langs
@@ -58,7 +55,6 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 		filesToScan = languageMap["all"]
 	}
 
-	// Filter files map
 	files := make(map[string]func(string) ([]models.Dependency, error))
 	for _, filename := range filesToScan {
 		if parser, ok := allFiles[filename]; ok {
@@ -78,7 +74,7 @@ func (vs *VulnScanner) Scan(projectPath string, language string) ([]models.Depen
 			deps, err := parser(path)
 			if err != nil {
 				if os.IsNotExist(err) {
-					return nil // Игнорируем ошибку, если файл не найден
+					return nil
 				}
 				return err
 			}

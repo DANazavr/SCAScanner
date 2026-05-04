@@ -42,7 +42,7 @@ func ParseGoMod(filepath string) ([]models.Dependency, error) {
 					Version: parts[1],
 				})
 			}
-			continue // ВАЖНО: продолжаем цикл
+			continue
 		}
 
 		if inRequireBlock && line != "" {

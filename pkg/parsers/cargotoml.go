@@ -50,11 +50,9 @@ func ParseCargoToml(filepath string) ([]models.Dependency, error) {
 func extractCargoVersion(raw interface{}) string {
 	switch v := raw.(type) {
 
-	// actix-web = "4.0.1"
 	case string:
 		return cleanCargoVersion(v)
 
-	// tokio = { version = "1.17.0", features = ["full"] }
 	case map[string]interface{}:
 		if versionRaw, exists := v["version"]; exists {
 			if versionStr, ok := versionRaw.(string); ok {

@@ -12,27 +12,23 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// Cache interface defines methods for caching operations
 type Cache interface {
 	Get(ctx context.Context, key string) ([]models.Vulnerability, error)
 	Set(ctx context.Context, key string, value []models.Vulnerability) error
 	Close() error
 }
 
-// LocalCache implements in-memory caching
 type LocalCache struct {
 	mu    sync.RWMutex
 	store map[string][]models.Vulnerability
 }
 
-// NewLocalCache creates a new in-memory cache
 func NewLocalCache() *LocalCache {
 	return &LocalCache{
 		store: make(map[string][]models.Vulnerability),
 	}
 }
 
-// Get retrieves vulnerabilities from local cache
 func (lc *LocalCache) Get(_ context.Context, key string) ([]models.Vulnerability, error) {
 	lc.mu.RLock()
 	defer lc.mu.RUnlock()
@@ -45,7 +41,6 @@ func (lc *LocalCache) Get(_ context.Context, key string) ([]models.Vulnerability
 	return nil, fmt.Errorf("key not found")
 }
 
-// Set stores vulnerabilities in local cache
 func (lc *LocalCache) Set(_ context.Context, key string, value []models.Vulnerability) error {
 	lc.mu.Lock()
 	defer lc.mu.Unlock()
@@ -55,19 +50,15 @@ func (lc *LocalCache) Set(_ context.Context, key string, value []models.Vulnerab
 	return nil
 }
 
-// Close closes the local cache (no-op for local cache)
 func (lc *LocalCache) Close() error {
 	return nil
 }
 
-// RedisCache implements Redis-based caching
 type RedisCache struct {
 	client *redis.Client
 	ttl    time.Duration
 }
 
-// NewRedisCache creates a new Redis cache
-// If connection fails, returns nil and logs a warning
 func NewRedisCache(addr string, password string, db int, ttl time.Duration) *RedisCache {
 	client := redis.NewClient(&redis.Options{
 		Addr:     addr,
@@ -75,7 +66,6 @@ func NewRedisCache(addr string, password string, db int, ttl time.Duration) *Red
 		DB:       db,
 	})
 
-	// Test connection
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -92,7 +82,6 @@ func NewRedisCache(addr string, password string, db int, ttl time.Duration) *Red
 	}
 }
 
-// Get retrieves vulnerabilities from Redis cache
 func (rc *RedisCache) Get(ctx context.Context, key string) ([]models.Vulnerability, error) {
 	if rc == nil || rc.client == nil {
 		return nil, fmt.Errorf("redis cache not available")
@@ -117,7 +106,6 @@ func (rc *RedisCache) Get(ctx context.Context, key string) ([]models.Vulnerabili
 	return vulns, nil
 }
 
-// Set stores vulnerabilities in Redis cache
 func (rc *RedisCache) Set(ctx context.Context, key string, value []models.Vulnerability) error {
 	if rc == nil || rc.client == nil {
 		return fmt.Errorf("redis cache not available")
@@ -138,7 +126,6 @@ func (rc *RedisCache) Set(ctx context.Context, key string, value []models.Vulner
 	return nil
 }
 
-// Close closes the Redis connection
 func (rc *RedisCache) Close() error {
 	if rc == nil || rc.client == nil {
 		return nil
@@ -146,18 +133,14 @@ func (rc *RedisCache) Close() error {
 	return rc.client.Close()
 }
 
-// MultiLevelCache combines Redis and local cache with fallback logic
 type MultiLevelCache struct {
 	redis *RedisCache
 	local *LocalCache
 }
 
-// NewMultiLevelCache creates a two-level cache system
-// Tries Redis first, falls back to local cache if Redis unavailable
 func NewMultiLevelCache(redisAddr string, redisPassword string, redisDB int, ttl time.Duration) *MultiLevelCache {
 	local := NewLocalCache()
 
-	// Try to connect to Redis (will log warning if fails)
 	redis := NewRedisCache(redisAddr, redisPassword, redisDB, ttl)
 
 	return &MultiLevelCache{
@@ -166,29 +149,22 @@ func NewMultiLevelCache(redisAddr string, redisPassword string, redisDB int, ttl
 	}
 }
 
-// Get retrieves vulnerabilities, trying Redis first then local cache
 func (mlc *MultiLevelCache) Get(ctx context.Context, key string) ([]models.Vulnerability, error) {
-	// Try Redis first
 	if mlc.redis != nil {
 		if vulns, err := mlc.redis.Get(ctx, key); err == nil {
-			// Also cache in local for faster access
 			_ = mlc.local.Set(ctx, key, vulns)
 			return vulns, nil
 		}
 	}
 
-	// Fall back to local cache
 	return mlc.local.Get(ctx, key)
 }
 
-// Set stores vulnerabilities in both levels
 func (mlc *MultiLevelCache) Set(ctx context.Context, key string, value []models.Vulnerability) error {
-	// Store in local cache (always succeeds)
 	if err := mlc.local.Set(ctx, key, value); err != nil {
 		log.Printf("LocalCache SET failed: %v", err)
 	}
 
-	// Store in Redis (if available)
 	if mlc.redis != nil {
 		if err := mlc.redis.Set(ctx, key, value); err != nil {
 			log.Printf("Redis SET failed (continuing with local cache): %v", err)
@@ -198,7 +174,6 @@ func (mlc *MultiLevelCache) Set(ctx context.Context, key string, value []models.
 	return nil
 }
 
-// Close closes both cache levels
 func (mlc *MultiLevelCache) Close() error {
 	if mlc.redis != nil {
 		_ = mlc.redis.Close()

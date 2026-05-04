@@ -64,7 +64,6 @@ func parsePom(path string, visited map[string]bool) ([]models.Dependency, error)
 	baseDir := filepath.Dir(path)
 
 	parentProps := map[string]string{}
-	// parentDM := map[string]string{}
 
 	if project.Parent != nil {
 		parentPath := filepath.Join(baseDir, project.Parent.RelativePath)
@@ -72,7 +71,7 @@ func parsePom(path string, visited map[string]bool) ([]models.Dependency, error)
 			parentPath = "../pom.xml"
 		}
 		parentDeps, _ := parsePom(parentPath, visited)
-		_ = parentDeps // можно расширить при необходимости
+		_ = parentDeps
 	}
 
 	props := mergeMaps(parentProps, project.Properties)
@@ -110,7 +109,6 @@ func parsePom(path string, visited map[string]bool) ([]models.Dependency, error)
 		}
 	}
 
-	// 🔥 модули (multi-module)
 	for _, module := range project.Modules {
 		modulePath := filepath.Join(baseDir, module, "pom.xml")
 		subDeps, err := parsePom(modulePath, visited)

@@ -4,6 +4,7 @@ import (
 	"SCAScanner/internal/models"
 	"bufio"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -16,6 +17,7 @@ func ParseRequirementsTxt(filepath string) ([]models.Dependency, error) {
 	}
 	defer file.Close()
 
+	re := regexp.MustCompile(`^([A-Za-z0-9_\-\.]+)==([^\s]+)`)
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
@@ -23,25 +25,14 @@ func ParseRequirementsTxt(filepath string) ([]models.Dependency, error) {
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
-
-		operators := []string{"==", ">=", "<=", "~="}
-
-		for _, op := range operators {
-			if strings.Contains(line, op) {
-				parts := strings.Split(line, "==")
-				if len(parts) == 2 {
-					dependencies = append(dependencies, models.Dependency{
-						Name:      parts[0],
-						Version:   parts[1],
-						Ecosystem: "PyPI",
-					})
-				}
-			}
+		matches := re.FindStringSubmatch(line)
+		if len(matches) == 3 {
+			dependencies = append(dependencies, models.Dependency{
+				Name:      matches[1],
+				Version:   matches[2],
+				Ecosystem: "PyPI",
+			})
 		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		return nil, err
 	}
 	return dependencies, nil
 }
