@@ -2,93 +2,93 @@ name: SCA Vulnerability Scan
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
   scan:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.24.0'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.24.0"
 
-    - name: Build SCAScanner
-      run: go build -v -o scascanner ./cmd/scascanner/main.go
+      - name: Build SCAScanner
+        run: go build -v -o scascanner ./cmd/scascanner/main.go
 
-    - name: Run vulnerability scan
-      run: |
-        mkdir -p scan-reports
-        ./scascanner -p . -o scan-reports -f json
-        ./scascanner -p . -o scan-reports -f html
+      - name: Run vulnerability scan
+        run: |
+          mkdir -p scan-reports
+          ./scascanner -p . -o scan-reports -f json
+          ./scascanner -p . -o scan-reports -f html
 
-    - name: Upload scan reports
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: vulnerability-reports
-        path: |
-          scan-reports/report.html
-          scan-reports/report.json
-        retention-days: 30
+      - name: Upload scan reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vulnerability-reports
+          path: |
+            scan-reports/report.html
+            scan-reports/report.json
+          retention-days: 30
 
-    - name: Check for critical vulnerabilities
-      run: |
-        if [ -f scan-reports/report.json ]; then
-          # Check if there are vulnerabilities with high/critical severity
-          if grep -q '"severity":"critical"' scan-reports/report.json; then
-            echo "❌ CRITICAL vulnerabilities found!"
-            exit 1
-          elif grep -q '"severity":"high"' scan-reports/report.json; then
-            echo "⚠️ HIGH severity vulnerabilities found - please review"
-          else
-            echo "✅ No critical vulnerabilities found"
+      - name: Check for critical vulnerabilities
+        run: |
+          if [ -f scan-reports/report.json ]; then
+            # Check if there are vulnerabilities with high/critical severity
+            if grep -q '"severity":"critical"' scan-reports/report.json; then
+              echo "❌ CRITICAL vulnerabilities found!"
+              exit 1
+            elif grep -q '"severity":"high"' scan-reports/report.json; then
+              echo "⚠️ HIGH severity vulnerabilities found - please review"
+            else
+              echo "✅ No critical vulnerabilities found"
+            fi
           fi
-        fi
 
-    - name: Comment PR with scan results
-      if: github.event_name == 'pull_request' && always()
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const fs = require('fs');
-          const reportPath = 'scan-reports/report.json';
+      - name: Comment PR with scan results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = 'scan-reports/report.json';
 
-          if (fs.existsSync(reportPath)) {
-            const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
-            const vulnCount = report.vulnerabilities ? report.vulnerabilities.length : 0;
+            if (fs.existsSync(reportPath)) {
+              const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+              const vulnCount = report.vulnerabilities ? report.vulnerabilities.length : 0;
 
-            let comment = `## 🔍 SCA Vulnerability Scan Report\n\n`;
-            comment += `- **Dependencies Found:** ${report.dependencies ? report.dependencies.length : 0}\n`;
-            comment += `- **Vulnerabilities Found:** ${vulnCount}\n\n`;
+              let comment = `## 🔍 SCA Vulnerability Scan Report\n\n`;
+              comment += `- **Dependencies Found:** ${report.dependencies ? report.dependencies.length : 0}\n`;
+              comment += `- **Vulnerabilities Found:** ${vulnCount}\n\n`;
 
-            if (vulnCount > 0) {
-              comment += `⚠️ **Vulnerabilities detected!** Review the [detailed report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
-              comment += `### Severity Breakdown:\n`;
-              const severities = {};
-              if (report.vulnerabilities) {
-                report.vulnerabilities.forEach(v => {
-                  const sev = v.severity || 'unknown';
-                  severities[sev] = (severities[sev] || 0) + 1;
-                });
-                Object.entries(severities).forEach(([sev, count]) => {
-                  comment += `- ${sev}: ${count}\n`;
-                });
+              if (vulnCount > 0) {
+                comment += `⚠️ **Vulnerabilities detected!** Review the [detailed report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
+                comment += `### Severity Breakdown:\n`;
+                const severities = {};
+                if (report.vulnerabilities) {
+                  report.vulnerabilities.forEach(v => {
+                    const sev = v.severity || 'unknown';
+                    severities[sev] = (severities[sev] || 0) + 1;
+                  });
+                  Object.entries(severities).forEach(([sev, count]) => {
+                    comment += `- ${sev}: ${count}\n`;
+                  });
+                }
+              } else {
+                comment += `✅ **No vulnerabilities found!**\n`;
               }
-            } else {
-              comment += `✅ **No vulnerabilities found!**\n`;
-            }
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
-          }
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
