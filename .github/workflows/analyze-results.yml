@@ -1,0 +1,56 @@
+name: Detailed Vulnerability Analysis
+
+on:
+  workflow_run:
+    workflows: ["SCA Vulnerability Scan"]
+    types: [completed]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure'
+
+    steps:
+    - name: Download scan artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: vulnerability-reports
+        github-token: ${{ github.token }}
+        run-id: ${{ github.event.workflow_run.id }}
+
+    - name: Parse and analyze vulnerabilities
+      run: |
+        if [ -f report.json ]; then
+          echo "## Vulnerability Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Extract vulnerability details
+          python3 << 'EOF'
+          import json
+
+          with open('report.json', 'r') as f:
+              report = json.load(f)
+
+          print("### Found Issues:")
+          print("")
+
+          if report.get('vulnerabilities'):
+              # Group by severity
+              by_severity = {}
+              for v in report['vulnerabilities']:
+                  sev = v.get('severity', 'unknown')
+                  if sev not in by_severity:
+                      by_severity[sev] = []
+                  by_severity[sev].append(v)
+
+              for severity in ['critical', 'high', 'medium', 'low']:
+                  if severity in by_severity:
+                      vulns = by_severity[severity]
+                      print(f"**{severity.upper()}** ({len(vulns)})")
+                      for v in vulns[:5]:  # Show top 5
+                          print(f"- {v.get('name', 'Unknown')}: {v.get('description', 'N/A')[:100]}")
+                      if len(vulns) > 5:
+                          print(f"- ... and {len(vulns) - 5} more")
+                      print("")
+          EOF
+        fi
